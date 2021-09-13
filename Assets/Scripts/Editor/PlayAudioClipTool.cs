@@ -25,12 +25,11 @@ namespace Editor
 			Assembly unityEditorAssembly = typeof(AudioImporter).Assembly;
 			Type audioUtilClass = unityEditorAssembly.GetType("UnityEditor.AudioUtil");
 			var xd = audioUtilClass.GetMethods();
-			var method = audioUtilClass.GetMethod("StopAllClips", BindingFlags.Static | BindingFlags.Public);
-			if (method == null) return;
-			method.Invoke(null, new object[] { });
-			method = audioUtilClass.GetMethod("PlayClip", BindingFlags.Static | BindingFlags.Public);
-			if (method == null) return;
-			method.Invoke(null, new object[] {clip, 0, false});
+			var stopMethod = audioUtilClass.GetMethod("StopAllPreviewClips", BindingFlags.Static | BindingFlags.Public);
+			if (stopMethod != null) stopMethod.Invoke(null, new object[] { });
+			var playMethod = audioUtilClass.GetMethod("PlayPreviewClip", BindingFlags.Static | BindingFlags.Public);
+			if (playMethod == null) return;
+			playMethod.Invoke(null, new object[] {clip, 0, false});
 		}
 	}
 }

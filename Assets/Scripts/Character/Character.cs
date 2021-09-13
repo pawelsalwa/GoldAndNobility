@@ -1,4 +1,6 @@
-﻿using Common;
+﻿using System;
+using Common;
+using Common.Fsm;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -16,17 +18,32 @@ namespace Character
 
 		// public PawnAnimator Animator;
 		public Refs Refs;
-		
+		private IGameStates gameState;
+
 		// private Animator animatorComponent;
 		// public Controller Controller { private get; set; }
 
-		private void Start()
+		private void Awake() 
 		{
 			// animatorComponent = GetComponent<Animator>();
 			Movement = new Movement(GetComponent<CharacterController>(), setup.Movement);
+			gameState = ServiceLocator.RequestService<IGameStates>();
 			// Animator = new PawnAnimator(animatorComponent, setup.Animator);
 			// Fsm = new Fsm(this, setup.Fsm);
+			enabled = false;
+			gameState.InGame.OnEntered += Enable;
 		}
+
+		private void Start()
+		{
+		}
+
+		private void OnDestroy()
+		{
+			gameState.InGame.OnEntered -= Enable;
+		}
+
+		private void Enable() => enabled = true;
 
 		private void Update()
 		{

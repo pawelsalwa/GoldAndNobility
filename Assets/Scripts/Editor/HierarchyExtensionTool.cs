@@ -1,5 +1,6 @@
 ﻿using System;
 using Cinemachine;
+using UI;
 using UnityEditor;
 using UnityEditor.Experimental.SceneManagement;
 using UnityEditor.SceneManagement;
@@ -90,6 +91,7 @@ namespace Editor
 
 			if (!toolActive) return;
 			DrawToggle(selectionrect, gameObj);
+			TryDrawUiToggle(selectionrect, gameObj);
 			DrawVCamToggle(selectionrect, gameObj);
 			DrawBackground(selectionrect);
 		}
@@ -103,6 +105,31 @@ namespace Editor
 			gameObj.SetActive(!gameObj.activeSelf);
 			if (!Application.isPlaying)
 				MarkSceneDirty(gameObj.scene);
+		}
+		
+		private static void TryDrawUiToggle(Rect selectionrect, GameObject gameObj)
+		{
+			if (gameObj.layer != UiLayer) return;
+			var visionToggle = gameObj.GetComponent<IVisibilityToggle>();
+			if (visionToggle == null) return;
+			var toggleRect = new Rect {x = selectionrect.xMax - 50f, y = selectionrect.yMin, width = 15, height = 15f};
+			var cache = GUI.color;
+			GUI.color = Color.cyan;
+			var visible = GUI.Toggle(toggleRect, visionToggle.Visible, backgroundTex);
+			GUI.color = cache;
+
+			if (visible && !visionToggle.Visible)
+			{
+				visionToggle.Show();
+				if (!Application.isPlaying) MarkSceneDirty(gameObj.scene);
+			}
+
+			if (!visible && visionToggle.Visible)
+			{
+				visionToggle.Hide();
+				if (!Application.isPlaying) MarkSceneDirty(gameObj.scene);
+			}
+			
 		}
 
 		private static void DrawVCamToggle(Rect selectionrect, GameObject gameObj)
@@ -154,16 +181,16 @@ namespace Editor
 			if (GUI.Button(activationBtnRect, toolActive ? DisableToolTxt : EnableToolTxt))
 				EditorPrefs.SetBool(ToolActivePropertyName, !toolActive);
 
-			// var quickLoadRect = new Rect {xMin = activationBtnRect.x - 80f, xMax = activationBtnRect.x - 5f, yMin = activationBtnRect.yMin, yMax = activationBtnRect.yMax};
-			// var guiEnabledCache = GUI.enabled;
-			// GUI.enabled = !Application.isPlaying;
-			// if (GUI.Button(quickLoadRect, "QuickLoad"))
-			// {
-			// 	// PopupWindow.Show(quickLoadRect, new SceneChoosePopupContent());
-			// }
-			//
-			// GUI.enabled = guiEnabledCache;
-			//
+			var quickLoadRect = new Rect {xMin = activationBtnRect.x - 80f, xMax = activationBtnRect.x - 5f, yMin = activationBtnRect.yMin, yMax = activationBtnRect.yMax};
+			var guiEnabledCache = GUI.enabled;
+			GUI.enabled = !Application.isPlaying;
+			if (GUI.Button(quickLoadRect, "QuickLoad"))
+			{
+				PopupWindow.Show(quickLoadRect, new SceneChoosePopupContent());
+			}
+			
+			GUI.enabled = guiEnabledCache;
+			
 			// var playModeSetupRect = quickLoadRect;
 			// playModeSetupRect.center = quickLoadRect.center + Vector2.left * 40f;
 			// playModeSetupRect.width = 35f;
