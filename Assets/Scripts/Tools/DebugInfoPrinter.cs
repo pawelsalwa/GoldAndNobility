@@ -13,7 +13,7 @@ namespace Tools
 		public float y = 35;
 		public int fontSize = 25;
 		
-		private IGameStates gameStates;
+		// private IGameStates gameStates;
 		private GUIStyle style = new GUIStyle();
 
 		private static bool EnablePlaymodeTools
@@ -24,14 +24,14 @@ namespace Tools
 
 		private void Start()
 		{
-			gameStates = ServiceLocator.RequestService<IGameStates>();
+			// gameStates = ServiceLocator.RequestService<IGameStates>();
 		}
 
 		private void OnGUI()
 		{
-			if (!EnablePlaymodeTools) return;
-			GUI.color = Color.green;
-			GUI.Label(new Rect(x, y, 400f, 50f), $"GameState: {gameStates?.Current?.GetType().Name}", style);
+			// if (!EnablePlaymodeTools) return;
+			// GUI.color = Color.green;
+			// GUI.Label(new Rect(x, y, 400f, 50f), $"GameState: {gameStates?.Current?.GetType().Name}", style);
 		}
 
 		private void OnValidate()

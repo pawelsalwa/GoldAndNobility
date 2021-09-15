@@ -18,7 +18,6 @@ namespace Character
 
 		// public PawnAnimator Animator;
 		public Refs Refs;
-		private IGameStates gameState;
 
 		// private Animator animatorComponent;
 		// public Controller Controller { private get; set; }
@@ -27,26 +26,30 @@ namespace Character
 		{
 			// animatorComponent = GetComponent<Animator>();
 			Movement = new Movement(GetComponent<CharacterController>(), setup.Movement);
-			gameState = ServiceLocator.RequestService<IGameStates>();
 			// Animator = new PawnAnimator(animatorComponent, setup.Animator);
 			// Fsm = new Fsm(this, setup.Fsm);
-			enabled = false;
-			gameState.InGame.OnEntered += Enable;
+			// enabled = false;
+			// gameState.InGame.OnEntered += Enable;
 		}
 
 		private void Start()
 		{
+			PauseGameManager.OnPaused += Disable;
+			PauseGameManager.OnResumed += Enable;
 		}
+
+		private void Disable() => enabled = false;
 
 		private void OnDestroy()
 		{
-			gameState.InGame.OnEntered -= Enable;
+			PauseGameManager.OnPaused -= Disable;
+			PauseGameManager.OnResumed -= Enable;
 		}
 
 		private void Enable() => enabled = true;
 
 		private void Update()
-		{
+		{ 
 			Vector2 inp = Vector2.zero;
 			if (Input.GetKey(KeyCode.W)) inp.y = 1f;
 			if (Input.GetKey(KeyCode.S)) inp.y = -1f;

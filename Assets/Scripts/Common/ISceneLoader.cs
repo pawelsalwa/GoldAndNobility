@@ -1,12 +1,14 @@
-﻿namespace Common
+﻿using System;
+
+namespace Common
 {
 	public interface ISceneLoader
 	{
-
-		float Progress { get; }
-		bool IsLoading { get; }
+		event Action<string> OnLoadingStarted;
+		event Action<float> OnProgressChanged;
+		event Action<string> OnSceneLoaded;
+		
 		void LoadGameScene();
 		void LoadMainMenu();
-
 	}
 }

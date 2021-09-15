@@ -1,30 +1,24 @@
-using System;
 using Common;
-using Common.Fsm;
-using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI.MainMenu
 {
-    public class MainMenu : MonoBehaviour
+    internal class MainMenu : UiPanelBase
     {
 
         public Button startBtn;
         public Button loadBtn;
         public Button quitBtn;
         
-        private IGameFsm gameFsm;
+        protected override bool ShowOnAwake => true;
 
-        private void Start()
+        protected override void Start()
         {
-            gameFsm = ServiceLocator.RequestService<IGameFsm>();
+            base.Start();
             startBtn.onClick.AddListener(OnStartBtn);
         }
 
-        private void OnStartBtn()
-        {
-            gameFsm.StartNewGame();
-        }
+        private void OnStartBtn() => ServiceLocator.RequestService<ISceneLoader>().LoadGameScene();
 
     }
 }

@@ -1,5 +1,4 @@
 using Common;
-using Common.Fsm;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,46 +14,43 @@ namespace UI
 		public GameObject loadingEndHint;
 		public Image loadingBar;
 		
-		private IGameStates gameState;
 		private ISceneLoader sceneLoader;
-		private IGameFsm gameFsm;
 
 		protected override void Awake()
 		{
 			base.Awake();
 			
-			gameState = ServiceLocator.RequestService<IGameStates>();
-			gameState.Loading.OnEntered += OnLoadingStarted;
-			gameState.LoadedAndWaiting.OnEntered += OnLoadingEnd;
-			gameState.LoadedAndWaiting.OnExited += OnGameReady;
-			
 			sceneLoader = ServiceLocator.RequestService<ISceneLoader>();
-			gameFsm = ServiceLocator.RequestService<IGameFsm>();
+			sceneLoader.OnSceneLoaded += OnSceneLoaded;
+			sceneLoader.OnLoadingStarted += OnLoadingStarted;
+			sceneLoader.OnProgressChanged += UpdateProgress;
 		}
 
 		protected override void OnDestroy()
 		{
-			gameState.Loading.OnEntered -= OnLoadingStarted;
-			gameState.LoadedAndWaiting.OnEntered -= OnLoadingEnd;
-			gameState.LoadedAndWaiting.OnExited -= OnGameReady;
+			sceneLoader.OnSceneLoaded -= OnSceneLoaded;
+			sceneLoader.OnLoadingStarted -= OnLoadingStarted;
+			sceneLoader.OnProgressChanged -= UpdateProgress;
 		}
 
-		protected override void UpdateActive() 
+		private void Update()
 		{
-			loadingBar.fillAmount = sceneLoader.Progress;
-			if (!sceneLoader.IsLoading && Input.anyKeyDown) gameFsm.EnterGame(); // xd
+			if (!Active) return;
+			if (loadingEndHint.activeSelf && Input.anyKeyDown) Close();
 		}
 
-		protected override void OnOpened()
+		protected override void OnOpened() => loadingEndHint?.SetActive(false);
+
+		private void UpdateProgress(float obj) => loadingBar.fillAmount = obj;
+		private void OnLoadingStarted(string scene) => Open();
+
+		private void OnSceneLoaded(string scene)
 		{
-			loadingEndHint?.SetActive(false);
+			switch (scene)
+			{
+				case "Castle": loadingEndHint.SetActive(true); break;
+				case "MainMenu": Close(); break;
+			}
 		}
-
-		private void OnLoadingEnd() => loadingEndHint?.SetActive(true);
-
-		private void OnGameReady() => Close();
-
-		private void OnLoadingStarted() => Open();
-
 	}
 }

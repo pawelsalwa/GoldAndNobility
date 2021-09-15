@@ -11,7 +11,7 @@ namespace UI
 		[SerializeField, HideInInspector] private CanvasGroup cg;
 
 		public bool Active { get; private set; } = false;
-		public bool Visible { get; private set; }
+		public bool Visible => cg.interactable;
 		
 		protected virtual bool ShowOnAwake => false;
 
@@ -31,13 +31,13 @@ namespace UI
 		
 		[Button] public void Show()
 		{
-			Visible = cg.interactable = cg.blocksRaycasts = true;
+			cg.interactable = cg.blocksRaycasts = true;
 			cg.alpha = 1f;
 		}
 
 		[Button] public void Hide()
 		{
-			Visible = cg.interactable = cg.blocksRaycasts = false;
+			cg.interactable = cg.blocksRaycasts = false;
 			cg.alpha = 0f;
 		}
 
@@ -51,8 +51,6 @@ namespace UI
 		protected virtual void OnOpened() { }
 		protected virtual void OnClosed() { }
 
-		protected virtual void UpdateActive() {}
-
 #if UNITY_EDITOR
 		protected override void OnValidate()
 		{
@@ -60,10 +58,5 @@ namespace UI
 			if (cg == null) cg = gameObject.AddComponent<CanvasGroup>();
 		}
 #endif
-		
-		private void Update()
-		{
-			if (Active) UpdateActive();
-		}
 	}
 }
