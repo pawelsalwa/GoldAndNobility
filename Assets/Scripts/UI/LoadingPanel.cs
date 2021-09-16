@@ -1,4 +1,5 @@
 using Common;
+using Common.GameInput;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,7 +37,11 @@ namespace UI
 		private void Update()
 		{
 			if (!Active) return;
-			if (loadingEndHint.activeSelf && Input.anyKeyDown) Close();
+			if (loadingEndHint.activeSelf && Input.anyKeyDown)
+			{
+				CharacterInput.enabled = true;
+				Close();
+			}
 		}
 
 		protected override void OnOpened() => loadingEndHint?.SetActive(false);

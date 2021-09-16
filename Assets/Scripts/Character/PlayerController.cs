@@ -1,24 +1,23 @@
-﻿using UnityEngine;
+using Common.GameInput;
+using UnityEngine;
 
 namespace Character
 {
-	public class PlayerController : Controller
+	internal class PlayerController : MonoBehaviour
 	{
+		private Character chara;
 
-		public override void UpdateInput(PlayerInput playerInput)
+		protected virtual void Start()
 		{
-			var movement = new Vector2
-			{
-				x = Input.GetKey(KeyCode.D) ? 1f : Input.GetKey(KeyCode.A) ? -1f : 0f,
-				y = Input.GetKey(KeyCode.W) ? 1f : Input.GetKey(KeyCode.S) ? -1f : 0f
-			};
+			chara = GetComponent<Character>();
+			if (!chara) enabled = false;
+		}
 
-			playerInput.Movement = movement;
-			playerInput.Attack = Input.GetKey(KeyCode.Mouse0);
-			playerInput.Dodge = Input.GetKey(KeyCode.Space);
-			playerInput.Run = Input.GetKeyDown(KeyCode.LeftShift);
-			
-			// playerInput.LookAtAngle = MainCamera.gameplayCamera.transform.rotation.eulerAngles.y; // for now get target rotation from cm orbit camera
+		private void Update()
+		{
+			chara.input.Movement = CharacterInput.movement;
+			chara.input.shift = CharacterInput.shiftDown;
+			chara.input.LookAtAngle = Camera.main.transform.eulerAngles.y;
 		}
 	}
 }

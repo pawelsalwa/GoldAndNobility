@@ -1,6 +1,5 @@
 ﻿using System;
 using Common;
-using Common.Fsm;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -12,24 +11,18 @@ namespace Character
 	{
 		public Movement Movement;
 		public Camera vCam;
-		// public Fsm Fsm;
-		// [HideInInspector] public PlayerInput playerInput;
-		[Expandable, SerializeField] private CharacterSetup setup;
-
-		// public PawnAnimator Animator;
-		public Refs Refs;
-
-		// private Animator animatorComponent;
-		// public Controller Controller { private get; set; }
+		[Expandable, SerializeField] internal CharacterSetup setup;
+		public PlayerInput input;
+		internal Animator animator;
+		private AnimManager animManager;
+		public AnimSetup animSetup;
 
 		private void Awake() 
 		{
-			// animatorComponent = GetComponent<Animator>();
 			Movement = new Movement(GetComponent<CharacterController>(), setup.Movement);
-			// Animator = new PawnAnimator(animatorComponent, setup.Animator);
-			// Fsm = new Fsm(this, setup.Fsm);
-			// enabled = false;
-			// gameState.InGame.OnEntered += Enable;
+			animator = GetComponent<Animator>();
+			animManager = new AnimManager(this);
+			
 		}
 
 		private void Start()
@@ -38,28 +31,20 @@ namespace Character
 			PauseGameManager.OnResumed += Enable;
 		}
 
-		private void Disable() => enabled = false;
-
 		private void OnDestroy()
 		{
 			PauseGameManager.OnPaused -= Disable;
 			PauseGameManager.OnResumed -= Enable;
 		}
 
+		private void Disable() => enabled = false;
+
 		private void Enable() => enabled = true;
 
 		private void Update()
 		{ 
-			Vector2 inp = Vector2.zero;
-			if (Input.GetKey(KeyCode.W)) inp.y = 1f;
-			if (Input.GetKey(KeyCode.S)) inp.y = -1f;
-			if (Input.GetKey(KeyCode.D)) inp.x = 1f;
-			if (Input.GetKey(KeyCode.A)) inp.x = -1f;
-			bool shift = Input.GetKey(KeyCode.LeftShift);
-			// if (Input.GetKey(KeyCode.A)) inp.z = -1f;
-			// if (Input.GetKey(KeyCode.D)) inp.z = 1f;
-			Movement.MoveByInput(inp, shift);
-			Movement.SetLookAtAngle(vCam.transform.rotation.eulerAngles.y);
+			Movement.Update(input);
+			animManager.Update();
 		}
 		
 		private void FixedUpdate()

@@ -1,4 +1,5 @@
 ﻿using System;
+using Common.Attributes;
 using UnityEngine;
 
 namespace Character
@@ -8,6 +9,7 @@ namespace Character
 	{
 
 		public MovementSetup Movement;
+		public AnimSetup animSetup;
 	}
 	
 	[Serializable]
@@ -17,5 +19,12 @@ namespace Character
 		public float RunSpeed = 4.5f;
 		public float TurningFactor = 0.3f;
 		public float forceDownSpeed = 3f;
+	}
+	
+	[Serializable]
+	public class AnimSetup
+	{
+		[AnimatorState]
+		public int MovementState;
 	}
 }

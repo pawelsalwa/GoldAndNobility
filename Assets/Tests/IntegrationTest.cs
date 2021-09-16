@@ -4,9 +4,12 @@ using Common;
 using Common.Fsm;
 using Common.GameInput;
 using NUnit.Framework;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 namespace Tests
 {
@@ -14,25 +17,42 @@ namespace Tests
 	{
 		private const float maxLoadingDuration = 10; // secs
 		
-		// private IGameFsm gameFsm;
-		// private IGameStates gameState;
 		private float timer;
 
 		[SetUp]
 		public void Setup() 
 		{
-			// Debug.Log($"<color=orange>seereetup</color>");
-			// gameFsm = ServiceLocator.RequestService<IGameFsm>();
-			// gameState = ServiceLocator.RequestService<IGameStates>();
 		}
 
-		[UnityTest]
-		public IEnumerator EnterGameFromMainMenu()
+		[Test]
+		public void CheckPersistentObjectLoaded()
 		{
-			Assert.IsTrue(Helpers.IsSceneLoaded("PersistentObjects"));
+			// this should be initialized on InitializeOnLoad or some Awake()
+			Assert.IsTrue(Helpers.IsSceneLoaded("PersistentObjects")); 
+		}
+
+
+		[UnityTest]
+		public IEnumerator EnterCastleScene()
+		{
 			SceneManager.LoadScene("Castle");
 			Assert.IsTrue(CharacterInput.enabled);
 			yield break;
+		}
+
+		[UnityTest]
+		public IEnumerator PassThroughApp()
+		{
+			SceneManager.LoadScene("MainMenu");
+			// ServiceLocator.RequestService<ISceneLoader>().OnSceneLoaded += 
+			timer = Time.time;
+			GameObject.Find("StartBtn").GetComponent<Button>().onClick.Invoke();
+			yield return new WaitUntil(IsLoadingCompleted);
+			Assert.IsTrue(CharacterInput.enabled);
+			PauseGameManager.Pause();
+			Assert.IsFalse(CharacterInput.enabled);
+			GameObject.Find("MainMenuBtn").GetComponent<Button>().onClick.Invoke();
+			// yield return new WaitUntil(IsLoadingCompleted);
 
 			// Debug.Log($"<color=white>Enter game from main menu test... </color>");
 			// SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
@@ -43,27 +63,18 @@ namespace Tests
 			// Assert.AreEqual(gameState.Current, gameState.Loading);
 			//
 			// timer = Time.time;
-			// yield return new WaitUntil(IsLoadingCompleted);
 			// Assert.AreEqual(gameState.Current, gameState.LoadedAndWaiting);
 			// Assert.IsTrue(Helpers.IsSceneLoaded("Castle"));
 		}
-		
-		// [Test]
-		// public void EnterGameFromGameScene()
-		// {
-		// 	Debug.Log($"<color=white>Enter game scene immediately test... </color>");
-		// 	SceneManager.LoadScene("Castle", LoadSceneMode.Additive);
-		// 	Assert.AreEqual(gameState.Current, gameState.InGame);
-		// }
 
 		[TearDown]
 		public void TearDown() { }
 
 		private bool IsLoadingCompleted()
 		{
-			// if (gameState.Current != gameState.Loading) return true;
-			// if (Time.time - timer > maxLoadingDuration)
-			// 	throw new TimeoutException("Loading takes longer than defined.");
+			if (Helpers.IsSceneLoaded("Castle")) return true;
+			if (Time.time - timer > maxLoadingDuration)
+				throw new TimeoutException("Loading takes longer than defined.");
 			return false;
 		}
 	}

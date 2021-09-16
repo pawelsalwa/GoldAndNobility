@@ -1,4 +1,5 @@
 using Common;
+using Common.GameInput;
 using UnityEngine.UI;
 
 namespace UI.MainMenu
@@ -16,6 +17,7 @@ namespace UI.MainMenu
         {
             base.Start();
             startBtn.onClick.AddListener(OnStartBtn);
+            CharacterInput.enabled = false;
         }
 
         private void OnStartBtn() => ServiceLocator.RequestService<ISceneLoader>().LoadGameScene();

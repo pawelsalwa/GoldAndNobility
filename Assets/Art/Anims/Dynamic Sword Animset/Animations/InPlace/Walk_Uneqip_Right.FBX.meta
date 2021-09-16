@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: dbab745e19d0a12409da3da8cf08e540
 ModelImporter:
-  serializedVersion: 20101
+  serializedVersion: 21100
   internalIDToNameTable:
   - first:
       1: 100000
@@ -427,7 +427,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
@@ -567,7 +567,7 @@ ModelImporter:
         weight: 0
       maskType: 0
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+      additiveReferencePoseFrame: 31.8
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -1350,6 +1350,7 @@ ModelImporter:
   animationType: 3
   humanoidOversampling: 1
   avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
   additionalBone: 0
   userData: 
   assetBundleName: 

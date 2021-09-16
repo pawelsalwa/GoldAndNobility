@@ -29,12 +29,13 @@ namespace Character
 
 		public void SetLookAtAngle(float lookAtAngle) => targetRotY = lookAtAngle;
 
-		public void MoveByInput(Vector2 inputVal, bool teddyInputRun)
+		public void Update(PlayerInput input)
 		{
-			inputVal *= teddyInputRun ? setup.RunSpeed : setup.WalkSpeed;
-			InternalCharacterVelocity = inputVal;
-			Vector2 movement = Rotate(inputVal, characterController.transform.eulerAngles.y);
+			var inputMovement = input.Movement * (input.shift ? setup.RunSpeed : setup.WalkSpeed);
+			InternalCharacterVelocity = inputMovement;
+			Vector2 movement = Rotate(inputMovement, characterController.transform.eulerAngles.y);
 			RequestControllerMove(movement);
+			SetLookAtAngle(input.LookAtAngle);
 		}
 
 		private void RequestControllerMove(Vector2 motion)
@@ -53,19 +54,19 @@ namespace Character
 				aPoint.y * c - aPoint.x * s);
 		}
 
-		/// <summary> imeediately calls move on controller </summary>
-		public void ForceMoveForward(float value)
-		{
-			Vector2 movement = Rotate(Vector2.up * value, characterController.transform.eulerAngles.y);
-			characterController.Move(new Vector3(movement.x, 0, movement.y));
-		}
-
-		public void OnAnimatorMove(Vector3 animatorDeltaPosition)
-		{
-			// if (animatorDeltaPosition.x > 0.01f || animatorDeltaPosition.z > 0.01f)
-				// Debug.Log($"<color=white>anim delta pos: x : {animatorDeltaPosition.x}, z: {animatorDeltaPosition.z} </color>");
-			// Vector2 movement = Rotate(new Vector2(animatorDeltaPosition.x, animatorDeltaPosition.z), characterController.transform.eulerAngles.y);
-			characterController.Move(new Vector3(animatorDeltaPosition.x, 0f, animatorDeltaPosition.z));
-		}
+		// /// <summary> imeediately calls move on controller </summary>
+		// public void ForceMoveForward(float value)
+		// {
+		// 	Vector2 movement = Rotate(Vector2.up * value, characterController.transform.eulerAngles.y);
+		// 	characterController.Move(new Vector3(movement.x, 0, movement.y));
+		// }
+		//
+		// public void OnAnimatorMove(Vector3 animatorDeltaPosition)
+		// {
+		// 	// if (animatorDeltaPosition.x > 0.01f || animatorDeltaPosition.z > 0.01f)
+		// 		// Debug.Log($"<color=white>anim delta pos: x : {animatorDeltaPosition.x}, z: {animatorDeltaPosition.z} </color>");
+		// 	// Vector2 movement = Rotate(new Vector2(animatorDeltaPosition.x, animatorDeltaPosition.z), characterController.transform.eulerAngles.y);
+		// 	characterController.Move(new Vector3(animatorDeltaPosition.x, 0f, animatorDeltaPosition.z));
+		// }
 	}
 }

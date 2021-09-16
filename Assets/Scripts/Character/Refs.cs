@@ -9,8 +9,7 @@ namespace Character
 	{
 		public bool FsmDebugs = false;
 		public TrailRenderer Trail;
-		public bool overrideInput = false;
-		public PlayerInput debugPlayerInput;
+		public PlayerInput input;
 		public Optional<float> xdd;
 	}
 }

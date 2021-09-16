@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using UnityEngine.SceneManagement;
 
 namespace Common
@@ -14,6 +17,14 @@ namespace Common
                     return true;
             }
             return false;
+        }
+        
+        public static IEnumerable<T> GetFieldsOfType<T>(this object obj) where T : class
+        {
+            var fields = obj.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.GetField);
+            var fieldInfos = fields.Where(m => m.FieldType == typeof(T));
+            var abilities = fieldInfos.Select(fi => fi.GetValue(obj) as T);
+            return abilities.Where(a => a != null);
         }
     }
 }
