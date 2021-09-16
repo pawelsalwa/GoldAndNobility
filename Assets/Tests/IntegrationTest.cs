@@ -36,7 +36,7 @@ namespace Tests
 		public IEnumerator EnterCastleScene()
 		{
 			SceneManager.LoadScene("Castle");
-			Assert.IsTrue(CharacterInput.enabled);
+			Assert.IsTrue(GameplayInput.enabled);
 			yield break;
 		}
 
@@ -46,11 +46,12 @@ namespace Tests
 			SceneManager.LoadScene("MainMenu");
 			// ServiceLocator.RequestService<ISceneLoader>().OnSceneLoaded += 
 			timer = Time.time;
+			yield return null;
 			GameObject.Find("StartBtn").GetComponent<Button>().onClick.Invoke();
 			yield return new WaitUntil(IsLoadingCompleted);
-			Assert.IsTrue(CharacterInput.enabled);
+			Assert.IsTrue(GameplayInput.enabled);
 			PauseGameManager.Pause();
-			Assert.IsFalse(CharacterInput.enabled);
+			Assert.IsFalse(GameplayInput.enabled);
 			GameObject.Find("MainMenuBtn").GetComponent<Button>().onClick.Invoke();
 			// yield return new WaitUntil(IsLoadingCompleted);
 

@@ -14,7 +14,7 @@ namespace Common
 		
 		public static void Pause()
 		{
-			CharacterInput.enabled = false;
+			GameplayInput.enabled = false;
 			Time.timeScale = 0f;
 			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
@@ -23,7 +23,7 @@ namespace Common
 		
 		public static void Resume()
 		{
-			CharacterInput.enabled = true;
+			GameplayInput.enabled = true;
 			Time.timeScale = 1f;
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;

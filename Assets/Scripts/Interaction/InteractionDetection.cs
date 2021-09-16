@@ -9,10 +9,9 @@ namespace Interaction
 
 		public List<Interactable> Interactables => interactables;
 		
-		private List<Interactable> interactables = new List<Interactable>();
+		private readonly List<Interactable> interactables = new List<Interactable>();
 		
 		private InteractionDetection() => ServiceLocator.RegisterService<IInteractablesProvider>(this);
-
 
 		private void OnTriggerEnter(Collider other)
 		{

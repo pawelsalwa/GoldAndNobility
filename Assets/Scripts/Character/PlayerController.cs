@@ -15,8 +15,8 @@ namespace Character
 
 		private void Update()
 		{
-			chara.input.Movement = CharacterInput.movement;
-			chara.input.shift = CharacterInput.shiftDown;
+			chara.input.Movement = GameplayInput.movement;
+			chara.input.shift = GameplayInput.shiftDown;
 			chara.input.LookAtAngle = Camera.main.transform.eulerAngles.y;
 		}
 	}

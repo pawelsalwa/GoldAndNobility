@@ -39,7 +39,7 @@ namespace UI
 			if (!Active) return;
 			if (loadingEndHint.activeSelf && Input.anyKeyDown)
 			{
-				CharacterInput.enabled = true;
+				GameplayInput.enabled = true;
 				Close();
 			}
 		}

@@ -17,7 +17,7 @@ namespace UI.MainMenu
         {
             base.Start();
             startBtn.onClick.AddListener(OnStartBtn);
-            CharacterInput.enabled = false;
+            GameplayInput.enabled = false;
         }
 
         private void OnStartBtn() => ServiceLocator.RequestService<ISceneLoader>().LoadGameScene();

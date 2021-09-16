@@ -1,5 +1,6 @@
 ﻿using System;
 using Common;
+using Common.GameInput;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -22,7 +23,7 @@ namespace Character
 			Movement = new Movement(GetComponent<CharacterController>(), setup.Movement);
 			animator = GetComponent<Animator>();
 			animManager = new AnimManager(this);
-			
+			GameplayInput.enabled = true; // wherever we could call this
 		}
 
 		private void Start()
