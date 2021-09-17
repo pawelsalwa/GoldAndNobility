@@ -1,6 +1,7 @@
 using System;
 using Common;
 using Common.Attributes;
+using Common.GameInput;
 using UnityEngine;
 
 namespace Dialogue
@@ -19,12 +20,21 @@ namespace Dialogue
 
         private bool currentLineIsLast => currentLineIdx == currentDialogue.quotes.Count - 1;
         private int currentLineIdx;
-        
+        private GameStateType stateCache;
+        private IInputSwitchService inputService;
+        private InputFocus inputCache;
+
         private DialogueController() => ServiceLocator.RegisterService<IDialogueController>(this);
+
+        private void Awake() => inputService = ServiceLocator.RequestService<IInputSwitchService>();
 
         public void StartDialogue(DialogueData data)
         {
             if (!data) return;
+            inputCache = inputService.current;
+            inputService.SetInputFocus(InputFocus.Dialogue);
+            stateCache = GameState.Current;
+            GameState.Current = GameStateType.InDialogue;
             currentDialogue = data;
             active = true;
             currentLineIdx = 0;
@@ -35,7 +45,7 @@ namespace Dialogue
         private void Update()
         {
             if (!active) return;
-            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Mouse0)) GoToNextLine();
+            if (DialogueInput.advanceDialogue) GoToNextLine();
         }
 
         private void GoToNextLine()
@@ -54,6 +64,8 @@ namespace Dialogue
 
         private void EndDialogue()
         {
+            inputService.SetInputFocus(inputCache);
+            GameState.Current = stateCache;
             currentDialogue = null;
             currentLine = null;
             currentLineIdx = 0;

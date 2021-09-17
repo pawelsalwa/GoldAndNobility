@@ -37,11 +37,7 @@ namespace UI
 		private void Update()
 		{
 			if (!Active) return;
-			if (loadingEndHint.activeSelf && Input.anyKeyDown)
-			{
-				GameplayInput.enabled = true;
-				Close();
-			}
+			if (loadingEndHint.activeSelf && Input.anyKeyDown) Close();
 		}
 
 		protected override void OnOpened() => loadingEndHint?.SetActive(false);

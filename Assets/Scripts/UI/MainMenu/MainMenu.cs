@@ -1,5 +1,4 @@
 using Common;
-using Common.GameInput;
 using UnityEngine.UI;
 
 namespace UI.MainMenu
@@ -13,11 +12,13 @@ namespace UI.MainMenu
         
         protected override bool ShowOnAwake => true;
 
+        protected override void OnOpened() => GameState.Current = GameStateType.MainMenu;
+
         protected override void Start()
         {
             base.Start();
             startBtn.onClick.AddListener(OnStartBtn);
-            GameplayInput.enabled = false;
+            ServiceLocator.RequestService<IInputSwitchService>().SetInputFocus(InputFocus.UI);
         }
 
         private void OnStartBtn() => ServiceLocator.RequestService<ISceneLoader>().LoadGameScene();

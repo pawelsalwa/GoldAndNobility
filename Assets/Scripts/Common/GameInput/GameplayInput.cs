@@ -1,25 +1,11 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Common.GameInput
 {
 	public static class GameplayInput
 	{
-		/// <summary> shouldnt be needed! but this way we turn off cinemachine orbit vcam </summary>
-		public static event Action<bool> OnEnabledChanged;
-		
-		private static bool _enabled = true;
 
-		public static bool enabled
-		{
-			get => _enabled;
-			set
-			{
-				if (_enabled == value) return;
-				_enabled = value;
-				OnEnabledChanged?.Invoke(value);
-			}
-		}
+		public static bool enabled = true;
 
 		public static Vector2 movement => enabled ? new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) : Vector2.zero;
 
@@ -34,8 +20,28 @@ namespace Common.GameInput
 		public static bool shiftDown => enabled && (Input.GetKeyDown(KeyCode.LeftShift));
 
 		public static bool pauseGame => enabled && Input.GetKeyDown(KeyCode.Escape);
+		public static bool interact => enabled && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Mouse0));
 
-		public static bool interact => enabled && (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Mouse0));
-
+		// private static bool interactUsed = false;
+		// public static bool interact
+		// {
+		// 	get
+		// 	{
+		// 		if (interactUsed) return false;
+		// 		var value = enabled && (Input.GetKey(KeyCode.Return) || Input.GetKey(KeyCode.E) || Input.GetKey(KeyCode.Mouse0));
+		// 		return value;
+		// 	}
+		// }
+		//
+		// /// <summary> Marks key as used to make it return false until next frame </summary>
+		// public static void UseInteractKey() => interactUsed = true;
+		//
+		// /// <summary> Restores uses for keys that are marked as 'used'. These can return true only once per frame.  </summary>
+		// private void ResetUsedKeys()
+		// {
+		// 	interactUsed = false; 
+		// }
+		//
+		// private void LateUpdate() => ResetUsedKeys();
 	}
 }

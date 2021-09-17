@@ -33,21 +33,5 @@ namespace UI
 
 
 		private void Quit() { throw new System.NotImplementedException(); }
-
-		private void Update()
-		{
-			if (!Active) HandlePause();
-			else HandleUnpause();
-		}
-
-		private void HandlePause()
-		{
-			if (Input.GetKeyDown(KeyCode.Escape)) PauseGameManager.Pause();
-		}
-
-		private void HandleUnpause()
-		{
-			if (Input.GetKeyDown(KeyCode.Escape)) PauseGameManager.Resume();
-		}
 	}
 }

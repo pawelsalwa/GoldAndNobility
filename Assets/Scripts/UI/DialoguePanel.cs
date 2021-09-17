@@ -14,13 +14,12 @@ namespace UI
 
 		protected override void OnOpened()
 		{
-			DisableInput();
+			// DisableInput();
 			ServiceLocator.RequestService<IInteractionController>().InteractionEnabled = false;
 		}
 
 		protected override void OnClosed()
 		{
-			GameplayInput.enabled = true;
 			ServiceLocator.RequestService<IInteractionController>().InteractionEnabled = true;
 		}
 
@@ -33,14 +32,14 @@ namespace UI
 			service.OnDialogueEnded += Close;
 			service.OnQuote += DisplayQuote;
 
-			PauseGameManager.OnResumed += DisableInput;
+			// PauseGameManager.OnResumed += DisableInput;
 		}
 
-		/// <summary> not sure if this panel should take care of it, maybe we should handle pause during UI display somewhere else. </summary>
-		private void DisableInput()
-		{
-			if (Active) GameplayInput.enabled = false;
-		}
+		// /// <summary> not sure if this panel should take care of it, maybe we should handle pause during UI display somewhere else. </summary>
+		// private void DisableInput()
+		// {
+		// 	if (Active) GameplayInput.enabled = false;
+		// }
 
 		protected override void OnDestroy()
 		{
@@ -49,7 +48,7 @@ namespace UI
 			service.OnDialogueEnded -= Close;
 			service.OnQuote -= DisplayQuote;
 
-			PauseGameManager.OnResumed -= DisableInput;
+			// PauseGameManager.OnResumed -= DisableInput;
 		}
 
 		private void DisplayQuote(Quote obj)

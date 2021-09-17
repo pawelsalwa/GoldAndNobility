@@ -29,9 +29,10 @@ namespace Tools
 
 		private void OnGUI()
 		{
-			// if (!EnablePlaymodeTools) return;
-			// GUI.color = Color.green;
-			// GUI.Label(new Rect(x, y, 400f, 50f), $"GameState: {gameStates?.Current?.GetType().Name}", style);
+			if (!EnablePlaymodeTools) return;
+			GUI.color = Color.green;
+			GUI.Label(new Rect(x, y, 400f, 50f), $"GameState: {GameState.Current}", style);
+			// GUI.Label(new Rect(x, y + 20, 400f, 50f), $"Input: {GameState.Current}", style);
 		}
 
 		private void OnValidate()
