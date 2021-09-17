@@ -5,19 +5,19 @@ using UnityEngine;
 
 namespace UI
 {
-	public class HudInteraction : UiPanelBase
+	internal class HudInteraction : UiPanelBase
 	{
 		protected override bool ShowOnAwake => true;
 
 		public RectTransform uiPrompt;
 		private Camera cam;
-		private IInteractionManager service;
+		private IInteractionController service;
 
 		protected override void Awake()
 		{
 			base.Awake();
 			cam = Camera.main;
-			service = ServiceLocator.RequestService<IInteractionManager>();
+			service = ServiceLocator.RequestService<IInteractionController>();
 		}
 
 		private void Update()

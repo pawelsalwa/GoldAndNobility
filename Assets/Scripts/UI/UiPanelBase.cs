@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 namespace UI
 {
 	[RequireComponent(typeof(CanvasGroup))]
-	public abstract class UiPanelBase : UIBehaviour, IUIPanel, IVisibilityToggle 
+	internal abstract class UiPanelBase : UIBehaviour, IUIPanel, IVisibilityToggle 
 	{
 
 		[SerializeField, HideInInspector] private CanvasGroup cg;

@@ -2,7 +2,7 @@
 
 namespace Interaction
 {
-	public interface IInteractablesProvider
+	internal interface IInteractablesProvider
 	{
 		List<Interactable> Interactables { get; }
 	}
