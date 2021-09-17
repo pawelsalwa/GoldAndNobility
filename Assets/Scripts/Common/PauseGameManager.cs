@@ -21,6 +21,16 @@ namespace Common
 			service = ServiceLocator.RequestService<IInputSwitchService>();
 		}
 
+		private void Start()
+		{
+			if (GameState.Current == GameStateType.InGame)
+			{
+				Cursor.lockState = CursorLockMode.Locked;
+				Cursor.visible = false;
+				Debug.Log($"<color=white>setting cursor at start</color>");
+			}
+		}
+
 		public static void Pause()
 		{
 			stateCache = GameState.Current; 
@@ -47,8 +57,8 @@ namespace Common
 		
 		private void Update()
 		{
-			if (GameState.Current == GameStateType.InGame) HandlePause();
-			else if (GameState.Current == GameStateType.Paused) HandleUnpause();
+			if (GameState.Current == GameStateType.Paused) HandleUnpause();
+			else HandlePause();
 		}
 
 		private void HandlePause()

@@ -49,6 +49,7 @@ namespace Tests
 			yield return null;
 			GameObject.Find("StartBtn").GetComponent<Button>().onClick.Invoke();
 			yield return new WaitUntil(IsLoadingCompleted);
+			yield return null;
 			Assert.IsTrue(GameplayInput.enabled);
 			PauseGameManager.Pause();
 			Assert.IsFalse(GameplayInput.enabled);

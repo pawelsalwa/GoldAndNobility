@@ -1,5 +1,4 @@
 ﻿using Common;
-using Common.GameInput;
 using Dialogue;
 using Interaction;
 using TMPro;
@@ -12,16 +11,9 @@ namespace UI
 
 		private IDialogueController service;
 
-		protected override void OnOpened()
-		{
-			// DisableInput();
-			ServiceLocator.RequestService<IInteractionController>().InteractionEnabled = false;
-		}
+		protected override void OnOpened() => ServiceLocator.RequestService<IInteractionController>().InteractionEnabled = false;
 
-		protected override void OnClosed()
-		{
-			ServiceLocator.RequestService<IInteractionController>().InteractionEnabled = true;
-		}
+		protected override void OnClosed() => ServiceLocator.RequestService<IInteractionController>().InteractionEnabled = true;
 
 		protected override void Awake()
 		{
@@ -31,15 +23,8 @@ namespace UI
 			service.OnDialogueStarted += Open;
 			service.OnDialogueEnded += Close;
 			service.OnQuote += DisplayQuote;
-
-			// PauseGameManager.OnResumed += DisableInput;
+			
 		}
-
-		// /// <summary> not sure if this panel should take care of it, maybe we should handle pause during UI display somewhere else. </summary>
-		// private void DisableInput()
-		// {
-		// 	if (Active) GameplayInput.enabled = false;
-		// }
 
 		protected override void OnDestroy()
 		{
@@ -47,8 +32,6 @@ namespace UI
 			service.OnDialogueStarted -= Open;
 			service.OnDialogueEnded -= Close;
 			service.OnQuote -= DisplayQuote;
-
-			// PauseGameManager.OnResumed -= DisableInput;
 		}
 
 		private void DisplayQuote(Quote obj)

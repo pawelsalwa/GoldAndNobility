@@ -28,7 +28,6 @@ namespace Interaction
 
 		private void OnValidate()
 		{
-			var xd = nameof(interactionType);
 			if (LayerMask.LayerToName( gameObject.layer) == "Interactable" ) return;
 			Debug.Log($"<color=red> Interactable component doesnt have Interactable layer! {gameObject}</color>", gameObject);
 		}

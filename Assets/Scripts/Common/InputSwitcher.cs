@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using Common.Attributes;
 using Common.GameInput;
 using NaughtyAttributes;
@@ -20,36 +19,6 @@ namespace Common
 		[SerializeField, ReadOnly] private bool _dialogueInputEnabled;
 		[SerializeField, ReadOnly] private bool _uiInputEnabled;
 		public InputFocus current { get; private set; }
-
-		// public bool GameplayInputEnabled
-		// {
-		// 	set
-		// 	{
-		// 		_gameplayInputEnabled = value;
-		// 		StopAllCoroutines();
-		// 		StartCoroutine(ScheduleInputSwitch());
-		// 	}
-		// }
-		//
-		// public bool DialogueInputEnabled
-		// {
-		// 	set
-		// 	{
-		// 		_dialogueInputEnabled = value;
-		// 		StopAllCoroutines();
-		// 		StartCoroutine(ScheduleInputSwitch());
-		// 	}
-		// }
-		//
-		// public bool UiInputEnabled
-		// {
-		// 	set
-		// 	{
-		// 		_uiInputEnabled = value;
-		// 		StopAllCoroutines();
-		// 		StartCoroutine(ScheduleInputSwitch());
-		// 	}
-		// }
 
 		public void SetInputFocus(InputFocus target)
 		{
@@ -78,16 +47,6 @@ namespace Common
 			UiInput.enabled = _uiInputEnabled;
 		}
 
-	}
-
-	public interface IInputSwitchService
-	{
-		// bool GameplayInputEnabled { set; }
-		// bool DialogueInputEnabled { set; }
-		// bool UiInputEnabled { set; }
-
-		void SetInputFocus(InputFocus target);
-		InputFocus current { get; }
 	}
 
 	public enum InputFocus { Gameplay, UI, Dialogue }
