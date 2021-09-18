@@ -1,4 +1,5 @@
-﻿using Common;
+﻿using System.Collections.Generic;
+using Common;
 using Dialogue;
 using Interaction;
 using TMPro;
@@ -23,7 +24,7 @@ namespace UI
 			service.OnDialogueStarted += Open;
 			service.OnDialogueEnded += Close;
 			service.OnQuote += DisplayQuote;
-			
+			service.OnPlayerChoicesAppear += ShowPlayerChoices;
 		}
 
 		protected override void OnDestroy()
@@ -37,6 +38,11 @@ namespace UI
 		private void DisplayQuote(Quote obj)
 		{
 			text.text = obj.talker + ": " + obj.text;
+		}
+
+		private void ShowPlayerChoices(List<Quote> quotes)
+		{
+			
 		}
 
 	}

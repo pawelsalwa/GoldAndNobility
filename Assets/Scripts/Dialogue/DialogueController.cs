@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Common;
 using Common.Attributes;
 using Common.GameInput;
@@ -13,7 +14,9 @@ namespace Dialogue
         
         public event Action OnDialogueStarted;
         public event Action<Quote> OnQuote;
+        public event Action<List<Quote>> OnPlayerChoicesAppear;
         public event Action OnDialogueEnded;
+        
         private bool active = false;
         private DialogueData currentDialogue;
         private Quote currentLine;
@@ -61,7 +64,11 @@ namespace Dialogue
             OnQuote?.Invoke(currentLine);
         }
 
-
+        public void ChooseQuote(Quote quote)
+        {
+            
+        }
+        
         private void EndDialogue()
         {
             inputService.SetInputFocus(inputCache);

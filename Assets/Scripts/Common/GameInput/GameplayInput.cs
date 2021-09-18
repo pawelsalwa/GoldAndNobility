@@ -25,6 +25,6 @@ namespace Common.GameInput
 
 		static GameplayInput() => CinemachineCore.GetInputAxis = GetInputAxis;
 
-		private static float GetInputAxis(string axisname) => enabled ? Input.GetAxisRaw(axisname) : 0f;
+		private static float GetInputAxis(string axisname) => enabled ? Input.GetAxis(axisname) : 0f;
 	}
 }
