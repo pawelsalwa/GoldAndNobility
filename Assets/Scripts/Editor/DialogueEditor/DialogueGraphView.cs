@@ -1,0 +1,129 @@
+using System.Collections.Generic;
+using System.Linq;
+using Dialogue;
+using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
+using UnityEngine;
+using UnityEngine.UIElements;
+using Edge = UnityEditor.Experimental.GraphView.Edge;
+
+namespace Editor.DialogueEditor
+{
+	internal class DialogueGraphView : GraphView
+	{
+		private readonly DialogueData data;
+
+		internal DialogueGraphView(DialogueData data)
+		{
+			this.data = data;
+			Setup();
+			GenerateGraph();
+		}
+
+		public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
+		{
+			if (evt.target is DialogueGraphView || evt.target is Node)
+				evt.menu.AppendAction("Create new", CreateFromContextMenu);
+
+			base.BuildContextualMenu(evt);
+		}
+
+		private void CreateFromContextMenu(DropdownMenuAction obj) => CreateNode(obj.eventInfo.mousePosition);
+
+
+		public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter) => ports.Where(port => port != startPort && startPort.node != port.node && startPort.direction != port.direction).ToList();
+
+		private void GenerateGraph()
+		{
+			foreach (var quote in data.quotes) CreateNode(quote);
+			foreach (var con in data.connections) CreateEdge(con);
+		}
+
+		private void CreateEdge(Connection connection)
+		{
+			var dialogueNodes = nodes.Cast<DialogueNode>();
+			var edge = new Edge();
+			var target = dialogueNodes.FirstOrDefault(dialogueNode => data.quotes.IndexOf(dialogueNode.quote) == connection.inputIdx);
+			// edge.input.ConnectTo(((Node) target).port);
+			
+			// AddElement(new Edge()
+			// {
+			// 	input = 
+			// });
+		}
+
+		private void Setup()
+		{
+			styleSheets.Add(Resources.Load<StyleSheet>("DialogueGraph"));
+			this.AddManipulator(new ContentDragger());
+			this.AddManipulator(new SelectionDragger());
+			this.AddManipulator(new RectangleSelector()); 
+			SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale + 0.5f);
+			GenerateToolbar();
+			GenerateGrid();
+			GenerateMinimap();
+
+			// elementsRemovedFromGroup += OnRemoved;
+			graphViewChanged += OnGraphChange;
+		}
+		private GraphViewChange OnGraphChange(GraphViewChange change)
+		{
+			if (change.elementsToRemove != null) RemoveElements(change.elementsToRemove);
+			if (change.edgesToCreate != null) CreateEdges(change.edgesToCreate);
+			return change;
+		}
+
+		private void RemoveElements(List<GraphElement> elementsToRemove)
+		{
+			foreach (var e in elementsToRemove)
+				if (e is DialogueNode node)
+					data.quotes.Remove(node.quote);
+				else if (e is Edge edge &&
+				         edge.input.node is DialogueNode @in &&
+				         edge.output.node is DialogueNode @out)
+					data.RemoveEdge(@in.quote, @out.quote);
+		}
+
+		private void CreateEdges(List<Edge> edgesToCreate)
+		{
+			foreach (var edge in edgesToCreate)
+				if (edge.output.node is DialogueNode @out &&
+				    edge.input.node is DialogueNode @in)
+					data.AddEdge(@out.quote, @in.quote);
+		}
+
+		private void GenerateMinimap()
+		{
+			var minimap = new MiniMap {anchored = true};
+			minimap.SetPosition(new Rect(10, 30, 200, 140));
+			Add(minimap);
+		}
+
+		private void GenerateGrid()
+		{
+			var grid = new GridBackground();
+			Insert(0, grid);
+			grid.StretchToParentSize();
+		}
+
+		private void GenerateToolbar()
+		{
+			var toolbar = new Toolbar();
+			var nodeCreateButton = new Button(CreateNode) {text = "CreateNode"};
+			toolbar.Add(nodeCreateButton);
+			Add(toolbar);
+		}
+
+		private void CreateNode() => CreateNode(viewport.localBound.center);
+
+		private void CreateNode(Vector2 pos)
+		{
+			var quote = new Quote {pos = {min = pos}};
+			data.quotes.Add(quote);
+			CreateNode(quote);
+		}
+
+		private void CreateNode(Quote quote) => AddElement(new DialogueNode(quote));
+
+	}
+}

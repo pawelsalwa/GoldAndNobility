@@ -8,7 +8,7 @@ namespace Editor
 {
 	public static class MissingComponentsFinder
 	{
-		[MenuItem("FlyingFat/SelectMissingComponents")]
+		[MenuItem("Tools/SelectMissingComponents")]
 		private static void SelectMissingComponents()
 		{
 			var selectionGos =
@@ -20,7 +20,7 @@ namespace Editor
 			Selection.objects = selectionGos;
 		}
 		
-		[MenuItem("FlyingFat/RemoveMissingComponents")]
+		[MenuItem("Tools/RemoveMissingComponents")]
 		private static void RemoveMissingComponents()
 		{
 			foreach (var go in Object.FindObjectsOfType<GameObject>())
