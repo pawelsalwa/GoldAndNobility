@@ -1,6 +1,4 @@
-﻿using System;
-using Common;
-using Common.GameInput;
+﻿using Common;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -18,7 +16,7 @@ namespace Character
 		private AnimManager animManager;
 		public AnimSetup animSetup;
 
-		private void Awake() 
+		private void Awake()
 		{
 			Movement = new Movement(GetComponent<CharacterController>(), setup.Movement);
 			animator = GetComponent<Animator>();

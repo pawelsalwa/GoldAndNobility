@@ -5,7 +5,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Edge = UnityEditor.Experimental.GraphView.Edge;
+// using Edge = UnityEditor.Experimental.GraphView.Edge;
 
 namespace Editor.DialogueEditor
 {
@@ -28,9 +28,6 @@ namespace Editor.DialogueEditor
 			base.BuildContextualMenu(evt);
 		}
 
-		private void CreateFromContextMenu(DropdownMenuAction obj) => CreateNode(obj.eventInfo.mousePosition);
-
-
 		public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter) => ports.Where(port => port != startPort && startPort.node != port.node && startPort.direction != port.direction).ToList();
 
 		private void GenerateGraph()
@@ -41,15 +38,27 @@ namespace Editor.DialogueEditor
 
 		private void CreateEdge(Connection connection)
 		{
-			var dialogueNodes = nodes.Cast<DialogueNode>();
-			var edge = new Edge();
-			var target = dialogueNodes.FirstOrDefault(dialogueNode => data.quotes.IndexOf(dialogueNode.quote) == connection.inputIdx);
-			// edge.input.ConnectTo(((Node) target).port);
+			var dialogueNodes = nodes.Cast<DialogueNode>().ToList();
 			
-			// AddElement(new Edge()
-			// {
-			// 	input = 
-			// });
+			var outputNode = dialogueNodes.FirstOrDefault(IsOutputNode);
+			var inputNode = dialogueNodes.FirstOrDefault(IsInputNode);
+
+			var outputPort = outputNode.outputContainer.Q<Port>();
+			if (outputPort == null) outputPort = outputNode.AddOutputPort();
+			var inputPort = inputNode.inputPort;
+
+			LinkEdge(outputPort, inputPort);
+			
+			bool IsOutputNode(DialogueNode node) => data.quotes.IndexOf(node.quote) == connection.outputIdx;
+			bool IsInputNode(DialogueNode node) => data.quotes.IndexOf(node.quote) == connection.inputIdx;
+		}
+
+		private void LinkEdge(Port output, Port input)
+		{
+			var edge = new Edge {output = output, input = input};
+			edge.input.Connect(edge);
+			edge.output.Connect(edge);
+			Add(edge);
 		}
 
 		private void Setup()
@@ -66,6 +75,7 @@ namespace Editor.DialogueEditor
 			// elementsRemovedFromGroup += OnRemoved;
 			graphViewChanged += OnGraphChange;
 		}
+
 		private GraphViewChange OnGraphChange(GraphViewChange change)
 		{
 			if (change.elementsToRemove != null) RemoveElements(change.elementsToRemove);
@@ -109,12 +119,14 @@ namespace Editor.DialogueEditor
 		private void GenerateToolbar()
 		{
 			var toolbar = new Toolbar();
-			var nodeCreateButton = new Button(CreateNode) {text = "CreateNode"};
+			var nodeCreateButton = new Button(OnCreateNodeButton) {text = "CreateNode"};
 			toolbar.Add(nodeCreateButton);
 			Add(toolbar);
 		}
 
-		private void CreateNode() => CreateNode(viewport.localBound.center);
+		private void OnCreateNodeButton() => CreateNode(viewport.localBound.center);
+
+		private void CreateFromContextMenu(DropdownMenuAction obj) => CreateNode(obj.eventInfo.mousePosition);
 
 		private void CreateNode(Vector2 pos)
 		{
@@ -123,7 +135,11 @@ namespace Editor.DialogueEditor
 			CreateNode(quote);
 		}
 
-		private void CreateNode(Quote quote) => AddElement(new DialogueNode(quote));
-
+		private void CreateNode(Quote quote)
+		{
+			var node = new DialogueNode(quote);
+			// node.AddOutputPort();
+			AddElement(node);
+		}
 	}
 }

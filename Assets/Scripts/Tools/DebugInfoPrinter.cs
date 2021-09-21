@@ -14,7 +14,7 @@ namespace Tools
 		public int fontSize = 25;
 		
 		// private IGameStates gameStates;
-		private GUIStyle style = new GUIStyle();
+		public GUIStyle style;
 
 		private static bool EnablePlaymodeTools
 		{
@@ -24,6 +24,12 @@ namespace Tools
 
 		private void Start()
 		{
+			style = new GUIStyle
+			{
+				fontSize = fontSize,
+				fontStyle = FontStyle.BoldAndItalic, 
+				normal = new GUIStyleState {textColor = Color.green}
+			};
 			// gameStates = ServiceLocator.RequestService<IGameStates>();
 		}
 
@@ -37,6 +43,7 @@ namespace Tools
 
 		private void OnValidate()
 		{
+			if (style == null) return;
 			style.fontSize = fontSize;
 			style.normal.textColor = Color.green;
 		}

@@ -18,44 +18,21 @@ MonoBehaviour:
     talker: 0
     pos:
       serializedVersion: 2
-      x: 316
-      y: 143
-      width: 163
-      height: 77
+      x: 411
+      y: 255
+      width: -411
+      height: -255
   - title: quote
     text: 
     talker: 0
     pos:
       serializedVersion: 2
-      x: 94
-      y: 201
+      x: 408
+      y: 122
       width: 163
       height: 77
-  - title: quote
-    text: 
-    talker: 0
-    pos:
-      serializedVersion: 2
-      x: 412
-      y: 490
-      width: 163
-      height: 77
-  - title: quote
-    text: 
-    talker: 0
-    pos:
-      serializedVersion: 2
-      x: 558
-      y: 217
-      width: 163
-      height: 77
-  - title: quote
-    text: 
-    talker: 0
-    pos:
-      serializedVersion: 2
-      x: 49
-      y: 314
-      width: 163
-      height: 77
-  connections: []
+  connections:
+  - outputIdx: 0
+    inputIdx: 1
+  - outputIdx: 1
+    inputIdx: 0

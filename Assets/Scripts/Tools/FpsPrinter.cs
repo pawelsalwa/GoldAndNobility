@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Common;
 using Common.Attributes;
 using NaughtyAttributes;
@@ -14,7 +15,7 @@ namespace Tools
 		private float avgFps;
 
 		private int currentIdx = 0;
-		private GUIStyle style = new GUIStyle();
+		private GUIStyle style;
 
 		public float x = 7;
 		public float y = 1;
@@ -29,6 +30,11 @@ namespace Tools
 		}
 
 		public int framesAvgCount = 120;
+
+		private void Awake()
+		{
+			style = new GUIStyle {normal = new GUIStyleState {textColor = Color.cyan}};
+		}
 
 		private void Update()
 		{
@@ -85,7 +91,8 @@ namespace Tools
 		private void OnGUI()
 		{
 			if (!EnablePlaymodeTools) return;
-			GUI.color = Color.cyan;
+			// GUI.color = Color.cyan;
+			style.fontSize = fontSize;
 			GUI.Label(new Rect(x, y, 400f, 50f), $"avgFps: {avgFps:0.}", style);
 		}
 
@@ -93,9 +100,6 @@ namespace Tools
 		{
 			fpsCache.Clear();
 			avgFps = 0f;
-			style.fontSize = fontSize;
-			style.normal.textColor = Color.cyan;
-
 		}
 
 		[Button]

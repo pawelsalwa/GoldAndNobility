@@ -39,6 +39,7 @@ namespace Editor.DialogueEditor
 			if (Selection.objects.Length != 1) return;
 			if (!(Selection.objects[0] is DialogueData data)) return;
 			if (!EditorWindow.HasOpenInstances<DialogueGraphWindow>()) return;
+			// if (!(EditorWindow.focusedWindow is DialogueGraphWindow)) return;
 			InitWindow(data);
 		}
 

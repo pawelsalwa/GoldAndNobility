@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4048c80fff887364e88ba3c1d5ad8a3b, type: 3}
-  m_Name: Welcome
+  m_Name: Welcome 1
   m_EditorClassIdentifier: 
   quotes:
   - title: quote
@@ -18,19 +18,10 @@ MonoBehaviour:
     talker: 0
     pos:
       serializedVersion: 2
-      x: 685
-      y: 269
+      x: 794
+      y: -36
       width: 163
-      height: 77
-  - title: quote
-    text: 
-    talker: 0
-    pos:
-      serializedVersion: 2
-      x: 338
-      y: 273
-      width: 163
-      height: 77
+      height: 101
   - title: quote
     text: 
     talker: 0
@@ -40,8 +31,21 @@ MonoBehaviour:
       y: 28
       width: 163
       height: 77
+  - title: quote
+    text: 
+    talker: 0
+    pos:
+      serializedVersion: 2
+      x: 437
+      y: 199
+      width: 163
+      height: 77
   connections:
-  - outputIdx: 1
+  - outputIdx: 2
+    inputIdx: 1
+  - outputIdx: 2
     inputIdx: 0
+  - outputIdx: 0
+    inputIdx: 1
   - outputIdx: 0
     inputIdx: 2
