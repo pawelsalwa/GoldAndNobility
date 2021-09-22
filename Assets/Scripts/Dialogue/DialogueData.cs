@@ -7,8 +7,8 @@ namespace Dialogue
 	[CreateAssetMenu(fileName = "NewConversation", menuName = "ScriptableObject/DialogueData")]
 	public class DialogueData : ScriptableObject
 	{
-		public List<Quote> quotes;
-		public List<Connection> connections;
+		public List<Quote> quotes = new List<Quote>();
+		public List<Connection> connections = new List<Connection>();
 
 		public void AddEdge(Quote @out, Quote @in)
 		{

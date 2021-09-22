@@ -9,7 +9,7 @@ namespace Dialogue
 	public class Quote
 	{
 		public string title = "quote";
-		public string text;
+		public string text = "Hello wanderer...";
 		public Talker talker;
 		public Rect pos;
 	}

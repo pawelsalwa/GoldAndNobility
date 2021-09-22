@@ -1,5 +1,7 @@
+using System;
 using Dialogue;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -23,8 +25,7 @@ namespace Editor.DialogueEditor
 			if (entry)
 			{
 				AddOutputPort();
-				capabilities = 0;
-				// capabilities ^= Capabilities.Copiable & Capabilities.Deletable & Capabilities.Groupable & Capabilities.Droppable;
+				capabilities = 0; // capabilities ^= Capabilities.Copiable & Capabilities.Deletable & Capabilities.Groupable & Capabilities.Droppable;
 			}
 			else
 			{
@@ -33,11 +34,27 @@ namespace Editor.DialogueEditor
 				inputPort = AddInputPort();
 				var ports = outputContainer.Query<Port>().ToList();
 				if (ports.Count == 0) AddOutputPort(); // utiliy, so one optput port is by default
+				
+				var talkerEnumField = new EnumField("who says?",Talker.Npc);
+				talkerEnumField.RegisterValueChangedCallback(OnTalkerChanged);
+				talkerEnumField.SetValueWithoutNotify(quote.talker);
+				mainContainer.Add(talkerEnumField);
+				
+				var quoteTextField = new TextField();
+				quoteTextField.RegisterValueChangedCallback(OnQuoteChanged);
+				quoteTextField.SetValueWithoutNotify(quote.text);
+				quoteTextField.multiline = true;
+				// textField.
+				mainContainer.Add(quoteTextField);
 			}
 			
 			RefreshExpandedState();
 			RefreshPorts();
 		}
+
+		private void OnTalkerChanged(ChangeEvent<Enum> evt) => quote.talker = (Talker)evt.newValue;
+
+		private void OnQuoteChanged(ChangeEvent<string> evt) => quote.text = evt.newValue;
 
 		private void OnAddPortBtn() => AddOutputPort();
 
