@@ -6,7 +6,6 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-// using Edge = UnityEditor.Experimental.GraphView.Edge;
 
 namespace Editor.DialogueEditor
 {
@@ -14,6 +13,7 @@ namespace Editor.DialogueEditor
 	{
 		private readonly DialogueData data;
 		private List<DialogueData> dialogueAssets;
+		private Port startPort;
 
 		internal DialogueGraphView(DialogueData data)
 		{
@@ -30,18 +30,30 @@ namespace Editor.DialogueEditor
 			base.BuildContextualMenu(evt);
 		}
 
-		public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter) => ports.Where(port => port != startPort && startPort.node != port.node && startPort.direction != port.direction).ToList();
+		public override List<Port> GetCompatiblePorts(Port port, NodeAdapter nodeAdapter) => ports.Where(p => p != port && port.node != p.node && port.direction != p.direction).ToList();
 
 		private void GenerateGraph()
 		{
-			// if (data.quotes == null || data.connections == null) return;
 			foreach (var quote in data.quotes) CreateNode(quote);
 			foreach (var con in data.connections) CreateEdge(con);
+			GenerateEntryEdge();
+		}
+
+		private void GenerateEntryEdge()
+		{
+			var dialogueStartNode = 
+				this.Query<DialogueNode>()
+					.ToList()
+					.FirstOrDefault(n => n.quote == data.entryQuote);
+			
+			if (dialogueStartNode == null) return;
+			LinkEdge(startPort, dialogueStartNode.inputPort);
 		}
 
 		private void CreateEdge(Connection connection)
 		{
-			var dialogueNodes = nodes.Cast<DialogueNode>().ToList();
+			var dialogueNodes = nodes.Where(n => n is DialogueNode).Cast<DialogueNode>();
+			// var dialogueNodes = nodes.ToList().Cast<DialogueNode>().Where(n => n != null).ToList();
 			
 			var outputNode = dialogueNodes.FirstOrDefault(IsOutputNode);
 			var inputNode = dialogueNodes.FirstOrDefault(IsInputNode);
@@ -74,9 +86,21 @@ namespace Editor.DialogueEditor
 			GenerateToolbar();
 			GenerateGrid();
 			GenerateMinimap();
-
+			GenerateStartNode();
 			// elementsRemovedFromGroup += OnRemoved;
 			graphViewChanged += OnGraphChange;
+		}
+
+		private void GenerateStartNode()
+		{
+			var startNode = new Node {capabilities = 0};
+			startPort = startNode.InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(float));
+			startPort.portName = "Start";
+			startNode.outputContainer.Add(startPort);
+			startNode.SetPosition(new Rect(100, 300, 100, 100));
+			startNode.RefreshPorts();
+			startNode.RefreshExpandedState();
+			AddElement(startNode);
 		}
 
 		private GraphViewChange OnGraphChange(GraphViewChange change)
@@ -103,6 +127,7 @@ namespace Editor.DialogueEditor
 				if (edge.output.node is DialogueNode @out &&
 				    edge.input.node is DialogueNode @in)
 					data.AddEdge(@out.quote, @in.quote);
+				else if (edge.output == startPort) data.entryQuote = (edge.input.node as DialogueNode).quote;
 		}
 
 		private void GenerateMinimap()
@@ -173,11 +198,6 @@ namespace Editor.DialogueEditor
 			CreateNode(quote);
 		}
 
-		private void CreateNode(Quote quote)
-		{
-			var node = new DialogueNode(quote);
-			// node.AddOutputPort();
-			AddElement(node);
-		}
+		private void CreateNode(Quote quote) => AddElement(new DialogueNode(quote));
 	}
 }

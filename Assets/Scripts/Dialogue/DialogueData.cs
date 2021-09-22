@@ -4,11 +4,20 @@ using UnityEngine;
 
 namespace Dialogue
 {
-	[CreateAssetMenu(fileName = "NewConversation", menuName = "ScriptableObject/DialogueData")]
+	[CreateAssetMenu(fileName = "NewDialogue", menuName = "ScriptableObject/DialogueData")]
 	public class DialogueData : ScriptableObject
 	{
 		public List<Quote> quotes = new List<Quote>();
 		public List<Connection> connections = new List<Connection>();
+		
+		[SerializeField] private int entryQuoteIdx;
+		
+		public Quote entryQuote
+		{
+			get => quotes.Count == 0 ? null : quotes[entryQuoteIdx];
+			set => entryQuoteIdx = quotes.IndexOf(value);
+		}
+
 
 		public void AddEdge(Quote @out, Quote @in)
 		{
