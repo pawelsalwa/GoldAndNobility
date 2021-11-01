@@ -24,23 +24,13 @@ namespace Editor.DialogueEditor
 			dropdown.RegisterValueChangedCallback(DropdownChangedCallback);
 			Add(dropdown);
 		}
-		
+
 		private void DropdownChangedCallback(ChangeEvent<string> evt)
 		{
 			// Debug.Log($"<color=orange>dropdown change cb {evt.previousValue} to {evt.newValue}</color>");
-			Selection.objects = new Object[] { dialogueAssets.FirstOrDefault(x => x.name == evt.newValue) }; // selection change will rebuild whole graph xP !!
-		} 
-		
-		private string GetSelectedDialogueName(string arg)
-		{
-			// Debug.Log($"<color=yellow>GetSelectedDialogueName {arg}</color>");
-			return arg;
-		}
-
-		private string GetDialogueNameFromLabelName(string arg)
-		{
-			// Debug.Log($"<color=yellow>GetDialogueNameFromLabelName {arg}</color>");
-			return arg;
+			
+			// selection change will rebuild whole graph :P
+			Selection.objects = new Object[] { dialogueAssets.FirstOrDefault(x => x.name == evt.newValue) }; 
 		}
 
 		private static List<DialogueData> GetDialogueAssets()

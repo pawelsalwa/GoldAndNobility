@@ -7,25 +7,26 @@ using UnityEngine;
 
 namespace Dialogue
 {
-    /// <summary> through events we can handle ui/logic/etc </summary>
+    /// <summary> through events we can handle ui/audio/etc </summary>
     [PersistentComponent]
     public class DialogueController : MonoBehaviour, IDialogueController
     {
         
-        public event Action OnDialogueStarted;
-        public event Action<Quote> OnQuote;
+        public event Action<DialogueData> OnDialogueStarted;
+        public event Action<Quote> OnQuoteStarted;
         public event Action<List<Quote>> OnPlayerChoicesAppear;
         public event Action OnDialogueEnded;
         
         private bool active = false;
-        private DialogueData currentDialogue;
-        private Quote currentLine;
-
-        private bool currentLineIsLast => currentLineIdx == currentDialogue.quotes.Count - 1;
+        
+        private bool currentLineIsLast => currentLineIdx == CurrentDialogue.quotes.Count - 1;
         private int currentLineIdx;
         private GameStateType stateCache;
         private IInputSwitchService inputService;
         private InputFocus inputCache;
+        
+        public DialogueData CurrentDialogue { get; private set; }
+        public Quote CurrentQuote { get; private set; }
 
         private DialogueController() => ServiceLocator.RegisterService<IDialogueController>(this);
 
@@ -38,11 +39,29 @@ namespace Dialogue
             inputService.SetInputFocus(InputFocus.Dialogue);
             stateCache = GameState.Current;
             GameState.Current = GameStateType.InDialogue;
-            currentDialogue = data;
+            CurrentDialogue = data;
             active = true;
+            SayQuote(data.entryQuote);
             currentLineIdx = 0;
-            OnDialogueStarted?.Invoke();
+            OnDialogueStarted?.Invoke(data);
+            // GoToNextLine();
+        }
+
+        public void SayQuote(int idx)
+        {
+            throw new NotImplementedException(); 
+            
+        }
+
+        public void Skip()
+        {
             GoToNextLine();
+        }
+
+        private void SayQuote(Quote quote)
+        {
+            CurrentQuote = quote;
+            OnQuoteStarted?.Invoke(quote);
         }
 
         private void Update()
@@ -53,18 +72,23 @@ namespace Dialogue
 
         private void GoToNextLine()
         {
-            if (currentDialogue == null) return;
-            if (currentLine == null) currentLine = currentDialogue.quotes[currentLineIdx = 0];
+            if (CurrentDialogue == null) return;
+            if (CurrentQuote == null) CurrentQuote = CurrentDialogue.quotes[currentLineIdx = 0];
             else if (currentLineIsLast)
             {
                 EndDialogue();
                 return;
             }
-            else currentLine = currentDialogue.quotes[++currentLineIdx];
-            OnQuote?.Invoke(currentLine);
+            else CurrentQuote = CurrentDialogue.quotes[++currentLineIdx];
+            OnQuoteStarted?.Invoke(CurrentQuote);
         }
 
         public void ChooseQuote(Quote quote)
+        {
+            
+        }
+
+        private void OnSpeadk()
         {
             
         }
@@ -73,8 +97,8 @@ namespace Dialogue
         {
             inputService.SetInputFocus(inputCache);
             GameState.Current = stateCache;
-            currentDialogue = null;
-            currentLine = null;
+            CurrentDialogue = null;
+            CurrentQuote = null;
             currentLineIdx = 0;
             active = false;
             OnDialogueEnded?.Invoke();

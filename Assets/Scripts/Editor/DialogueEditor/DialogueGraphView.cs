@@ -79,7 +79,7 @@ namespace Editor.DialogueEditor
 			this.AddManipulator(new SelectionDragger());
 			this.AddManipulator(new RectangleSelector()); 
 			SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale + 0.5f);
-			GenerateToolbar();
+			// GenerateToolbar();
 			GenerateGrid();
 			GenerateMinimap();
 			GenerateStartNode();
@@ -140,7 +140,7 @@ namespace Editor.DialogueEditor
 			grid.StretchToParentSize();
 		}
 
-		private void GenerateToolbar() => Add(new DialogueToolbar(data));
+		// private void GenerateToolbar() => Add(new DialogueToolbar(data));
 
 		private void OnCreateNodeButton() => CreateNode(viewport.localBound.center);
 

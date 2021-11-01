@@ -1,5 +1,6 @@
 using Dialogue;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Editor.DialogueEditor
@@ -8,6 +9,7 @@ namespace Editor.DialogueEditor
 	{
 		private DialogueGraphView graphView;
 		private DialogueData editedData;
+		private DialogueToolbar toolbar;
 		private bool initialized => editedData != null;
 
 		public void Init(DialogueData data)
@@ -18,19 +20,32 @@ namespace Editor.DialogueEditor
 
 		private void RebuildGraph()
 		{
-			if (!initialized) return;
 			ClearGraph();
-			ConstructGraphView();
+			if (initialized) ConstructGraphView();
+			GenerateToolbar();
 		}
 
 		private void ClearGraph()
 		{
-			if (graphView != null) rootVisualElement.Remove(graphView);
+			if (rootVisualElement.Contains(graphView)) rootVisualElement.Remove(graphView);
+		}
+		
+		private void OnFocus()
+		{
+			if (!initialized) ClearGraph();
+			GenerateToolbar();
 		}
 
 		private void OnEnable() => RebuildGraph();
 
 		private void OnDisable() => ClearGraph();
+		
+		private void GenerateToolbar()
+		{
+			if (rootVisualElement.Contains(toolbar)) rootVisualElement.Remove(toolbar);
+			toolbar = new DialogueToolbar(editedData);
+			rootVisualElement.Add(toolbar);
+		}
 
 		private void ConstructGraphView()
 		{

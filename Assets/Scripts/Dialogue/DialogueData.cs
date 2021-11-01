@@ -10,7 +10,7 @@ namespace Dialogue
 		public List<Quote> quotes = new List<Quote>();
 		public List<Connection> connections = new List<Connection>();
 		
-		[SerializeField] private int entryQuoteIdx;
+		[field: SerializeField] private int entryQuoteIdx;
 		
 		public Quote entryQuote
 		{

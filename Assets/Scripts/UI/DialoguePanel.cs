@@ -21,19 +21,21 @@ namespace UI
 			base.Awake();
 
 			service = ServiceLocator.RequestService<IDialogueController>();
-			service.OnDialogueStarted += Open;
+			service.OnDialogueStarted += OnDialogeuStarted;
 			service.OnDialogueEnded += Close;
-			service.OnQuote += DisplayQuote;
+			service.OnQuoteStarted += DisplayQuote;
 			service.OnPlayerChoicesAppear += ShowPlayerChoices;
 		}
 
 		protected override void OnDestroy()
 		{
 			base.OnDestroy();
-			service.OnDialogueStarted -= Open;
+			service.OnDialogueStarted -= OnDialogeuStarted;
 			service.OnDialogueEnded -= Close;
-			service.OnQuote -= DisplayQuote;
+			service.OnQuoteStarted -= DisplayQuote;
 		}
+
+		private void OnDialogeuStarted(DialogueData obj) => Open();
 
 		private void DisplayQuote(Quote obj)
 		{
