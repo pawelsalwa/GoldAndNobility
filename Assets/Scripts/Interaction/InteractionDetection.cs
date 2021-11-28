@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Interaction
 {
+	/// <summary> This should be attached to character or camera in game world to provide collider that can collide with interactable objects </summary>
 	internal class InteractionDetection : MonoBehaviour, IInteractablesProvider
 	{
 

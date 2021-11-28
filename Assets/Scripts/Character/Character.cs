@@ -1,4 +1,5 @@
-﻿using Common;
+﻿using System;
+using Common;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -21,23 +22,17 @@ namespace Character
 			Movement = new Movement(GetComponent<CharacterController>(), setup.Movement);
 			animator = GetComponent<Animator>();
 			animManager = new AnimManager(this);
-		}
-
-		private void Start()
-		{
-			PauseGameManager.OnPaused += Disable;
-			PauseGameManager.OnResumed += Enable;
+			GameState.OnChanged += UpdateActivation;
 		}
 
 		private void OnDestroy()
 		{
-			PauseGameManager.OnPaused -= Disable;
-			PauseGameManager.OnResumed -= Enable;
+			GameState.OnChanged -= UpdateActivation;
 		}
 
-		private void Disable() => enabled = false;
-
-		private void Enable() => enabled = true;
+		private void UpdateActivation(GameStateType obj) => enabled = 
+				obj == GameStateType.InGame ||
+				obj == GameStateType.InDialogue;
 
 		private void Update()
 		{ 

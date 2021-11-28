@@ -14,7 +14,7 @@ namespace Tests
 		public void Setup()
 		{
 			controller = new GameObject("test").AddComponent<DialogueController>();
-			data = GetTestData();
+			data = TestData.GetTestDialogueData();
 		}
 
 		[Test]
@@ -42,56 +42,46 @@ namespace Tests
 			Quote saidQuote = null;
 			controller.OnQuoteStarted += OnQuoteStarted;
 			controller.StartDialogue(data);
-			Assert.That(saidQuote == data.quotes[0]);
-			controller.Skip();
-			Assert.That(saidQuote == data.quotes[1]);
 			controller.OnQuoteStarted -= OnQuoteStarted;
+			Assert.That(saidQuote == data.quotes[0]);
 
 			void OnQuoteStarted(Quote q) => saidQuote = q;
 		}
-
+		
 		[Test]
-		public void PassWholeDiaologue()
+		public void CheckEndEvent()
 		{
-			controller.StartDialogue(data);
-			Assert.AreEqual(controller.CurrentQuote, data.quotes[0]);
-			controller.Skip();
-			Assert.AreEqual(controller.CurrentQuote, data.quotes[1]);
-			Assert.True(data.quotes.Count == 2);
-			
-			var endEventCalled = false;
-			controller.OnDialogueEnded += MarkEventCalled;
-			controller.Skip();
-			controller.OnDialogueEnded -= MarkEventCalled;
-			
-			Assert.That(endEventCalled);
-			Assert.That(controller.CurrentDialogue == null);
-
-			void MarkEventCalled() => endEventCalled = true;
+			// var saidQuotesCount = 3;
+			// Assert.True(data.quotes.Count == saidQuotesCount);
+			// var endEventCalled = false;
+			// controller.StartDialogue(data);
+			// controller.OnDialogueEnded += OnEndEvent;
+			// for (int i = 0; i < saidQuotesCount; i++) controller.Skip();
+			// controller.OnDialogueEnded -= OnEndEvent;
+			// Assert.That(endEventCalled);
+			//
+			// void OnEndEvent() => endEventCalled = true;
 		}
 
-		private static DialogueData GetTestData()
+		/// <summary> Dialogue data used should have choices right after first npc quote (after welcome) </summary>
+		[Test]
+		public void CheckPlayerChoices()
 		{
-			var newData = ScriptableObject.CreateInstance<DialogueData>();
-			newData.quotes = new List<Quote>
-			{
-				new Quote
-				{
-					talker = Talker.Npc,
-					text = "testQuote",
-					title = "testTitle"
-				},
-				new Quote
-				{
-					talker = Talker.Player,
-					text = "testQuote2",
-					title = "testTitle2"
-				},
-			};
+			bool quotesShown = false;
+			controller.StartDialogue(data);
+			
+			controller.OnPlayerQuotesAppear += CheckPlayerQuotes;
+			controller.Skip();
+			controller.OnPlayerQuotesAppear -= CheckPlayerQuotes;
 
-			newData.connections = new List<Connection> {new Connection(0, 1)};
-			newData.entryQuote = newData.quotes[0];
-			return newData;
+			Assert.That(quotesShown);
+
+			void CheckPlayerQuotes(List<Quote> quotes)
+			{
+				quotesShown = true;
+				Assert.That(quotes[0] == data.quotes[1]); // shown quotes are from data
+				Assert.That(quotes[1] == data.quotes[2]);
+			}
 		}
 	}
 }

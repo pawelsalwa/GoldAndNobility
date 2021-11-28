@@ -1,6 +1,6 @@
 using System;
 using Common;
-using Common.GameInput;
+using GameInput;
 using UnityEngine;
 
 namespace Character

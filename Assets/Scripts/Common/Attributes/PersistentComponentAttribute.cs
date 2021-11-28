@@ -6,6 +6,13 @@ namespace Common.Attributes
 	[AttributeUsage(AttributeTargets.Class)]
 	public class PersistentComponentAttribute : Attribute
 	{
-		
+
+		/// <summary> if specified, this will be registered as service in ServiceLocator </summary>
+		public Type serviceType;
+
+		public PersistentComponentAttribute(Type serviceType = null)
+		{
+			this.serviceType = serviceType;
+		}
 	}
 }

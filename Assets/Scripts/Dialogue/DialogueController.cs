@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Common;
 using Common.Attributes;
-using Common.GameInput;
+using GameInput;
 using UnityEngine;
 
 namespace Dialogue
@@ -14,23 +14,24 @@ namespace Dialogue
         
         public event Action<DialogueData> OnDialogueStarted;
         public event Action<Quote> OnQuoteStarted;
-        public event Action<List<Quote>> OnPlayerChoicesAppear;
+        public event Action<List<Quote>> OnPlayerQuotesAppear;
         public event Action OnDialogueEnded;
         
         private bool active = false;
-        
-        private bool currentLineIsLast => currentLineIdx == CurrentDialogue.quotes.Count - 1;
-        private int currentLineIdx;
+
         private GameStateType stateCache;
         private IInputSwitchService inputService;
         private InputFocus inputCache;
+
+        private readonly List<Quote> currentChoices = new List<Quote>();
+        private bool isShowingChoices => currentChoices.Count > 0;
         
         public DialogueData CurrentDialogue { get; private set; }
-        public Quote CurrentQuote { get; private set; }
+        private Quote currentQuote;
 
         private DialogueController() => ServiceLocator.RegisterService<IDialogueController>(this);
 
-        private void Awake() => inputService = ServiceLocator.RequestService<IInputSwitchService>();
+        private void Start() => inputService = ServiceLocator.RequestService<IInputSwitchService>();
 
         public void StartDialogue(DialogueData data)
         {
@@ -41,65 +42,56 @@ namespace Dialogue
             GameState.Current = GameStateType.InDialogue;
             CurrentDialogue = data;
             active = true;
-            SayQuote(data.entryQuote);
-            currentLineIdx = 0;
             OnDialogueStarted?.Invoke(data);
-            // GoToNextLine();
+            SayQuote(data.entryQuote);
         }
 
-        public void SayQuote(int idx)
+        public void ChoosePlayerQuote(Quote quote)
         {
-            throw new NotImplementedException(); 
-            
+            if (!currentChoices.Contains(quote)) throw new ArgumentException("Cant choose player quote that is not within current choices.");
+            currentChoices.Clear(); // important to clear choices when we're done choosing
+            SayQuote(quote);
         }
 
         public void Skip()
         {
-            GoToNextLine();
+            if (!CurrentDialogue) throw new Exception("Cant skip, current dialogue is null");
+            if (isShowingChoices) throw new Exception("Cant call skip dialogue when multiple choices are shown.");
+            GoToNextQuote();
         }
 
         private void SayQuote(Quote quote)
         {
-            CurrentQuote = quote;
+            currentQuote = quote;
             OnQuoteStarted?.Invoke(quote);
         }
 
         private void Update()
         {
             if (!active) return;
-            if (DialogueInput.advanceDialogue) GoToNextLine();
+            if (DialogueInput.advanceDialogue && !isShowingChoices) Skip();
         }
 
-        private void GoToNextLine()
+        private void GoToNextQuote()
         {
-            if (CurrentDialogue == null) return;
-            if (CurrentQuote == null) CurrentQuote = CurrentDialogue.quotes[currentLineIdx = 0];
-            else if (currentLineIsLast)
-            {
-                EndDialogue();
-                return;
-            }
-            else CurrentQuote = CurrentDialogue.quotes[++currentLineIdx];
-            OnQuoteStarted?.Invoke(CurrentQuote);
+            var nextQuotes = CurrentDialogue.GetNextQuotesFor(currentQuote);
+            if (nextQuotes.Count == 0) EndDialogue();
+            if (nextQuotes.Count == 1) SayQuote(nextQuotes[0]);
+            if (nextQuotes.Count > 1) ShowPlayerChoices(nextQuotes);
         }
 
-        public void ChooseQuote(Quote quote)
+        private void ShowPlayerChoices(List<Quote> nextQuotes)
         {
-            
+            currentChoices.Clear();
+            currentChoices.AddRange(nextQuotes);
+            OnPlayerQuotesAppear?.Invoke(nextQuotes);
         }
 
-        private void OnSpeadk()
-        {
-            
-        }
-        
         private void EndDialogue()
         {
             inputService.SetInputFocus(inputCache);
             GameState.Current = stateCache;
             CurrentDialogue = null;
-            CurrentQuote = null;
-            currentLineIdx = 0;
             active = false;
             OnDialogueEnded?.Invoke();
         }

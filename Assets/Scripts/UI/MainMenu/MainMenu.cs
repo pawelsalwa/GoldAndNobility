@@ -1,4 +1,5 @@
 using Common;
+using GameInput;
 using UnityEngine.UI;
 
 namespace UI.MainMenu

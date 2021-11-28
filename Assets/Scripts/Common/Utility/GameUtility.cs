@@ -8,7 +8,14 @@ namespace Common.Utility
 	{
 
 		private static GameObject persistentGoCache;
-		private static GameObject persistentGo => persistentGoCache == null ? persistentGoCache = new GameObject("-- PersistentComponents --") : persistentGoCache;
+		private static GameObject persistentGo
+		{
+			get
+			{
+				if (!persistentGoCache) Object.DontDestroyOnLoad(persistentGoCache = new GameObject("-- PersistentComponents --"));
+				return persistentGoCache;
+			}
+		}
 
 
 		public static void ExitGame() // todo show are u sure popup
@@ -24,7 +31,6 @@ namespace Common.Utility
 		public static void CreatePersistentComponent<T>() where T : Component => 
 			Object.DontDestroyOnLoad(persistentGo.AddComponent<T>());
 		
-		public static void CreatePersistentComponent(Type type) => Object.DontDestroyOnLoad(persistentGo.AddComponent(type));
-
+		public static Component CreatePersistentComponent(Type type) => persistentGo.AddComponent(type);
 	}
 }

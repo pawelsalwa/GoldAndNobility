@@ -1,6 +1,7 @@
-﻿using Common;
+﻿using System;
+using Common;
 using Common.Attributes;
-using Common.GameInput;
+using GameInput;
 using UnityEngine;
 
 namespace Interaction
@@ -10,16 +11,21 @@ namespace Interaction
 	{
 
 		public Interactable Current { get; private set; } = null;
-		public bool InteractionEnabled { private get; set; } = true;
+		private bool interactionEnabled = true;
 
 		private Transform _cameraTransform;
 		private Transform cameraTransform => _cameraTransform == null ? _cameraTransform = Camera.main.transform : _cameraTransform;
 		
 		private InteractionController() => ServiceLocator.RegisterService<IInteractionController>(this);
 
+		private void Awake() => GameState.OnChanged += UpdateInteractionEnabled;
+		private void OnDestroy() => GameState.OnChanged -= UpdateInteractionEnabled;
+
+		private void UpdateInteractionEnabled(GameStateType obj) => interactionEnabled = obj == GameStateType.InGame;
+
 		private void Update()
 		{
-			Current = InteractionEnabled ? GetInteractableClosestToCameraRay() : null;
+			Current = interactionEnabled ? GetInteractableClosestToCameraRay() : null;
 			if (GameplayInput.interact && Current) Current.Interact();
 		}
 
@@ -49,9 +55,7 @@ namespace Interaction
 			float distance = Vector3.Cross(ray.direction, point - ray.origin).magnitude;
 			return distance;
 		}
-
 	}
-
 }
 
 

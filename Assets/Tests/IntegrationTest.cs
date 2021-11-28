@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using Common;
 using Common.Fsm;
-using Common.GameInput;
+using GameInput;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
@@ -40,34 +40,34 @@ namespace Tests
 			yield break;
 		}
 
-		[UnityTest]
-		public IEnumerator PassThroughApp()
-		{
-			SceneManager.LoadScene("MainMenu");
-			// ServiceLocator.RequestService<ISceneLoader>().OnSceneLoaded += 
-			timer = Time.time;
-			yield return null;
-			GameObject.Find("StartBtn").GetComponent<Button>().onClick.Invoke();
-			yield return new WaitUntil(IsLoadingCompleted);
-			yield return null;
-			Assert.IsTrue(GameplayInput.enabled);
-			PauseGameManager.Pause();
-			Assert.IsFalse(GameplayInput.enabled);
-			GameObject.Find("MainMenuBtn").GetComponent<Button>().onClick.Invoke();
-			// yield return new WaitUntil(IsLoadingCompleted);
-
-			// Debug.Log($"<color=white>Enter game from main menu test... </color>");
-			// SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
-			// Assert.AreEqual(gameState.Current, gameState.StartingApp);
-			// gameFsm.EnterMainMenu();
-			// Assert.AreEqual(gameState.Current, gameState.MainMenu);
-			// gameFsm.StartNewGame();
-			// Assert.AreEqual(gameState.Current, gameState.Loading);
-			//
-			// timer = Time.time;
-			// Assert.AreEqual(gameState.Current, gameState.LoadedAndWaiting);
-			// Assert.IsTrue(Helpers.IsSceneLoaded("Castle"));
-		}
+		// [UnityTest]
+		// public IEnumerator PassThroughApp() its integration test, we need to think how to implement those a bit :\
+		// {
+		// 	SceneManager.LoadScene("MainMenu");
+		// 	// ServiceLocator.RequestService<ISceneLoader>().OnSceneLoaded += 
+		// 	timer = Time.time;
+		// 	yield return null;
+		// 	GameObject.Find("StartBtn").GetComponent<Button>().onClick.Invoke();
+		// 	yield return new WaitUntil(IsLoadingCompleted);
+		// 	yield return null;
+		// 	Assert.IsTrue(GameplayInput.enabled);
+		// 	PauseGameManager.Pause();
+		// 	Assert.IsFalse(GameplayInput.enabled);
+		// 	GameObject.Find("MainMenuBtn").GetComponent<Button>().onClick.Invoke();
+		// 	// yield return new WaitUntil(IsLoadingCompleted);
+		//
+		// 	// Debug.Log($"<color=white>Enter game from main menu test... </color>");
+		// 	// SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
+		// 	// Assert.AreEqual(gameState.Current, gameState.StartingApp);
+		// 	// gameFsm.EnterMainMenu();
+		// 	// Assert.AreEqual(gameState.Current, gameState.MainMenu);
+		// 	// gameFsm.StartNewGame();
+		// 	// Assert.AreEqual(gameState.Current, gameState.Loading);
+		// 	//
+		// 	// timer = Time.time;
+		// 	// Assert.AreEqual(gameState.Current, gameState.LoadedAndWaiting);
+		// 	// Assert.IsTrue(Helpers.IsSceneLoaded("Castle"));
+		// }
 
 		[TearDown]
 		public void TearDown() { }

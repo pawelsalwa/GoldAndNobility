@@ -1,5 +1,5 @@
 ﻿using Common;
-using UnityEngine;
+using GameManagement;
 using UnityEngine.UI;
 
 namespace UI
@@ -14,7 +14,7 @@ namespace UI
 		protected override void Start()
 		{
 			base.Start();
-
+			
 			returnToGameBtn.onClick.AddListener(PauseGameManager.Resume);
 			mainMenuBtn.onClick.AddListener(ReturnToMainMenu);
 			quitBtn.onClick.AddListener(Quit);
