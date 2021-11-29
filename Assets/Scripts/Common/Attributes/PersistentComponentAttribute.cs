@@ -8,7 +8,7 @@ namespace Common.Attributes
 	{
 
 		/// <summary> if specified, this will be registered as service in ServiceLocator </summary>
-		public Type serviceType;
+		public readonly Type serviceType;
 
 		public PersistentComponentAttribute(Type serviceType = null)
 		{

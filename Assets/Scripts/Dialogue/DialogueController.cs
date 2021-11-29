@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Dialogue
 {
     /// <summary> through events we can handle ui/audio/etc </summary>
-    [PersistentComponent]
+    [PersistentComponent(typeof(IDialogueController))]
     public class DialogueController : MonoBehaviour, IDialogueController
     {
         
@@ -28,8 +28,6 @@ namespace Dialogue
         
         public DialogueData CurrentDialogue { get; private set; }
         private Quote currentQuote;
-
-        private DialogueController() => ServiceLocator.RegisterService<IDialogueController>(this);
 
         private void Start() => inputService = ServiceLocator.RequestService<IInputSwitchService>();
 
