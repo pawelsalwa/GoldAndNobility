@@ -2,17 +2,20 @@ using System.Collections.Generic;
 using Common;
 using UnityEngine;
 
-namespace Interaction
+namespace InteractionSystem
 {
 	/// <summary> This should be attached to character or camera in game world to provide collider that can collide with interactable objects </summary>
-	internal class InteractionDetection : MonoBehaviour, IInteractablesProvider
+	internal class InteractablesDetector : MonoBehaviour, IInteractablesProvider
 	{
 
+		public Transform CameraTransform => cameraAttached.transform;
 		public List<Interactable> Interactables => interactables;
 		
+		public Camera cameraAttached;
+
 		private readonly List<Interactable> interactables = new List<Interactable>();
 		
-		private InteractionDetection() => ServiceLocator.RegisterService<IInteractablesProvider>(this);
+		private InteractablesDetector() => ServiceLocator.RegisterService<IInteractablesProvider>(this);
 
 		private void OnTriggerEnter(Collider other)
 		{
@@ -36,6 +39,14 @@ namespace Interaction
 			}
 
 			interactables.Remove(interactable);
+		}
+
+		private void OnValidate()
+		{
+			if (cameraAttached) return;
+			cameraAttached = GetComponentInParent<Camera>();
+			if (cameraAttached) return;
+			cameraAttached = Camera.main;
 		}
 	}
 }

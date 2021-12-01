@@ -25,8 +25,8 @@ namespace Tools
 
 		private static bool EnablePlaymodeTools
 		{
-			get => PlayerPrefs.GetInt("ShowOurFps") == 1;
-			set => PlayerPrefs.SetInt("ShowOurFps", value ? 1 : 0);
+			get => PlayerPrefs.GetInt("EnablePlaymodeTools") == 1;
+			set => PlayerPrefs.SetInt("EnablePlaymodeTools", value ? 1 : 0);
 		}
 
 		public int framesAvgCount = 120;

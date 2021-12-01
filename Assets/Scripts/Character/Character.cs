@@ -10,7 +10,6 @@ namespace Character
 	public class Character : MonoBehaviour
 	{
 		public Movement Movement;
-		public Camera vCam;
 		[Expandable, SerializeField] internal CharacterSetup setup;
 		public PlayerInput input;
 		internal Animator animator;

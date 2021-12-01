@@ -29,8 +29,11 @@ namespace Common
 
 		private static void CheckIfIsGameService(Type type, Component service)
 		{
-			var serviceType = type.GetCustomAttribute<PersistentComponentAttribute>()?.serviceType;
-			if (serviceType != null)
+			Type[] serviceTypes = null;
+			var att = type.GetCustomAttribute<PersistentComponentAttribute>();
+			if (att != null) serviceTypes = type.GetCustomAttribute<PersistentComponentAttribute>()?.serviceTypes;
+			if (serviceTypes == null || serviceTypes.Length <= 0) return;
+			foreach (var serviceType in serviceTypes)
 				ServiceLocator.RegisterService(serviceType, service);
 		}
 

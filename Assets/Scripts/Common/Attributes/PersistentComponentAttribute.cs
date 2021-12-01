@@ -8,11 +8,11 @@ namespace Common.Attributes
 	{
 
 		/// <summary> if specified, this will be registered as service in ServiceLocator </summary>
-		public readonly Type serviceType;
-
-		public PersistentComponentAttribute(Type serviceType = null)
+		public readonly Type[] serviceTypes;
+		
+		public PersistentComponentAttribute(params Type[] serviceTypes)
 		{
-			this.serviceType = serviceType;
+			this.serviceTypes = serviceTypes;
 		}
 	}
 }

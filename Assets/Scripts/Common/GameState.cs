@@ -3,7 +3,7 @@
 namespace Common
 {
 
-	public enum GameStateType { None, MainMenu, Loading, InGame, Paused, InDialogue }
+	public enum GameStateType { None, MainMenu, Loading, InGame, InventoryOpened, Paused, InDialogue }
 
 	public static class GameState
 	{
