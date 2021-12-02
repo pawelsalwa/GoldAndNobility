@@ -6,7 +6,7 @@
         "UnityEditor.TestRunner",
         "Common",
         "GameInput",
-        "Dialogue"
+        "DialogueSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

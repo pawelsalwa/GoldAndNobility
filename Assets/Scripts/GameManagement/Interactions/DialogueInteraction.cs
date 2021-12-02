@@ -1,5 +1,5 @@
 using Common;
-using Dialogue;
+using DialogueSystem;
 using InteractionSystem;
 
 namespace GameManagement.Interactions

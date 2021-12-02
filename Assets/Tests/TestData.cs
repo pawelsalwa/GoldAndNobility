@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Dialogue;
+using DialogueSystem;
 using UnityEngine;
 
 internal class TestData

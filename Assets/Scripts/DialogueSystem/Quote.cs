@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Dialogue
+namespace DialogueSystem
 {
 	public enum Talker { Player, Npc}
 

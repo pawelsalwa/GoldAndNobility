@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Dialogue
+namespace DialogueSystem
 {
 	[CreateAssetMenu(fileName = "NewDialogue", menuName = "ScriptableObject/DialogueData")]
 	public class DialogueData : ScriptableObject

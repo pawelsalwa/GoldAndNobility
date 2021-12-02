@@ -1,4 +1,5 @@
 using System;
+using DialogueSystem;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Dialogue;
+using DialogueSystem;
 using NUnit.Framework;
 
 namespace Tests

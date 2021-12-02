@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Common;
-using Dialogue;
+using DialogueSystem;
 using TMPro;
 
 namespace UI

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Dialogue
+namespace DialogueSystem
 {
     /// <summary> through events we can handle ui/audio/etc </summary>
     public class DialogueController : IDialogueController

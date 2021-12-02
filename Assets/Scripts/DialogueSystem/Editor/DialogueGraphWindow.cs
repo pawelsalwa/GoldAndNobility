@@ -1,3 +1,4 @@
+using DialogueSystem;
 using UnityEditor;
 using UnityEngine.UIElements;
 

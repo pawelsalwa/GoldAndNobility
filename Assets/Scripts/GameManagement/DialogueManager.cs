@@ -1,6 +1,6 @@
 ﻿using Common;
 using Common.Attributes;
-using Dialogue;
+using DialogueSystem;
 using GameInput;
 using UnityEngine;
 
