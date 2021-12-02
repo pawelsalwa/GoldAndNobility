@@ -13,7 +13,5 @@ namespace Dialogue
 		void StartDialogue(DialogueData data);
 		void ChoosePlayerQuote(Quote quote);
 		void Skip();
-		
-		DialogueData CurrentDialogue { get; }
 	}
 }

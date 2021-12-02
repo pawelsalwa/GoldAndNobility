@@ -25,7 +25,7 @@ namespace Common
 
 		public void LoadGameScene()
 		{
-			GameState.Current = GameStateType.Loading;
+			// GameState.Current = GameStateType.Loading;
 			var scene = "Castle";
 			OnLoadingStarted?.Invoke("Castle");
 			
@@ -42,7 +42,7 @@ namespace Common
 
 		public void LoadMainMenu()
 		{
-			GameState.Current = GameStateType.Loading;
+			// GameState.Current = GameStateType.Loading;
 			var scene = "MainMenu";
 			OnLoadingStarted?.Invoke(scene);
 			

@@ -6,7 +6,7 @@ namespace GameInput
 	public static class GameplayInput
 	{
 
-		public static bool enabled = true;
+		internal static bool enabled = true;
 		
 		public static Vector2 movement => enabled ? new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) : Vector2.zero;
 

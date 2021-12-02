@@ -32,13 +32,13 @@ namespace Tests
 		}
 
 
-		[UnityTest]
-		public IEnumerator EnterCastleScene()
-		{
-			SceneManager.LoadScene("Castle");
-			Assert.IsTrue(GameplayInput.enabled);
-			yield break;
-		}
+		// [UnityTest]
+		// public IEnumerator EnterCastleScene()
+		// {
+		// 	SceneManager.LoadScene("Castle");
+		// 	Assert.IsTrue(GameplayInput.enabled);
+		// 	yield break;
+		// }
 
 		// [UnityTest]
 		// public IEnumerator PassThroughApp() its integration test, we need to think how to implement those a bit :\

@@ -7,7 +7,7 @@ namespace GameManagement
 {
     /// <summary> Marks cursor, its fully dependant on GameState class </summary>
     [PersistentComponent]
-    public class CursorManager : MonoBehaviour
+    internal class CursorManager : MonoBehaviour
     {
         [SerializeField, ReadOnly] private CursorLockMode cursorState = CursorLockMode.None;
         [SerializeField, ReadOnly] private bool cursorVisible = false;

@@ -13,13 +13,14 @@ namespace UI.MainMenu
         
         protected override bool ShowOnAwake => true;
 
-        protected override void OnOpened() => GameState.Current = GameStateType.MainMenu;
+        protected override void OnOpened() => GameState.ChangeState(GameStateType.MainMenu);
+
+        protected override void OnClosed() => GameState.CancelState(GameStateType.MainMenu);
 
         protected override void Start()
         {
             base.Start();
             startBtn.onClick.AddListener(OnStartBtn);
-            ServiceLocator.RequestService<IInputSwitchService>().SetInputFocus(InputFocus.UI);
         }
 
         private void OnStartBtn() => ServiceLocator.RequestService<ISceneLoader>().LoadGameScene();

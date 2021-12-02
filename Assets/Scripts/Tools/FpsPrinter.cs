@@ -46,8 +46,8 @@ namespace Tools
 
 			float current;
 
-			if (Mathf.Approximately(Time.deltaTime, 0f) || framesAvgCount == 0) current = 0f;
-			else current = 1f / Time.deltaTime / framesAvgCount;
+			if (Mathf.Approximately(Time.unscaledDeltaTime, 0f) || framesAvgCount == 0) current = 0f;
+			else current = 1f / Time.unscaledDeltaTime / framesAvgCount;
 
 			current = float.IsNaN(current) ? 0f : current; // can be nan if zero is somehow there
 			avgFps += current;

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace GameManagement
 {
-   [PersistentComponent()] 
+   [PersistentComponent()]
     public class InteractionManager : MonoBehaviour
     {
         private IInteractionController service;

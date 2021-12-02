@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Common
 {
@@ -9,15 +10,25 @@ namespace Common
 	{
 		public static event Action<GameStateType> OnChanged;
 
-		private static GameStateType current = GameStateType.None;
-		public static GameStateType Current
+		private static readonly List<GameStateType> statesQueue = new List<GameStateType>();
+		
+		public static void ChangeState(GameStateType state)
 		{
-			get => current;
-			set
-			{
-				current = value;
-				OnChanged?.Invoke(value);
-			}
-		} 
+			if (statesQueue.Contains(state))
+				statesQueue.RemoveAt(statesQueue.IndexOf(state));
+			statesQueue.Add(state);
+			Notify();
+		}
+
+		/// <summary> Cancels game state to previous one </summary>
+		/// <param name="state"> state set previously to be cancelled </param>
+		public static void CancelState(GameStateType state)
+		{
+			if (!statesQueue.Contains(state)) return;// throw new ArgumentException("Cant cancel state that hasn't been set previously!");
+			statesQueue.Remove(state);
+			Notify();
+		}
+		
+		private static void Notify() => OnChanged?.Invoke(statesQueue[statesQueue.Count - 1]);
 	}
 }

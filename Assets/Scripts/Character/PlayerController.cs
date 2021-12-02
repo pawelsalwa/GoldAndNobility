@@ -10,12 +10,12 @@ namespace Character
 		private Character chara;
 
 		private void Awake()
-		{GameState.Current = GameStateType.InGame; // player controller shoyld be only one so it could kinda initialize that
+		{
+			GameState.ChangeState(GameStateType.InGame); // player controller shoyld be only one so it could kinda initialize that
 		}
 
 		protected virtual void Start()
 		{
-			ServiceLocator.RequestService<IInputSwitchService>().SetInputFocus(InputFocus.Gameplay);
 			chara = GetComponent<Character>();
 			if (!chara) enabled = false;
 		}

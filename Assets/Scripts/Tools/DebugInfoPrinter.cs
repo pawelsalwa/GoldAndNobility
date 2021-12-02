@@ -13,13 +13,13 @@ namespace Tools
 		public float y = 35;
 		public int fontSize = 25;
 		
-		// private IGameStates gameStates;
 		public GUIStyle style;
+		private GameStateType currentState;
 
 		private static bool EnablePlaymodeTools
 		{
-			get => PlayerPrefs.GetInt("ShowOurFps") == 1;
-			set => PlayerPrefs.SetInt("ShowOurFps", value ? 1 : 0);
+			get => PlayerPrefs.GetInt("EnablePlaymodeTools") == 1;
+			set => PlayerPrefs.SetInt("EnablePlaymodeTools", value ? 1 : 0);
 		}
 
 		private void Start()
@@ -30,14 +30,26 @@ namespace Tools
 				fontStyle = FontStyle.BoldAndItalic, 
 				normal = new GUIStyleState {textColor = Color.green}
 			};
-			// gameStates = ServiceLocator.RequestService<IGameStates>();
+			GameState.OnChanged += OnStateChanged;
 		}
+
+		private void OnDestroy()
+		{
+			GameState.OnChanged -= OnStateChanged;
+		}
+
+		private void Update()
+		{
+			if (Input.GetKeyDown(KeyCode.F1)) EnablePlaymodeTools = !EnablePlaymodeTools;
+		}
+
+		private void OnStateChanged(GameStateType obj) => currentState = obj;
 
 		private void OnGUI()
 		{
 			if (!EnablePlaymodeTools) return;
 			GUI.color = Color.green;
-			GUI.Label(new Rect(x, y, 400f, 50f), $"GameState: {GameState.Current}", style);
+			GUI.Label(new Rect(x, y, 400f, 50f), $"GameState: {currentState}", style);
 			// GUI.Label(new Rect(x, y + 20, 400f, 50f), $"Input: {GameState.Current}", style);
 		}
 

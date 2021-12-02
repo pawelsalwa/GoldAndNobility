@@ -1,15 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Common;
-using Common.Attributes;
-using GameInput;
-using UnityEngine;
 
 namespace Dialogue
 {
     /// <summary> through events we can handle ui/audio/etc </summary>
-    [PersistentComponent(typeof(IDialogueController))]
-    public class DialogueController : MonoBehaviour, IDialogueController
+    public class DialogueController : IDialogueController
     {
         
         public event Action<DialogueData> OnDialogueStarted;
@@ -19,26 +14,16 @@ namespace Dialogue
         
         private bool active = false;
 
-        private GameStateType stateCache;
-        private IInputSwitchService inputService;
-        private InputFocus inputCache;
-
         private readonly List<Quote> currentChoices = new List<Quote>();
         private bool isShowingChoices => currentChoices.Count > 0;
         
-        public DialogueData CurrentDialogue { get; private set; }
+        private DialogueData currentDialogue;
         private Quote currentQuote;
-
-        private void Start() => inputService = ServiceLocator.RequestService<IInputSwitchService>();
 
         public void StartDialogue(DialogueData data)
         {
             if (!data) return;
-            inputCache = inputService.current;
-            inputService.SetInputFocus(InputFocus.Dialogue);
-            stateCache = GameState.Current;
-            GameState.Current = GameStateType.InDialogue;
-            CurrentDialogue = data;
+            currentDialogue = data;
             active = true;
             OnDialogueStarted?.Invoke(data);
             SayQuote(data.entryQuote);
@@ -46,6 +31,7 @@ namespace Dialogue
 
         public void ChoosePlayerQuote(Quote quote)
         {
+            if (quote == null) throw new ArgumentException("Cant choose null quote.");
             if (!currentChoices.Contains(quote)) throw new ArgumentException("Cant choose player quote that is not within current choices.");
             currentChoices.Clear(); // important to clear choices when we're done choosing
             SayQuote(quote);
@@ -53,8 +39,8 @@ namespace Dialogue
 
         public void Skip()
         {
-            if (!CurrentDialogue) throw new Exception("Cant skip, current dialogue is null");
-            if (isShowingChoices) throw new Exception("Cant call skip dialogue when multiple choices are shown.");
+            if (!currentDialogue) throw new Exception("Cant skip, current dialogue is null");
+            if (isShowingChoices) return; //throw new Exception("Cant call skip dialogue when multiple choices are shown.");
             GoToNextQuote();
         }
 
@@ -64,15 +50,9 @@ namespace Dialogue
             OnQuoteStarted?.Invoke(quote);
         }
 
-        private void Update()
-        {
-            if (!active) return;
-            if (DialogueInput.advanceDialogue && !isShowingChoices) Skip();
-        }
-
         private void GoToNextQuote()
         {
-            var nextQuotes = CurrentDialogue.GetNextQuotesFor(currentQuote);
+            var nextQuotes = currentDialogue.GetNextQuotesFor(currentQuote);
             if (nextQuotes.Count == 0) EndDialogue();
             if (nextQuotes.Count == 1) SayQuote(nextQuotes[0]);
             if (nextQuotes.Count > 1) ShowPlayerChoices(nextQuotes);
@@ -87,9 +67,7 @@ namespace Dialogue
 
         private void EndDialogue()
         {
-            inputService.SetInputFocus(inputCache);
-            GameState.Current = stateCache;
-            CurrentDialogue = null;
+            currentDialogue = null;
             active = false;
             OnDialogueEnded?.Invoke();
         }

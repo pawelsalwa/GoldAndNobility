@@ -14,24 +14,24 @@ namespace GameManagement
         
         private void Update()
         {
-            if (GameState.Current == GameStateType.InventoryOpened) CheckInventoryClosing();
-            if (GameState.Current == GameStateType.InGame) CheckInventoryOpening();
+            // if (GameState.Current == GameStateType.InventoryOpened) CheckInventoryClosing();
+            // if (GameState.Current == GameStateType.InGame) CheckInventoryOpening();
             
         }
 
-        private void CheckInventoryClosing()
-        {
-            if (GameplayInput.openInventory) CloseInventory();
-        }
+        // private void CheckInventoryClosing()
+        // {
+        //     if (GameplayInput.openInventory) CloseInventory();
+        // }
+        //
+        // private void CheckInventoryOpening()
+        // {
+        //     if (GameplayInput.openInventory) OpenInventory();
+        // }
 
-        private void CheckInventoryOpening()
-        {
-            if (GameplayInput.openInventory) OpenInventory();
-        }
-
-        private void OpenInventory() => GameState.Current = GameStateType.InventoryOpened;
-
-        private void CloseInventory() => GameState.Current = GameStateType.InGame;
+        // private void OpenInventory() => GameState.Current = GameStateType.InventoryOpened;
+        //
+        // private void CloseInventory() => GameState.Current = GameStateType.InGame;
     }
 
     internal interface IInventoryManager

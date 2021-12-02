@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Dialogue;
 using NUnit.Framework;
-using UnityEngine;
 
 namespace Tests
 {
@@ -13,15 +12,8 @@ namespace Tests
 		[SetUp]
 		public void Setup()
 		{
-			controller = new GameObject("test").AddComponent<DialogueController>();
+			controller = new DialogueController();
 			data = TestData.GetTestDialogueData();
-		}
-
-		[Test]
-		public void StartData()
-		{
-			controller.StartDialogue(data);
-			Assert.AreEqual(controller.CurrentDialogue, data);
 		}
 		
 		[Test]
@@ -51,16 +43,16 @@ namespace Tests
 		[Test]
 		public void CheckEndEvent()
 		{
-			// var saidQuotesCount = 3;
-			// Assert.True(data.quotes.Count == saidQuotesCount);
-			// var endEventCalled = false;
-			// controller.StartDialogue(data);
-			// controller.OnDialogueEnded += OnEndEvent;
-			// for (int i = 0; i < saidQuotesCount; i++) controller.Skip();
-			// controller.OnDialogueEnded -= OnEndEvent;
-			// Assert.That(endEventCalled);
-			//
-			// void OnEndEvent() => endEventCalled = true;
+			var saidQuotesCount = 3;
+			Assert.True(data.quotes.Count == saidQuotesCount);
+			var endEventCalled = false;
+			controller.StartDialogue(data);
+			controller.OnDialogueEnded += OnEndEvent;
+			for (int i = 0; i < saidQuotesCount; i++) controller.Skip();
+			controller.OnDialogueEnded -= OnEndEvent;
+			Assert.That(endEventCalled);
+			
+			void OnEndEvent() => endEventCalled = true;
 		}
 
 		/// <summary> Dialogue data used should have choices right after first npc quote (after welcome) </summary>

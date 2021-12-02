@@ -3345,7 +3345,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1814366062}
-  m_LocalRotation: {x: 0.2164285, y: 0.000000016798563, z: -0.0000000037239505, w: 0.9762985}
+  m_LocalRotation: {x: 0.2164285, y: -0.000000016798566, z: 0.0000000037239514, w: 0.9762985}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -4368,8 +4368,8 @@ GameObject:
   - component: {fileID: 3759009875358158946}
   - component: {fileID: 3769282072189472980}
   - component: {fileID: 3776782932146788110}
-  - component: {fileID: 3763153982291936286}
   - component: {fileID: 3763153982291936285}
+  - component: {fileID: 3763153982291936286}
   m_Layer: 8
   m_Name: Wood
   m_TagString: Untagged
@@ -4399,13 +4399,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3763153982291936284}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd00b6f7a09649778a916f22f2a5e1a6, type: 3}
+  m_Script: {fileID: 11500000, guid: a7d396e94b63cd548a23a546e2a54ee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactionType: 2
-  dialogue: {fileID: 0}
-  item: {fileID: 11400000, guid: e664a4434a1274246ac06bc6c7202ea2, type: 2}
-  interactionTextLocalPos: {x: 0, y: 0.8, z: 0}
+  interactionTextLocalPos: {x: 0, y: 0, z: 0}
+  DialogueData: {fileID: 11400000, guid: f86934f24049fa44fb5eb5978cfc319a, type: 2}
 --- !u!33 &3769282072189472980
 MeshFilter:
   m_ObjectHideFlags: 0

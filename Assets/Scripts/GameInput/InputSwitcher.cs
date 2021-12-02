@@ -10,17 +10,44 @@ namespace GameInput
 	/// Schedules input switching for the end of frame
 	/// so no different inputs are active during the same frame.
 	/// </summary>
-	[PersistentComponent(typeof(IInputSwitchService))]
-	internal class InputSwitcher : MonoBehaviour, IInputSwitchService
+	[PersistentComponent]
+	internal class InputSwitcher : MonoBehaviour
 	{
-		// private InputSwitcher() => ServiceLocator.RegisterService<IInputSwitchService>(this);
-
+		private enum InputFocus { Gameplay, UI, Dialogue }
+		
 		[SerializeField, ReadOnly] private bool _gameplayInputEnabled;
 		[SerializeField, ReadOnly] private bool _dialogueInputEnabled;
 		[SerializeField, ReadOnly] private bool _uiInputEnabled;
-		public InputFocus current { get; private set; }
+		[SerializeField, ReadOnly] private InputFocus current;
 
-		public void SetInputFocus(InputFocus target)
+		private void Start() => GameState.OnChanged += OnStateChanged;
+
+		private void OnDestroy() => GameState.OnChanged -= OnStateChanged;
+
+		private void OnStateChanged(GameStateType obj)
+		{
+			var type = InputFocus.Gameplay;
+			switch (obj)
+			{
+				case GameStateType.None:
+				case GameStateType.InGame:
+					type = InputFocus.Gameplay;
+					break;
+				case GameStateType.MainMenu:
+				case GameStateType.Loading:
+				case GameStateType.Paused:
+				case GameStateType.InventoryOpened:
+					type = InputFocus.UI;
+					break;
+				case GameStateType.InDialogue:
+					type = InputFocus.Dialogue;
+					break;
+			}
+
+			SetInputFocus(type);
+		}
+
+		private void SetInputFocus(InputFocus target)
 		{
 			_dialogueInputEnabled = _gameplayInputEnabled = _uiInputEnabled = false;
 			current = target;
@@ -46,8 +73,5 @@ namespace GameInput
 			DialogueInput.enabled = _dialogueInputEnabled;
 			UiInput.enabled = _uiInputEnabled;
 		}
-
 	}
-
-	public enum InputFocus { Gameplay, UI, Dialogue }
 }
