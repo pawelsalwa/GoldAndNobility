@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DialogueSystem;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Dialogue.Editor
+namespace DialogueSystem.Editor
 {
 	internal class DialogueToolbar : Toolbar
 	{
@@ -20,6 +19,7 @@ namespace Dialogue.Editor
 			dialogueAssets = GetDialogueAssets();
 			var assetsLabels = dialogueAssets.Select(x => x.name).ToList();
 			var idx = dialogueAssets.IndexOf(data);
+			
 			var dropdown = new DropdownField("Edited dialogue: ", assetsLabels, idx); //, GetSelectedDialogueName, GetDialogueNameFromLabelName);
 			dropdown.RegisterValueChangedCallback(DropdownChangedCallback);
 			Add(dropdown);

@@ -30,6 +30,7 @@ namespace GameManagement
                 case GameStateType.MainMenu:
                 case GameStateType.Paused:
                 case GameStateType.InDialogue:
+                case GameStateType.BrowsingInventory:
                     cursorState = CursorLockMode.None;
                     cursorVisible = true;
                     break;

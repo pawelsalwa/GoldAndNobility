@@ -1,15 +1,14 @@
-﻿using DialogueSystem;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEditor.Callbacks;
 
-namespace Dialogue.Editor
+namespace DialogueSystem.Editor
 {
-	internal static class DialogueGraphWindowOpener
+	internal static class DialogueWindowOpener
 	{
 		private const string windowName = "Dialogue Graph";
 
 		[OnOpenAsset]
-		private static bool OnDialogueAssetOpened(int instanceID)
+		private static bool OnDialogueAssetOpened(int instanceID, int line)
 		{
 			var obj = EditorUtility.InstanceIDToObject(instanceID);
 			var data = obj as DialogueData;
@@ -25,7 +24,7 @@ namespace Dialogue.Editor
 			Selection.selectionChanged += OnSelectionChanged;
 		}
 
-		[MenuItem("Graph/DialogueGraph")]
+		[MenuItem("Window/DialogueEditor")]
 		private static void OnMenuItem()
 		{
 			OpenWindow();
@@ -38,7 +37,7 @@ namespace Dialogue.Editor
 		{
 			if (Selection.objects.Length != 1) return;
 			if (!(Selection.objects[0] is DialogueData data)) return;
-			if (!EditorWindow.HasOpenInstances<DialogueGraphWindow>()) return;
+			if (!EditorWindow.HasOpenInstances<DialogueWindow>()) return;
 			// if (!(EditorWindow.focusedWindow is DialogueGraphWindow)) return;
 			InitWindow(data);
 		}
@@ -49,7 +48,7 @@ namespace Dialogue.Editor
 			window.Init(data);
 		}
 		
-		private static DialogueGraphWindow OpenWindow() 
-			=> EditorWindow.GetWindow<DialogueGraphWindow>(windowName);
+		private static DialogueWindow OpenWindow() 
+			=> EditorWindow.GetWindow<DialogueWindow>(windowName);
 	}
 }

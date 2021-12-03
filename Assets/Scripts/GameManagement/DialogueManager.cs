@@ -19,59 +19,29 @@ namespace GameManagement
             ServiceLocator.RegisterService(controller);
             controller.OnDialogueStarted += OnDialogueStarted;
             controller.OnDialogueEnded += OnDialogueEnded;
+            controller.OnQuoteStarted += CheckDialogueAction;
         }
 
         private void OnDestroy()
         {
             controller.OnDialogueStarted -= OnDialogueStarted;
             controller.OnDialogueEnded -= OnDialogueEnded;
+            controller.OnQuoteStarted -= CheckDialogueAction;
+        }
+
+        private void CheckDialogueAction(Quote obj)
+        {
+            if (!obj.isDialogueAction) return;
+            if (obj.text == "selling_ui_action")
+                GameState.ChangeState(GameStateType.Trading);
         }
 
         private void OnDialogueStarted(DialogueData obj) => GameState.ChangeState(GameStateType.InDialogue);
 
         private void OnDialogueEnded() => GameState.CancelState(GameStateType.InDialogue);
-
-        // public event Action<DialogueData> OnDialogueStarted;
-        // public event Action OnDialogueEnded;
-        // public event Action<Quote> OnQuoteStarted;
-        // public event Action<List<Quote>> OnPlayerQuotesAppear;
-
-        // public void StartDialogue(DialogueData data)
-        // {
-        //     GameState.ChangeState(GameStateType.InDialogue);
-        //     controller.StartDialogue(data);
-        // }
-
-        // public void ChoosePlayerQuote(Quote quote) => controller.ChoosePlayerQuote(quote);
-        //
-        // public void Skip() => throw new Exception("Dont call this method, skip is made in update instead on its own.");
-
         private void Update()
         {
             if (DialogueInput.advanceDialogue) controller.Skip();
         }
-
-        // private void Start()
-        // {
-        //     controller.OnDialogueStarted += OnDialogueStarted.Invoke;
-        //     controller.OnDialogueEnded += OnDialogueEndedCallback;
-        //     controller.OnQuoteStarted += OnQuoteStarted.Invoke;
-        //     controller.OnPlayerQuotesAppear += OnPlayerQuotesAppear.Invoke;
-        // }
-        //
-        // private void OnDestroy()
-        // {
-        //     controller.OnDialogueStarted -= OnDialogueStarted.Invoke;
-        //     controller.OnDialogueEnded -= OnDialogueEndedCallback;
-        //     controller.OnQuoteStarted -= OnQuoteStarted.Invoke;
-        //     controller.OnPlayerQuotesAppear -= OnPlayerQuotesAppear.Invoke;
-        //     
-        // }
-        //
-        // private void OnDialogueEndedCallback()
-        // {
-        //     GameState.
-        //     OnDialogueEnded?.Invoke();
-        // }
     }
 }

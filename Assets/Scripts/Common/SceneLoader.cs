@@ -21,7 +21,7 @@ namespace Common
 		
 		private SceneLoader() => ServiceLocator.RegisterService<ISceneLoader>(this);
 
-		private void Awake() => LoadPersistentScene(); // could be called wherever..
+		// private void Awake() => LoadPersistentScene(); // could be called wherever..
 
 		public void LoadGameScene()
 		{
@@ -54,6 +54,11 @@ namespace Common
 			if (loadOp != null) operations.Add(loadOp);
 
 			StartCoroutine(CheckLoading(scene));
+		}
+
+		public void LoadPersistentObjects()
+		{
+			SceneManager.LoadScene("PersistentObjects", LoadSceneMode.Additive);
 		}
 
 		private void LoadPersistentScene() 

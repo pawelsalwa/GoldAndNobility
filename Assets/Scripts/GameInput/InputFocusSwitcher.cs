@@ -11,7 +11,7 @@ namespace GameInput
 	/// so no different inputs are active during the same frame.
 	/// </summary>
 	[PersistentComponent]
-	internal class InputSwitcher : MonoBehaviour
+	internal class InputFocusSwitcher : MonoBehaviour
 	{
 		private enum InputFocus { Gameplay, UI, Dialogue }
 		
@@ -36,7 +36,8 @@ namespace GameInput
 				case GameStateType.MainMenu:
 				case GameStateType.Loading:
 				case GameStateType.Paused:
-				case GameStateType.InventoryOpened:
+				case GameStateType.BrowsingInventory:
+				case GameStateType.Trading:
 					type = InputFocus.UI;
 					break;
 				case GameStateType.InDialogue:

@@ -7,12 +7,9 @@ namespace Useless
 {
     public class DummyInteraction : Interactable
     {
-
-        public DialogueData DialogueData;
-        
         protected override void OnInteraction()
         {
-            ServiceLocator.RequestService<IDialogueController>().StartDialogue(DialogueData);
+            throw new System.NotImplementedException();
         }
     }
 }

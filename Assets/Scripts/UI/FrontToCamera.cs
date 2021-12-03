@@ -11,8 +11,8 @@ namespace UI
 
 		public void Update()
 		{
-			if (cam == null) cam = Camera.main;
-			if (cam == null) return;
+			if (!cam) cam = Camera.main;
+			if (!cam) return;
 			transform.LookAt(transform.position + cam.transform.rotation * Vector3.forward,
 				cam.transform.rotation * Vector3.up);
 		}

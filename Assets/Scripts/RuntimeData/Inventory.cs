@@ -1,6 +1,7 @@
 using System;
-using System.Collections.Generic;
 using Common.Attributes;
+using Common.Const;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace RuntimeData
@@ -9,15 +10,37 @@ namespace RuntimeData
     public class Inventory : MonoBehaviour, IInventory
     {
         
-        public event Action OnChanged;
+        public event Action<int, Item> OnChangedAt;
+
+        [SerializeField, ReadOnly] public Item[] items = new Item[GameConsts.InventorySlotsCount];
+
+        private void Awake()
+        {
+            items = new Item[GameConsts.InventorySlotsCount];
+        }
         
-        public List<Item> items = new List<Item>();
-
-
         public void TryAddItem(Item item)
         {
-            items.Add(item);
-            OnChanged?.Invoke();
+            if (!TryGetFirstEmptyIdx(out int idx))
+            {
+                Debug.Log($"<color=white>no space in inventory</color>");
+                return;
+            }
+            items[idx] = item;
+            OnChangedAt?.Invoke(idx, item);
+        }
+
+        private bool TryGetFirstEmptyIdx(out int idx )
+        {
+            for (int i = 0; i < items.Length; i++)
+            {
+                if (items[i]) continue;
+                idx = i;
+                return true;
+            }
+
+            idx = -1;
+            return false;
         }
     }
 }

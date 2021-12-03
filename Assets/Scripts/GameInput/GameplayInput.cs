@@ -21,7 +21,7 @@ namespace GameInput
 		public static bool shiftDown => enabled && (Input.GetKeyDown(KeyCode.LeftShift));
 
 		public static bool pauseGame => enabled && Input.GetKeyDown(KeyCode.Escape);
-		public static bool openInventory => enabled && (Input.GetKey(KeyCode.I) || Input.GetKey(KeyCode.Tab));
+		public static bool openInventory => enabled && (Input.GetKeyDown(KeyCode.I) || Input.GetKeyDown(KeyCode.Tab));
 		public static bool interact => enabled && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.Mouse0));
 
 		static GameplayInput() => CinemachineCore.GetInputAxis = GetInputAxis;

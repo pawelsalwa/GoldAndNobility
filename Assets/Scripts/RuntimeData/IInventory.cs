@@ -4,7 +4,7 @@ namespace RuntimeData
 {
     public interface IInventory
     {
-        event Action OnChanged; 
+        event Action<int, Item> OnChangedAt;
         void TryAddItem(Item item);
     }
 }

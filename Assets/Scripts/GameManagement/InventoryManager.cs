@@ -6,35 +6,49 @@ using UnityEngine;
 
 namespace GameManagement
 {
-    [PersistentComponent()]
+    [PersistentComponent(typeof(IInventoryManager))]
     internal class InventoryManager : MonoBehaviour, IInventoryManager
     {
         public event Action OnInventoryOpened;
         public event Action OnInventoryClosed;
+
+        private bool inventoryOpened;
         
+        private void Start() => GameState.OnChanged += OnStateChanged;
+        private void OnDestroy() => GameState.OnChanged -= OnStateChanged;
+
+        private void OnStateChanged(GameStateType obj) => inventoryOpened = obj == GameStateType.BrowsingInventory;
+
         private void Update()
         {
-            // if (GameState.Current == GameStateType.InventoryOpened) CheckInventoryClosing();
-            // if (GameState.Current == GameStateType.InGame) CheckInventoryOpening();
-            
+            if (inventoryOpened) CheckInventoryClosing();
+            else CheckInventoryOpening();
         }
 
-        // private void CheckInventoryClosing()
-        // {
-        //     if (GameplayInput.openInventory) CloseInventory();
-        // }
-        //
-        // private void CheckInventoryOpening()
-        // {
-        //     if (GameplayInput.openInventory) OpenInventory();
-        // }
+        private void CheckInventoryClosing()
+        {
+            if (UiInput.closeInventory) CloseInventory();
+        }
+        
+        private void CheckInventoryOpening()
+        {
+            if (GameplayInput.openInventory) OpenInventory();
+        }
 
-        // private void OpenInventory() => GameState.Current = GameStateType.InventoryOpened;
-        //
-        // private void CloseInventory() => GameState.Current = GameStateType.InGame;
+        private void OpenInventory()
+        {
+            GameState.ChangeState(GameStateType.BrowsingInventory);
+            OnInventoryOpened?.Invoke();
+        }
+
+        private void CloseInventory()
+        {
+            GameState.CancelState(GameStateType.BrowsingInventory);
+            OnInventoryClosed?.Invoke();
+        }
     }
 
-    internal interface IInventoryManager
+    public interface IInventoryManager
     {
         event Action OnInventoryOpened;
         event Action OnInventoryClosed;

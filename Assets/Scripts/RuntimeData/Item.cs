@@ -6,6 +6,5 @@ namespace RuntimeData
     public class Item : ScriptableObject
     {
         public Sprite sprite;
-        public string Name => name;
     }
 }

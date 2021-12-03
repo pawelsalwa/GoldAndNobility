@@ -4,9 +4,9 @@ namespace GameInput
 {
 	public static class UiInput
 	{
-		private static bool _enabled;
+		internal static bool enabled;
 
-		public static bool enabled { set => _enabled = value; }
-		public static bool unpauseGame => _enabled && Input.GetKeyDown(KeyCode.Escape);
+		public static bool unpauseGame => enabled && Input.GetKeyDown(KeyCode.Escape);
+		public static bool closeInventory => enabled && Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(KeyCode.I);
 	}
 } 

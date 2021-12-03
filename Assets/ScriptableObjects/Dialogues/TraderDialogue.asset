@@ -15,23 +15,79 @@ MonoBehaviour:
   quotes:
   - title: quote
     text: Hello wanderer...
+    talker: 1
+    pos:
+      serializedVersion: 2
+      x: 223
+      y: 301
+      width: 208.06
+      height: 119
+    isDialogueAction: 0
+  - title: quote
+    text: 1
     talker: 0
     pos:
       serializedVersion: 2
-      x: 331
-      y: 286
+      x: 693
+      y: 184
       width: 219
       height: 119
+    isDialogueAction: 0
   - title: quote
     text: Hello wanderer...
     talker: 0
     pos:
       serializedVersion: 2
-      x: 685
-      y: 303
+      x: 686
+      y: 321
       width: 219
       height: 119
+    isDialogueAction: 0
+  - title: quote
+    text: 3
+    talker: 0
+    pos:
+      serializedVersion: 2
+      x: 685
+      y: 455
+      width: 219
+      height: 119
+    isDialogueAction: 0
+  - title: quote
+    text: selling_ui_action
+    talker: 0
+    pos:
+      serializedVersion: 2
+      x: 1062
+      y: 196
+      width: 217
+      height: 138
+    isDialogueAction: 1
+  - title: quote
+    text: Hello wanderer...
+    talker: 0
+    pos:
+      serializedVersion: 2
+      x: 325
+      y: 64
+      width: 217
+      height: 186
+    isDialogueAction: 0
   connections:
   - outputIdx: 0
     inputIdx: 1
+  - outputIdx: 0
+    inputIdx: 2
+  - outputIdx: 0
+    inputIdx: 3
+  - outputIdx: 4
+    inputIdx: 5
+  - outputIdx: 1
+    inputIdx: 4
+  - outputIdx: 5
+    inputIdx: 1
+  - outputIdx: 5
+    inputIdx: 2
+  - outputIdx: 5
+    inputIdx: 3
   entryQuoteIdx: 0

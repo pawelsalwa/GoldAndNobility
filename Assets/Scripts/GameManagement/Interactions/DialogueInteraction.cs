@@ -9,10 +9,7 @@ namespace GameManagement.Interactions
         public DialogueData DialogueData;
         private IDialogueController service;
 
-        private void Start()
-        {
-            service = ServiceLocator.RequestService<IDialogueController>();
-        }
+        private void Start() => service = ServiceLocator.RequestService<IDialogueController>();
 
         protected override void OnInteraction() => StartDialogue();
 

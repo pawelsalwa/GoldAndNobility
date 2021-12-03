@@ -1,10 +1,9 @@
-using DialogueSystem;
 using UnityEditor;
 using UnityEngine.UIElements;
 
-namespace Dialogue.Editor
+namespace DialogueSystem.Editor
 {
-	internal class DialogueGraphWindow : EditorWindow
+	internal class DialogueWindow : EditorWindow
 	{
 		private DialogueGraphView graphView;
 		private DialogueData editedData;
@@ -14,6 +13,7 @@ namespace Dialogue.Editor
 		public void Init(DialogueData data)
 		{
 			editedData = data;
+			EditorUtility.SetDirty(data);
 			RebuildGraph();
 		}
 

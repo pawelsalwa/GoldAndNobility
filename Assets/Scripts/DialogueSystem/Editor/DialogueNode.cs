@@ -1,11 +1,10 @@
 using System;
-using DialogueSystem;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Dialogue.Editor
+namespace DialogueSystem.Editor
 {
 	internal class DialogueNode : Node
 	{
@@ -35,26 +34,43 @@ namespace Dialogue.Editor
 				var ports = outputContainer.Query<Port>().ToList();
 				if (ports.Count == 0) AddOutputPort(); // utiliy, so one optput port is by default
 				
-				var talkerEnumField = new EnumField("who says?",Talker.Npc);
-				talkerEnumField.RegisterValueChangedCallback(OnTalkerChanged);
-				talkerEnumField.SetValueWithoutNotify(quote.talker);
-				mainContainer.Add(talkerEnumField);
-				
-				var quoteTextField = new TextField();
-				quoteTextField.RegisterValueChangedCallback(OnQuoteChanged);
-				quoteTextField.SetValueWithoutNotify(quote.text);
-				quoteTextField.multiline = true;
-				// textField.
-				mainContainer.Add(quoteTextField);
+				SetupDialogueActionCheckbox();
+				SetupTalkerEnumField();
+				SetupTextField();
 			}
 			
 			RefreshExpandedState();
 			RefreshPorts();
 		}
 
-		private void OnTalkerChanged(ChangeEvent<Enum> evt) => quote.talker = (Talker)evt.newValue;
+		private void SetupDialogueActionCheckbox()
+		{
+			var toggle = new Toggle("Is dialogue action");
+			toggle.RegisterValueChangedCallback(OnChanged);
+			toggle.SetValueWithoutNotify(quote.isDialogueAction);
+			mainContainer.Add(toggle);
+			void OnChanged(ChangeEvent<bool> evt) => quote.isDialogueAction = evt.newValue;
+		}
 
-		private void OnQuoteChanged(ChangeEvent<string> evt) => quote.text = evt.newValue;
+
+		private void SetupTalkerEnumField()
+		{
+			var talkerEnumField = new EnumField("Talker", Talker.Npc);
+			talkerEnumField.RegisterValueChangedCallback(OnTalkerChanged);
+			talkerEnumField.SetValueWithoutNotify(quote.talker);
+			mainContainer.Add(talkerEnumField);
+			void OnTalkerChanged(ChangeEvent<Enum> evt) => quote.talker = (Talker)evt.newValue;
+		}
+
+		private void SetupTextField()
+		{
+			var quoteTextField = new TextField();
+			quoteTextField.RegisterValueChangedCallback(OnTextChanged);
+			quoteTextField.SetValueWithoutNotify(quote.text);
+			quoteTextField.multiline = true;
+			mainContainer.Add(quoteTextField);
+			void OnTextChanged(ChangeEvent<string> evt) => quote.text = evt.newValue;
+		}
 
 		private void OnAddPortBtn() => AddOutputPort();
 

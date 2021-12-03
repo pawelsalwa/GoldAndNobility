@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using DialogueSystem;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Dialogue.Editor
+namespace DialogueSystem.Editor
 {
 	internal class DialogueGraphView : GraphView
 	{
@@ -22,7 +21,10 @@ namespace Dialogue.Editor
 		public override void BuildContextualMenu(ContextualMenuPopulateEvent evt)
 		{
 			if (evt.target is DialogueGraphView || evt.target is Node)
-				evt.menu.AppendAction("Create new", CreateFromContextMenu);
+			{
+				evt.menu.AppendAction("Create new quote", CreateFromContextMenu);
+				evt.menu.AppendAction("Create new dialogue action", CreateFromContextMenu);
+			}
 
 			base.BuildContextualMenu(evt);
 		}
@@ -49,13 +51,19 @@ namespace Dialogue.Editor
 
 		private void CreateEdge(Connection connection)
 		{
-			var dialogueNodes = nodes.Where(n => n is DialogueNode).Cast<DialogueNode>();
+			// var dialogueNodes = nodes.ToList().OfType<DialogueNode>().ToList();
+			// var dialogueNodes = nodes.ToList().Cast<DialogueNode>().ToList();
+			var dialogueNodes = nodes.Where(n => n is DialogueNode).Cast<DialogueNode>().ToList(); // api changed x(
 			
 			var outputNode = dialogueNodes.FirstOrDefault(IsOutputNode);
 			var inputNode = dialogueNodes.FirstOrDefault(IsInputNode);
 
 			var outputPort = outputNode.outputContainer.Q<Port>();
-			if (outputPort == null) outputPort = outputNode.AddOutputPort();
+			if (outputPort.connections.Count() != 0)
+				outputPort = outputNode.AddOutputPort(); // we need to add output ports each single time :)
+			
+			// outputNode.outputContainer.Remove(outputPort); //... theres always one port by default so lets remove it so line below works :)
+			// if (outputPort == null) outputPort = outputNode.AddOutputPort();
 			var inputPort = inputNode.inputPort;
 
 			LinkEdge(outputPort, inputPort);

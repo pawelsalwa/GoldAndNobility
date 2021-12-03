@@ -2,12 +2,14 @@
 using Common;
 using DialogueSystem;
 using TMPro;
+using UnityEngine;
 
 namespace UI
 {
 	internal class DialoguePanel : UiPanelBase
 	{
 		public TextMeshProUGUI text;
+		public GameObject textDisplay;
 		public DialogueChoices dialogueChoices;
 
 		private IDialogueController service;
@@ -27,6 +29,7 @@ namespace UI
 		private void OnQuoteStarted(Quote obj)
 		{
 			dialogueChoices.Hide();
+			textDisplay.SetActive(!obj.isDialogueAction); // if quote is meant to be dialogue action, its not meant to be displayed (unity serializing abstract classes workaround)
 			DisplayQuote(obj);
 		}
 

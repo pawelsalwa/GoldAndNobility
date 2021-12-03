@@ -26,7 +26,14 @@ namespace InteractionSystem
 				return;
 			}
 
+			interactable.OnDestroyed += OnDestroyed;
 			interactables.Add(interactable);
+
+			void OnDestroyed()
+			{
+				interactable.OnDestroyed -= OnDestroyed;
+				OnTriggerExit(interactable.GetComponent<Collider>());
+			}
 		}
 
 		private void OnTriggerExit(Collider other)

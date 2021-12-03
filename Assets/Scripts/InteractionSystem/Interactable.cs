@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -7,22 +8,19 @@ namespace InteractionSystem
 {
 	public abstract class Interactable : MonoBehaviour
 	{
-		// public InteractionType interactionType;
-		//
-		// [EnableIf(nameof(IsDialogue))] public DialogueData dialogue;
-		// [EnableIf(nameof(IsPickable))] public Item item;
+		public event Action OnDestroyed;
 
 		[SerializeField] private Vector3 interactionTextLocalPos;
 
-		public virtual string InteractionText => GetInteractionTxt();
+		public virtual string InteractionText => "interact";
 
 		public Vector3 TextPosition => transform.position + interactionTextLocalPos;
-		// private bool IsDialogue => interactionType == InteractionType.Dialogue;
-		// private bool IsPickable => interactionType == InteractionType.Pickable;
 
 		public void Interact() => OnInteraction();
 
 		protected abstract void OnInteraction();
+
+		private void OnDestroy() => OnDestroyed?.Invoke();
 
 		private void OnValidate()
 		{
@@ -39,16 +37,6 @@ namespace InteractionSystem
 				col = gameObject.AddComponent<SphereCollider>();
 			}
 			col.isTrigger = true;
-		}
-
-		private string GetInteractionTxt()
-		{
-			// switch (interactionType)
-			// {
-			// 	case InteractionType.Dialogue: return "Talk";
-			// 	case InteractionType.Pickable: return "Pick up";
-			// }
-			return "Dummy interaction";
 		}
 
 		private void OnDrawGizmosSelected()

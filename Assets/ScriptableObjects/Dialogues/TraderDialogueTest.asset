@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4048c80fff887364e88ba3c1d5ad8a3b, type: 3}
+  m_Name: TraderDialogueTest
+  m_EditorClassIdentifier: 
+  quotes:
+  - title: quote
+    text: Hello wanderer...
+    talker: 1
+    pos:
+      serializedVersion: 2
+      x: 223
+      y: 301
+      width: 208.06
+      height: 119
+    isDialogueAction: 0
+  - title: quote
+    text: 1
+    talker: 0
+    pos:
+      serializedVersion: 2
+      x: 693
+      y: 184
+      width: 219
+      height: 119
+    isDialogueAction: 0
+  - title: quote
+    text: Hello wanderer...
+    talker: 0
+    pos:
+      serializedVersion: 2
+      x: 686
+      y: 321
+      width: 219
+      height: 119
+    isDialogueAction: 0
+  - title: quote
+    text: 3
+    talker: 0
+    pos:
+      serializedVersion: 2
+      x: 685
+      y: 455
+      width: 219
+      height: 119
+    isDialogueAction: 0
+  - title: quote
+    text: selling_ui_action
+    talker: 0
+    pos:
+      serializedVersion: 2
+      x: 1062
+      y: 196
+      width: 217
+      height: 138
+    isDialogueAction: 1
+  - title: quote
+    text: Hello wanderer...
+    talker: 0
+    pos:
+      serializedVersion: 2
+      x: 325
+      y: 64
+      width: 217
+      height: 186
+    isDialogueAction: 0
+  connections:
+  - outputIdx: 0
+    inputIdx: 1
+  - outputIdx: 0
+    inputIdx: 2
+  - outputIdx: 0
+    inputIdx: 3
+  - outputIdx: 4
+    inputIdx: 5
+  - outputIdx: 1
+    inputIdx: 4
+  - outputIdx: 5
+    inputIdx: 1
+  - outputIdx: 5
+    inputIdx: 2
+  - outputIdx: 5
+    inputIdx: 3
+  entryQuoteIdx: 0

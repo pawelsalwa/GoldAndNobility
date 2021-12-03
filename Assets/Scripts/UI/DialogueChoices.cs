@@ -38,6 +38,7 @@ namespace UI
             choices.Clear();
         } 
 
+        #if UNITY_EDITOR
         protected override void OnValidate()
         {
             if (choiceTemplate && choiceTemplate.gameObject.activeSelf)
@@ -46,5 +47,6 @@ namespace UI
                 choiceTemplate.gameObject.SetActive(false);
             }
         }
+        #endif
     }
 }

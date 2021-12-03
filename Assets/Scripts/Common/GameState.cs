@@ -4,14 +4,14 @@ using System.Collections.Generic;
 namespace Common
 {
 
-	public enum GameStateType { None, MainMenu, Loading, InGame, InventoryOpened, Paused, InDialogue }
+	public enum GameStateType { None, MainMenu, Loading, InGame, BrowsingInventory, Paused, InDialogue, Trading }
 
 	public static class GameState
 	{
 		public static event Action<GameStateType> OnChanged;
 
 		private static readonly List<GameStateType> statesQueue = new List<GameStateType>();
-		
+
 		public static void ChangeState(GameStateType state)
 		{
 			if (statesQueue.Contains(state))
