@@ -8,7 +8,7 @@ namespace GameManagement
 {
     /// <summary> I got no idea if thats a good approachm basically this class wraps Dialogue system functionality providing the same interface that system itself to service locator.
     /// Thanks to that, DialogueSystem doesnt need to have any project related dependancies</summary>
-    [PersistentComponent()]
+    [GameService()]
     public class DialogueManager : MonoBehaviour
     {
 

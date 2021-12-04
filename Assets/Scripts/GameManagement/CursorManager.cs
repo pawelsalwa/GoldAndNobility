@@ -6,7 +6,7 @@ using UnityEngine;
 namespace GameManagement
 {
     /// <summary> Marks cursor, its fully dependant on GameState class </summary>
-    [PersistentComponent]
+    [GameService]
     internal class CursorManager : MonoBehaviour
     {
         [SerializeField, ReadOnly] private CursorLockMode cursorState = CursorLockMode.None;

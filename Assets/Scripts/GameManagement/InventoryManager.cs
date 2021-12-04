@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace GameManagement
 {
-    [PersistentComponent(typeof(IInventoryManager))]
+    [GameService(typeof(IInventoryManager))]
     internal class InventoryManager : MonoBehaviour, IInventoryManager
     {
         public event Action OnInventoryOpened;

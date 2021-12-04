@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Tools
 {
-	[PersistentComponent]
+	[GameService]
 	internal class FpsPrinter : MonoBehaviour
 	{
 		private float currentFps;

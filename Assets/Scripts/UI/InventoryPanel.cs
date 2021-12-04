@@ -31,6 +31,7 @@ namespace UI
         private void OnStateChanged(GameStateType obj)
         {
             if (obj == GameStateType.Trading) Open();
+            else Close();
         }
 
         protected override void OnDestroy()

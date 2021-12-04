@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameManagement
 {
-    [PersistentComponent(typeof(ITradeManager))]
+    [GameService(typeof(ITradeManager))]
     public class TradeManager : MonoBehaviour, ITradeManager
     {
         

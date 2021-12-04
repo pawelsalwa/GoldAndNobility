@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace InteractionSystem
 {
-    [PersistentComponent(typeof(IInteractionController), typeof(IInteractionFocusChanger))]
+    [GameService(typeof(IInteractionController), typeof(IInteractionFocusChanger))]
     internal class InteractionController : MonoBehaviour, IInteractionController, IInteractionFocusChanger
     {
         public event Action<Interactable> OnInteractableFocused;

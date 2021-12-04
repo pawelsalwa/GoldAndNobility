@@ -7,7 +7,7 @@ using UnityEngine;
 namespace GameManagement
 {
 	
-	[PersistentComponent]
+	[GameService]
 	public class PauseGameManager : MonoBehaviour
 	{
 		public static event Action OnPaused;

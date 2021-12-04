@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace RuntimeData
 {
-    [PersistentComponent(typeof(IInventory))]
+    [GameService(typeof(IInventory))]
     public class Inventory : MonoBehaviour, IInventory
     {
         

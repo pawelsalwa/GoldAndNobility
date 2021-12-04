@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quotes:
   - title: quote
-    text: Hello wanderer...
+    text: How may I help?
     talker: 1
     pos:
       serializedVersion: 2
@@ -24,7 +24,7 @@ MonoBehaviour:
       height: 119
     isDialogueAction: 0
   - title: quote
-    text: 1
+    text: Wanna buy something?
     talker: 0
     pos:
       serializedVersion: 2
@@ -34,17 +34,17 @@ MonoBehaviour:
       height: 119
     isDialogueAction: 0
   - title: quote
-    text: Hello wanderer...
+    text: What do you sell?
     talker: 0
     pos:
       serializedVersion: 2
       x: 686
       y: 321
-      width: 219
+      width: 218
       height: 119
     isDialogueAction: 0
   - title: quote
-    text: 3
+    text: Nothing, bye
     talker: 0
     pos:
       serializedVersion: 2
@@ -64,7 +64,7 @@ MonoBehaviour:
       height: 138
     isDialogueAction: 1
   - title: quote
-    text: Hello wanderer...
+    text: Anything else?
     talker: 0
     pos:
       serializedVersion: 2

@@ -30,8 +30,8 @@ namespace Common
 		private static void CheckIfIsGameService(Type type, Component service)
 		{
 			Type[] serviceTypes = null;
-			var att = type.GetCustomAttribute<PersistentComponentAttribute>();
-			if (att != null) serviceTypes = type.GetCustomAttribute<PersistentComponentAttribute>()?.serviceTypes;
+			var att = type.GetCustomAttribute<GameServiceAttribute>();
+			if (att != null) serviceTypes = type.GetCustomAttribute<GameServiceAttribute>()?.serviceTypes;
 			if (serviceTypes == null || serviceTypes.Length <= 0) return;
 			foreach (var serviceType in serviceTypes)
 				ServiceLocator.RegisterService(serviceType, service);
@@ -42,7 +42,7 @@ namespace Common
 			return 
 				from assembly in AppDomain.CurrentDomain.GetAssemblies() 
 				from type in assembly.GetTypes() 
-				where type.GetCustomAttributes(typeof(PersistentComponentAttribute), true).Length > 0 select type;
+				where type.GetCustomAttributes(typeof(GameServiceAttribute), true).Length > 0 select type;
 		}
 	}
 }

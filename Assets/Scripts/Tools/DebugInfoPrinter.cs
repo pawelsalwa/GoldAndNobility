@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Tools
 {
-	[PersistentComponent]
+	[GameService]
 	internal class DebugInfoPrinter : MonoBehaviour
 	{
 		public float x = 7;

@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 namespace Common
 {
 	/// <summary> Api for loading scenes and monitoring current progress. </summary>
-	[PersistentComponent]
+	[GameService]
 	internal class SceneLoader : MonoBehaviour, ISceneLoader
 	{
 		

@@ -10,7 +10,7 @@ namespace GameInput
 	/// Schedules input switching for the end of frame
 	/// so no different inputs are active during the same frame.
 	/// </summary>
-	[PersistentComponent]
+	[GameService]
 	internal class InputFocusSwitcher : MonoBehaviour
 	{
 		private enum InputFocus { Gameplay, UI, Dialogue }
@@ -20,7 +20,11 @@ namespace GameInput
 		[SerializeField, ReadOnly] private bool _uiInputEnabled;
 		[SerializeField, ReadOnly] private InputFocus current;
 
-		private void Start() => GameState.OnChanged += OnStateChanged;
+		private void Start()
+		{
+			GameState.OnChanged += OnStateChanged;
+			OnStateChanged(GameState.Current);
+		}
 
 		private void OnDestroy() => GameState.OnChanged -= OnStateChanged;
 

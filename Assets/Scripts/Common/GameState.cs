@@ -12,6 +12,8 @@ namespace Common
 
 		private static readonly List<GameStateType> statesQueue = new List<GameStateType>();
 
+		public static GameStateType Current => statesQueue[^1];
+
 		public static void ChangeState(GameStateType state)
 		{
 			if (statesQueue.Contains(state))
