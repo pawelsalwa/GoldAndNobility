@@ -10,7 +10,7 @@ namespace Common
 	{
 		public static event Action<GameStateType> OnChanged;
 
-		private static readonly List<GameStateType> statesQueue = new List<GameStateType>();
+		private static readonly List<GameStateType> statesQueue = new() {GameStateType.None}; // To prevent out of range exceptions
 
 		public static GameStateType Current => statesQueue[^1];
 

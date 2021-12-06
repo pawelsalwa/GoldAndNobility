@@ -26,8 +26,9 @@ namespace Common
 
 		public static T RequestService<T>() where T : class
 		{
-			if (!instance.services.ContainsKey(typeof(T)))
-				throw new Exception($"Requested service of type {typeof(T).Name} has not been registered!");
+			if (!instance.services.ContainsKey(typeof(T))) 
+				return null;
+				// throw new Exception($"Requested service of type {typeof(T).Name} has not been registered!");
 			return instance.services[typeof(T)] as T;
 		}
 

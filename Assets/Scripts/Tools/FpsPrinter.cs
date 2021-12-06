@@ -34,9 +34,9 @@ namespace Tools
 		private void Awake()
 		{
 			style = new GUIStyle {normal = new GUIStyleState {textColor = Color.cyan}};
-			capFps.EditorSetValue = 30;
-			capFps.EditorSetEnabled = true;
-			OnValidate();
+			// capFps.EditorSetValue = 30;
+			// capFps.EditorSetEnabled = true;
+			// OnValidate();
 		}
 
 		private void Update()
