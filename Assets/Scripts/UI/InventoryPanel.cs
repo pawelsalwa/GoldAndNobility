@@ -1,19 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Common;
-using Common.Const;
 using GameManagement;
 using NaughtyAttributes;
 using RuntimeData;
-using UnityEngine;
 
 namespace UI
 {
     internal class InventoryPanel : UiPanelBase
     {
+
+        public event Action<ItemIcon, bool> OnItemInspected;
+        public event Action<Item> OnClicked;
+        
         private IInventory service;
 
-        public List<ItemIcon> icons = new List<ItemIcon>();
+        public List<ItemIcon> icons = new();
+
         private IInventoryManager manager;
 
         protected override void Start()
@@ -26,7 +30,17 @@ namespace UI
             manager.OnInventoryClosed += Close;
 
             GameState.OnChanged += OnStateChanged;
+
+            foreach (var icon in icons)
+            {
+                icon.OnMouseEntered += OnMouseOverItem;
+                icon.OnClick += OnItemClicked;
+            }
         }
+
+        private void OnItemClicked(Item item) => OnClicked?.Invoke(item);
+
+        private void OnMouseOverItem(object sender, EventArgs e) => OnItemInspected?.Invoke((ItemIcon)sender, ((ItemFocusEventArgs) e).mouseEntered);
 
         private void OnStateChanged(GameStateType obj)
         {
@@ -40,6 +54,11 @@ namespace UI
             manager.OnInventoryOpened -= Open;
             manager.OnInventoryClosed -= Close;
             GameState.OnChanged -= OnStateChanged;
+            foreach (var icon in icons)
+            {
+                icon.OnMouseEntered -= OnMouseOverItem;
+                icon.OnClick -= OnItemClicked;
+            }
         }
 
         private void UpdateItemAt(int idx, Item obj) => icons[idx].SetItem(obj);

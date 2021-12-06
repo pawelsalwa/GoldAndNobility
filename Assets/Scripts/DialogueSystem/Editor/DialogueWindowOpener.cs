@@ -13,6 +13,7 @@ namespace DialogueSystem.Editor
 			var obj = EditorUtility.InstanceIDToObject(instanceID);
 			var data = obj as DialogueData;
 			if (!data) return false;
+			GetWindow(true);
 			InitWindow(data);
 			return true; // means - we handled opening
 		}
@@ -25,30 +26,25 @@ namespace DialogueSystem.Editor
 		}
 
 		[MenuItem("Window/DialogueEditor")]
-		private static void OnMenuItem()
-		{
-			OpenWindow();
-			if (Selection.objects.Length != 1) return;
-			if (!(Selection.objects[0] is DialogueData data)) return;
-			InitWindow(data);
-		}
+		private static void OnMenuItem() => GetWindow(true);
 
 		private static void OnSelectionChanged()
 		{
 			if (Selection.objects.Length != 1) return;
 			if (!(Selection.objects[0] is DialogueData data)) return;
 			if (!EditorWindow.HasOpenInstances<DialogueWindow>()) return;
-			// if (!(EditorWindow.focusedWindow is DialogueGraphWindow)) return;
+			// if (!(EditorWindow.focusedWindow is DialogueWindow)) return;
 			InitWindow(data);
 		}
 
 		private static void InitWindow(DialogueData data)
 		{
-			var window = OpenWindow();
+			if (!data) return;
+			if (!EditorWindow.HasOpenInstances<DialogueWindow>()) return;
+			var window = GetWindow(false); // should keep window not on top
 			window.Init(data);
 		}
 		
-		private static DialogueWindow OpenWindow() 
-			=> EditorWindow.GetWindow<DialogueWindow>(windowName);
+		private static DialogueWindow GetWindow(bool focus) => EditorWindow.GetWindow<DialogueWindow>(windowName, focus);
 	}
 }

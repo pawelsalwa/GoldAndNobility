@@ -1,10 +1,25 @@
-﻿using UnityEngine;
+﻿using Common.Const;
 
 namespace RuntimeData
 {
-    [CreateAssetMenu(fileName = "NewItem", menuName = "ScriptableObject/InventoryItem")]
-    public class Item : ScriptableObject
+    public class Item
     {
-        public Sprite sprite;
+        public ItemData data;
+        private int count;
+        public int Count => count;
+
+        public Item(ItemData data)
+        {
+            this.data = data;
+            this.count = 1;
+        }
+
+        public bool TryIncreaseCount()
+        {
+            if (count >= GameConsts.ItemMaxStack) return false;
+            count++;
+            return true;
+        }
+        
     }
 }

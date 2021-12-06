@@ -11,7 +11,7 @@ namespace Tools
 	internal class FpsPrinter : MonoBehaviour
 	{
 		private float currentFps;
-		private List<float> fpsCache = new List<float>();
+		private readonly List<float> fpsCache = new();
 		private float avgFps;
 
 		private int currentIdx = 0;
@@ -34,6 +34,7 @@ namespace Tools
 		private void Awake()
 		{
 			style = new GUIStyle {normal = new GUIStyleState {textColor = Color.cyan}};
+			capFps.EditorSetValue = 30;
 		}
 
 		private void Update()
@@ -42,7 +43,6 @@ namespace Tools
 			if (Input.GetKey(KeyCode.Joystick1Button10) && Input.GetKeyDown(KeyCode.Joystick1Button11)) ToggleActive();
 			if (!EnablePlaymodeTools) return;
 			CheckTimeScale();
-			Application.targetFrameRate = capFps.Enabled ? capFps.Value : 999;
 
 			float current;
 
@@ -99,6 +99,7 @@ namespace Tools
 		private void OnValidate()
 		{
 			fpsCache.Clear();
+			Application.targetFrameRate = capFps.Enabled ? capFps.Value : 0;
 			avgFps = 0f;
 		}
 

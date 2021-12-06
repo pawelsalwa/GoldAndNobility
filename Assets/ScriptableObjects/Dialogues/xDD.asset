@@ -22,6 +22,7 @@ MonoBehaviour:
       y: 286
       width: 219
       height: 119
+    isDialogueAction: 0
   - title: quote
     text: Hello wanderer...
     talker: 0
@@ -31,6 +32,7 @@ MonoBehaviour:
       y: 303
       width: 219
       height: 119
+    isDialogueAction: 0
   connections:
   - outputIdx: 0
     inputIdx: 1

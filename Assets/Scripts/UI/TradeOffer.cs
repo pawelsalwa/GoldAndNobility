@@ -1,6 +1,8 @@
-﻿namespace UI
+﻿using UnityEngine.EventSystems;
+
+namespace UI
 {
-    public class TradeOffer
+    public class TradeOffer : UIBehaviour
     {
         
     }

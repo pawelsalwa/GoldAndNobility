@@ -1,16 +1,17 @@
 using Common;
 using InteractionSystem;
 using RuntimeData;
+using UnityEngine.Serialization;
 
 namespace GameManagement.Interactions
 {
     public class ItemInteraction : Interactable
     {
 
-        public Item item;
+        [FormerlySerializedAs("item")] public ItemData itemData;
         private IInventory service;
 
-        public override string InteractionText => item.name;
+        public override string InteractionText => itemData.name;
 
         private void Start() => service = ServiceLocator.RequestService<IInventory>();
 
@@ -20,6 +21,6 @@ namespace GameManagement.Interactions
             Destroy(gameObject);
         }
 
-        private void AddToInventory() => service.TryAddItem(item);
+        private void AddToInventory() => service.TryAddItem(itemData);
     }
 }
