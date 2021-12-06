@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Common
 {
 
-	public enum GameStateType { None, MainMenu, Loading, InGame, BrowsingInventory, Paused, InDialogue, Trading }
+	public enum GameStateType { None, MainMenu, Loading, InGame, BrowsingInventory, Paused, InDialogue, Trading, AnnouncementTableBrowsing }
 
 	public static class GameState
 	{

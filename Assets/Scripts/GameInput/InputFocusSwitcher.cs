@@ -42,6 +42,7 @@ namespace GameInput
 				case GameStateType.Paused:
 				case GameStateType.BrowsingInventory:
 				case GameStateType.Trading:
+				case GameStateType.AnnouncementTableBrowsing:
 					type = InputFocus.UI;
 					break;
 				case GameStateType.InDialogue:

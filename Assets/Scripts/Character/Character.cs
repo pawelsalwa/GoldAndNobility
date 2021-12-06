@@ -32,6 +32,7 @@ namespace Character
 		private void UpdateActivation(GameStateType obj) => enabled = 
 				obj == GameStateType.InGame ||
 				obj == GameStateType.BrowsingInventory ||
+				obj == GameStateType.AnnouncementTableBrowsing||
 				obj == GameStateType.InDialogue;
 
 		private void Update()

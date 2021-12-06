@@ -35,6 +35,8 @@ namespace Tools
 		{
 			style = new GUIStyle {normal = new GUIStyleState {textColor = Color.cyan}};
 			capFps.EditorSetValue = 30;
+			capFps.EditorSetEnabled = true;
+			OnValidate();
 		}
 
 		private void Update()
