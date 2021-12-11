@@ -10,14 +10,14 @@ namespace Common
 	{
 		public static event Action<GameStateType> OnChanged;
 
-		private static readonly List<GameStateType> statesQueue = new() {GameStateType.None}; // To prevent out of range exceptions
+		private static readonly List<GameStateType> statesQueue = new() {GameStateType.None}; // Inited with 'None' to prevent out of range exceptions
 
 		public static GameStateType Current => statesQueue[^1];
 
 		public static void ChangeState(GameStateType state)
 		{
 			if (statesQueue.Contains(state))
-				statesQueue.RemoveAt(statesQueue.IndexOf(state));
+				statesQueue.Remove(state);
 			statesQueue.Add(state);
 			Notify();
 		}

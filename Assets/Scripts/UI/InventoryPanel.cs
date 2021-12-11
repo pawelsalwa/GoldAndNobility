@@ -22,6 +22,7 @@ namespace UI
 
         protected override void Start()
         {
+            base.Start();
             service = ServiceLocator.RequestService<IInventory>();
             service.OnChangedAt += UpdateItemAt;
             

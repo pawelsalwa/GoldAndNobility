@@ -1,11 +1,12 @@
 ﻿using System;
-using Common;
-using Common.Attributes;
+// using Common;
+// using Common.Attributes;
 using UnityEngine;
 
 namespace InteractionSystem
 {
-    [GameService(typeof(IInteractionController), typeof(IInteractionFocusChanger))]
+    /// <summary> this component starts disabled, and will enable when initialized with detector by scene </summary>
+    // [GameService(typeof(IInteractionController), typeof(IInteractionFocusChanger))]
     internal class InteractionController : MonoBehaviour, IInteractionController, IInteractionFocusChanger
     {
         public event Action<Interactable> OnInteractableFocused;
@@ -13,6 +14,14 @@ namespace InteractionSystem
         private Interactable current = null;
 
         private IInteractablesProvider provider;
+
+        public void Init(IInteractablesProvider sceneObject)
+        {
+            provider = sceneObject;
+            EnableInteraction();
+        }
+
+        private void Awake() => DisableInteraction();
 
         public bool TryInteract()
         {
@@ -47,8 +56,8 @@ namespace InteractionSystem
 
         private Interactable GetInteractableClosestToCameraRay()
         {
-            provider = ServiceLocator.RequestService<IInteractablesProvider>(); // makes sense to do in on update since with scene reload it could get destroyed
-            if (provider == null) return null; // makes sense to nullcheck since this service is scene based!
+            // provider = ServiceLocator.RequestService<IInteractablesProvider>(); // makes sense to do in on update since with scene reload it could get destroyed
+            if (provider == null) throw new Exception("if interactables provider gets destroyed, this controller should be disabled, call .DisableInteraction()");
 
             Interactable closest = null;
             var closestDist = float.MaxValue;

@@ -1,10 +1,7 @@
 {
     "name": "InteractionSystem",
     "rootNamespace": "",
-    "references": [
-        "GUID:a5217dec679fedf42a2921c6605c2bf9",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

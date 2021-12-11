@@ -7,15 +7,15 @@ using UnityEngine;
 
 namespace GameManagement
 {
-   [GameService()]
-    public class InteractionManager : MonoBehaviour
+    [GameService()]
+    internal class InteractionManager : MonoBehaviour
     {
         private IInteractionController service;
 
         private void Start()
         {
             GameState.OnChanged += OnGameStateChanged;
-            service = ServiceLocator.RequestService<IInteractionController>();
+            service = InteractionSystem.InteractionSystem.controller;
         }
 
         private void OnDestroy() => GameState.OnChanged -= OnGameStateChanged;

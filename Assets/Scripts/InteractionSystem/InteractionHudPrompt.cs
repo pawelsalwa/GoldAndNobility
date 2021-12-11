@@ -1,16 +1,17 @@
-﻿using Common;
-using TMPro;
+﻿using System;
 using UnityEngine;
 
 namespace InteractionSystem
 {
-	[RequireComponent(typeof(TextMeshProUGUI))]
 	[RequireComponent(typeof(RectTransform))]
-	internal class InteractionHudPrompt : MonoBehaviour
+	public class InteractionHudPrompt : MonoBehaviour
 	{
 
-		// [Tooltip("This is visible part that moves properly and is toggled on and off.")]
-		private TextMeshProUGUI interactionText;
+		// // [Tooltip("This is visible part that moves properly and is toggled on and off.")]
+		// private TextMeshProUGUI interactionText;
+		public event Action<string> OnTextChanged;
+		public string currentText;
+		
 		private Camera cam;
 		private IInteractionFocusChanger service;
 		private RectTransform rectTransform;
@@ -20,12 +21,11 @@ namespace InteractionSystem
 
 		private void Start()
 		{
-			service = ServiceLocator.RequestService<IInteractionFocusChanger>();
+			service = InteractionSystem.focusChanger;
 			service.OnInteractableFocused += OnFocusChanged;
 			
 			canvas = GetComponentInParent<Canvas>();
 			canvasRectTransform = canvas.GetComponent<RectTransform>();
-			interactionText = GetComponent<TextMeshProUGUI>();
 			
 			cam = Camera.main;
 			rectTransform = transform as RectTransform;
@@ -49,7 +49,8 @@ namespace InteractionSystem
 		private void OnFocused(Interactable obj)
 		{
 			current = obj;
-			interactionText.text = obj.InteractionText;
+			OnTextChanged?.Invoke(currentText = obj.InteractionText);
+			// interactionText.text = obj.InteractionText;
 			gameObject.SetActive(true);
 		}
 

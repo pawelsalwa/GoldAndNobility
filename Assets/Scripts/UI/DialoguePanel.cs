@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Common;
 using DialogueSystem;
+using GameManagement;
 using TMPro;
 using UnityEngine;
 
@@ -12,13 +13,14 @@ namespace UI
 		public GameObject textDisplay;
 		public DialogueChoices dialogueChoices;
 
-		private IDialogueController service;
+		private IDialogueManager service;
 
 		protected override void Awake()
 		{
 			base.Awake();
 
-			service = ServiceLocator.RequestService<IDialogueController>();
+			// service = ServiceLocator.RequestService<IDialogueController>();
+			service = ServiceLocator.RequestService<IDialogueManager>();
 			service.OnDialogueStarted += OnDialogueStarted;
 			service.OnDialogueEnded += Close;
 			service.OnQuoteStarted += OnQuoteStarted;
@@ -39,6 +41,7 @@ namespace UI
 			service.OnDialogueStarted -= OnDialogueStarted;
 			service.OnDialogueEnded -= Close;
 			service.OnQuoteStarted -= DisplayQuote;
+			service.OnPlayerQuotesAppear -= ShowPlayerQuotes;
 			dialogueChoices.OnChoiceClicked -= service.ChoosePlayerQuote;
 		}
 

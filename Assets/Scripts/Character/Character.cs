@@ -15,6 +15,7 @@ namespace Character
 		internal Animator animator;
 		private AnimManager animManager;
 		public AnimSetup animSetup;
+		// public tradeEnti
 
 		private void Awake()
 		{

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Common;
 using UnityEngine;
 
 namespace InteractionSystem
@@ -13,9 +12,9 @@ namespace InteractionSystem
 		
 		public Camera cameraAttached;
 
-		private readonly List<Interactable> interactables = new List<Interactable>();
+		private readonly List<Interactable> interactables = new ();
 		
-		private InteractablesDetector() => ServiceLocator.RegisterService<IInteractablesProvider>(this);
+		private void Awake() => InteractionSystem.InitializeDetector(this);
 
 		private void OnTriggerEnter(Collider other)
 		{
