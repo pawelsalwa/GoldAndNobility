@@ -2,6 +2,7 @@
 using Common;
 using Common.Attributes;
 using GameInput;
+using InventorySystem;
 using UnityEngine;
 
 namespace GameManagement
@@ -11,31 +12,15 @@ namespace GameManagement
     {
         public event Action OnInventoryOpened;
         public event Action OnInventoryClosed;
-
-        private bool inventoryOpened;
-        
-        private void Start() => GameState.OnChanged += OnStateChanged;
-        private void OnDestroy() => GameState.OnChanged -= OnStateChanged;
-
-        private void OnStateChanged(GameStateType obj) => inventoryOpened = obj == GameStateType.BrowsingInventory;
+        public IInventory PlayerInventory { get; } = new Inventory();
 
         private void Update()
         {
-            if (inventoryOpened) CheckInventoryClosing();
-            else CheckInventoryOpening();
+            if (GameState.Current == GameStateType.InGame && GameplayInput.openInventory) OpenInventory();
+            else if (GameState.Current == GameStateType.BrowsingInventory && UiInput.closeInventory) CloseInventory();
         }
 
-        private void CheckInventoryClosing()
-        {
-            if (UiInput.closeInventory) CloseInventory();
-        }
-        
-        private void CheckInventoryOpening()
-        {
-            if (GameplayInput.openInventory) OpenInventory();
-        }
-
-        private void OpenInventory()
+        public void OpenInventory()
         {
             GameState.ChangeState(GameStateType.BrowsingInventory);
             OnInventoryOpened?.Invoke();
@@ -52,5 +37,10 @@ namespace GameManagement
     {
         event Action OnInventoryOpened;
         event Action OnInventoryClosed;
+
+        void OpenInventory();
+
+        /// <summary> i got no idea where to put it, should it be accesible through character service maybe? that would be similar to other characters i guess :\</summary>
+        IInventory PlayerInventory { get; }
     }
 }

@@ -9,9 +9,9 @@ namespace InteractionSystem
     // [GameService(typeof(IInteractionController), typeof(IInteractionFocusChanger))]
     internal class InteractionController : MonoBehaviour, IInteractionController, IInteractionFocusChanger
     {
-        public event Action<Interactable> OnInteractableFocused;
+        public event Action<InteractableBase> OnInteractableFocused;
 
-        private Interactable current = null;
+        private InteractableBase current = null;
 
         private IInteractablesProvider provider;
 
@@ -40,7 +40,7 @@ namespace InteractionSystem
             if (closest != current) SwitchFocusTo(closest);
         }
 
-        private void SwitchFocusTo(Interactable closest)
+        private void SwitchFocusTo(InteractableBase closest)
         {
             if (closest) closest.OnDestroyed += CheckOnDestroyed;
             OnInteractableFocused?.Invoke(current = closest);
@@ -54,12 +54,12 @@ namespace InteractionSystem
         }
 
 
-        private Interactable GetInteractableClosestToCameraRay()
+        private InteractableBase GetInteractableClosestToCameraRay()
         {
             // provider = ServiceLocator.RequestService<IInteractablesProvider>(); // makes sense to do in on update since with scene reload it could get destroyed
             if (provider == null) throw new Exception("if interactables provider gets destroyed, this controller should be disabled, call .DisableInteraction()");
 
-            Interactable closest = null;
+            InteractableBase closest = null;
             var closestDist = float.MaxValue;
 
             for (var i = 0; i < provider.Interactables.Count; i++)

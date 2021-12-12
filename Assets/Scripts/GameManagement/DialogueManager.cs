@@ -4,7 +4,6 @@ using Common;
 using Common.Attributes;
 using DialogueSystem;
 using GameInput;
-using TradeSystem;
 using UnityEngine;
 
 namespace GameManagement
@@ -14,7 +13,6 @@ namespace GameManagement
     [GameService(typeof(IDialogueManager))]
     internal class DialogueManager : MonoBehaviour, IDialogueManager
     {
-        
         public event Action<DialogueData> OnDialogueStarted;
         public event Action OnDialogueEnded;
         public event Action<Quote> OnQuoteStarted;
@@ -23,49 +21,43 @@ namespace GameManagement
         /// <summary> Game end of talking to whole DialogueSystem </summary>
         private readonly IDialogueController controller = new DialogueController();
 
-        private TradeEntity entity;
-
-
         public void ChoosePlayerQuote(Quote quote) => controller.ChoosePlayerQuote(quote);
+        public void Skip() => controller.Skip();
 
-        public void StartDialogue(DialogueData data, TradeEntity tradeEntity)
+        public void StartDialogue(DialogueData data)
         {
-            entity = tradeEntity;
             controller.StartDialogue(data);
             GameState.ChangeState(GameStateType.InDialogue);
-            controller.StartDialogue(data);
         }
 
         private void Awake()
         {
-            controller.OnDialogueStarted += OnDialogueStarted.Invoke;
-            controller.OnDialogueEnded += OnDialogueEnded.Invoke;
+            controller.OnDialogueStarted += DialogueStarted;
+            controller.OnDialogueEnded += DialogueEnded;
             controller.OnQuoteStarted += QuoteStarted;
             controller.OnPlayerQuotesAppear += PlayerQuotesAppear;
+        }
 
+        private void DialogueStarted(DialogueData obj) => OnDialogueStarted?.Invoke(obj);
+
+        private void DialogueEnded()
+        {
+            GameState.CancelState(GameStateType.InDialogue);
+            OnDialogueEnded?.Invoke();
         }
 
         private void OnDestroy()
         {
-            controller.OnDialogueStarted -= OnDialogueStarted;
-            controller.OnDialogueEnded -= OnDialogueEnded;
+            controller.OnDialogueStarted -= DialogueStarted;
+            controller.OnDialogueEnded -= DialogueEnded;
             controller.OnQuoteStarted -= QuoteStarted;
+            controller.OnPlayerQuotesAppear -= PlayerQuotesAppear;
         }
 
         private void PlayerQuotesAppear(List<Quote> obj) => OnPlayerQuotesAppear?.Invoke(obj);
 
 
-        private void QuoteStarted(Quote obj)
-        {
-            if (obj.isDialogueAction)
-            {
-                if (obj.text == "selling_ui_action")
-                {
-                    ServiceLocator.RequestService<ITradeManager>().BeginTrade(entity);
-                }
-            }
-            OnQuoteStarted?.Invoke(obj);
-        }
+        private void QuoteStarted(Quote obj) => OnQuoteStarted?.Invoke(obj);
 
         private void EndDialogueState() => GameState.CancelState(GameStateType.InDialogue);
 
@@ -82,8 +74,9 @@ namespace GameManagement
         event Action OnDialogueEnded;
         event Action<Quote> OnQuoteStarted;
         event Action<List<Quote>> OnPlayerQuotesAppear;
-		
-        void StartDialogue(DialogueData data, TradeEntity entity);
+
+        void StartDialogue(DialogueData data);
         void ChoosePlayerQuote(Quote quote);
+        void Skip();
     }
 }

@@ -31,6 +31,7 @@ namespace Tools
 				normal = new GUIStyleState {textColor = Color.green}
 			};
 			GameState.OnChanged += OnStateChanged;
+			OnStateChanged(GameState.Current);
 		}
 
 		private void OnDestroy()

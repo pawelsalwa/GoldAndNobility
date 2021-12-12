@@ -6,7 +6,7 @@ namespace InteractionSystem
 {
 	internal interface IInteractablesProvider
 	{
-		List<Interactable> Interactables { get; }
+		List<InteractableBase> Interactables { get; }
 		Transform CameraTransform { get; }
 	}
 }

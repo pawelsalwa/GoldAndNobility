@@ -1,11 +1,10 @@
 using Common;
 using DialogueSystem;
 using InteractionSystem;
-using TradeSystem;
 
 namespace GameManagement.Interactions
 {
-    internal class CharacterInteraction : Interactable
+    internal class CharacterInteraction : InteractableBase
     {
         public DialogueData DialogueData;
         
@@ -13,11 +12,22 @@ namespace GameManagement.Interactions
         
         // public Trade
         private IDialogueManager service;
+        public static TradeEntity currentTrader;
+        public TradeEntity tradeEntity;
 
         private void Start() => service = ServiceLocator.RequestService<IDialogueManager>();
 
-        protected override void OnInteraction() => StartDialogue();
+        protected override void OnInteraction()
+        {
+            currentTrader = tradeEntity;
+            service.OnDialogueEnded += ResetTraderObjectOnDialogueEnd;
+            service.StartDialogue(DialogueData);
 
-        private void StartDialogue() => service.StartDialogue(DialogueData, new TradeEntity());
+            void ResetTraderObjectOnDialogueEnd()
+            {
+                service.OnDialogueEnded -= ResetTraderObjectOnDialogueEnd;
+                currentTrader = null;
+            }
+        }
     }
 }

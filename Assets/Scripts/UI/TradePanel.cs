@@ -1,38 +1,47 @@
 using Common;
-using DialogueSystem;
 using GameManagement;
+using InventorySystem;
 using UnityEngine.UI;
 
 namespace UI
 {
     internal class TradePanel : UiPanelBase
     {
-        // private ITradeManager service;
         public Button finishTradeButton;
+        public UiPanelBase inventoryPanel;
+        public InventoryUi npcInventoryUi;
+        private ITradeManager service;
 
         protected override void Start()
         {
             base.Start();
-            GameState.OnChanged += OnStateChanged;
-            finishTradeButton.onClick.AddListener(FinishTrade);
-        }
-
-        private void FinishTrade()
-        {
-            Close();
-            GameState.CancelState(GameStateType.Trading); // this should go to some trade manager class and it will help to clean this up :)
-            ServiceLocator.RequestService<IDialogueController>().Skip(); // hack i guess? :( we need to find a way to properly get back to dialogue from trading
+            service = ServiceLocator.RequestService<ITradeManager>();
+            finishTradeButton.onClick.AddListener(service.FinishTrade);
+            service.OnTradeStarted += TradeStarted;
+            service.OnTradeFinished += Close;
         }
 
         protected override void OnDestroy()
         {
-            GameState.OnChanged -= OnStateChanged;
-            finishTradeButton.onClick.RemoveListener(FinishTrade);
+            finishTradeButton.onClick.RemoveListener(service.FinishTrade);
+            service.OnTradeStarted -= TradeStarted;
+            service.OnTradeFinished -= Close;
         }
 
-        private void OnStateChanged(GameStateType obj)
+        protected override void OnOpened() => inventoryPanel.Open();
+        protected override void OnClosed() => inventoryPanel.Close();
+
+        private void TradeStarted(TradeEntity obj)
         {
-            if (obj == GameStateType.Trading) Open();
+            npcInventoryUi.Init(obj.inventory);
+            Open();
         }
+
+        // private void FinishTrade()
+        // {
+        //     Close();
+        //     // GameState.CancelState(GameStateType.Trading); // this should go to some trade manager class and it will help to clean this up :)
+        //     ServiceLocator.RequestService<IDialogueManager>().Skip(); // hack i guess? :( we need to find a way to properly get back to dialogue from trading
+        // }
     }
 }

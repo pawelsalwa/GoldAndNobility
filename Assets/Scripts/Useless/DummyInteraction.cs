@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Useless
 {
-    public class DummyInteraction : Interactable
+    public class DummyInteraction : InteractableBase
     {
         protected override void OnInteraction()
         {

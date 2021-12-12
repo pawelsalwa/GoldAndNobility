@@ -8,17 +8,17 @@ namespace InteractionSystem
 	{
 
 		public Transform CameraTransform => cameraAttached.transform;
-		public List<Interactable> Interactables => interactables;
+		public List<InteractableBase> Interactables => interactables;
 		
 		public Camera cameraAttached;
 
-		private readonly List<Interactable> interactables = new ();
+		private readonly List<InteractableBase> interactables = new ();
 		
 		private void Awake() => InteractionSystem.InitializeDetector(this);
 
 		private void OnTriggerEnter(Collider other)
 		{
-			var interactable = other.GetComponent<Interactable>();
+			var interactable = other.GetComponent<InteractableBase>();
 			if (!interactable)
 			{
 				Debug.Log($"<color=red> Game Object {other.gameObject} should have interactable on it or layer that doesnt allow interaction collision. </color>", other.gameObject);
@@ -37,7 +37,7 @@ namespace InteractionSystem
 
 		private void OnTriggerExit(Collider other)
 		{
-			var interactable = other.GetComponent<Interactable>();
+			var interactable = other.GetComponent<InteractableBase>();
 			if (!interactable)
 			{
 				Debug.Log($"<color=red> Game Object {other.gameObject} should have interactable on it or layer that doesnt allow interaction collision. </color>", other.gameObject);

@@ -3,7 +3,7 @@ using InteractionSystem;
 
 namespace GameManagement.Interactions
 {
-    public class AnnouncementTableInteraction : Interactable
+    public class AnnouncementTableInteraction : InteractableBase
     {
         
         // public DialogueData DialogueData;

@@ -15,7 +15,7 @@ namespace InteractionSystem
 		private Camera cam;
 		private IInteractionFocusChanger service;
 		private RectTransform rectTransform;
-		private Interactable current;
+		private InteractableBase current;
 		private Canvas canvas;
 		private RectTransform canvasRectTransform;
 
@@ -34,7 +34,7 @@ namespace InteractionSystem
 
 		private void OnDestroy() => service.OnInteractableFocused -= OnFocusChanged;
 
-		private void OnFocusChanged(Interactable obj)
+		private void OnFocusChanged(InteractableBase obj)
 		{
 			if (obj) OnFocused(obj);
 			else OnFocusLost();
@@ -46,11 +46,11 @@ namespace InteractionSystem
 			gameObject.SetActive(false);
 		}
 
-		private void OnFocused(Interactable obj)
+		private void OnFocused(InteractableBase obj)
 		{
 			current = obj;
-			OnTextChanged?.Invoke(currentText = obj.InteractionText);
-			// interactionText.text = obj.InteractionText;
+			currentText = obj.InteractionText;
+			OnTextChanged?.Invoke(obj.InteractionText);
 			gameObject.SetActive(true);
 		}
 

@@ -3,6 +3,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Object = UnityEngine.Object;
 
 namespace DialogueSystem.Editor
 {
@@ -34,7 +35,7 @@ namespace DialogueSystem.Editor
 				var ports = outputContainer.Query<Port>().ToList();
 				if (ports.Count == 0) AddOutputPort(); // utiliy, so one optput port is by default
 				
-				SetupDialogueActionCheckbox();
+				SetupDialogueAction();
 				SetupTalkerEnumField();
 				SetupTextField();
 			}
@@ -43,13 +44,18 @@ namespace DialogueSystem.Editor
 			RefreshPorts();
 		}
 
-		private void SetupDialogueActionCheckbox()
+		private void SetupDialogueAction()
 		{
-			var toggle = new Toggle("Is dialogue action");
-			toggle.RegisterValueChangedCallback(OnChanged);
-			toggle.SetValueWithoutNotify(quote.isDialogueAction);
-			mainContainer.Add(toggle);
-			void OnChanged(ChangeEvent<bool> evt) => quote.isDialogueAction = evt.newValue;
+			var dialogueActionField = new ObjectField("DialogueAction") {objectType = typeof(DialogueAction)};
+			dialogueActionField.SetValueWithoutNotify(quote.dialogueAction);
+			dialogueActionField.RegisterValueChangedCallback(OnChanged);
+			mainContainer.Add(dialogueActionField);
+
+			// var toggle = new Toggle("Is dialogue action");
+			// toggle.RegisterValueChangedCallback(OnChanged);
+			// toggle.SetValueWithoutNotify(quote.isDialogueAction);
+			// mainContainer.Add(toggle);
+			void OnChanged(ChangeEvent<Object> evt) => quote.dialogueAction = evt.newValue as DialogueAction;
 		}
 
 

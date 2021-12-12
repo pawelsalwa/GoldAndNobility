@@ -12,7 +12,10 @@ namespace DialogueSystem
 		public string text = "Hello wanderer...";
 		public Talker talker;
 		public Rect pos;
-		public bool isDialogueAction = false;
+		public DialogueAction dialogueAction;
+
+		public bool isDialogueAction => dialogueAction;
+		// public bool isDialogueAction = false;
 	}
 
 }

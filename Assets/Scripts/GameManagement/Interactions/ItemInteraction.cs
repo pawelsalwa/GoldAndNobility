@@ -1,19 +1,19 @@
 using Common;
 using InteractionSystem;
-using RuntimeData;
 using UnityEngine.Serialization;
+using InventorySystem;
 
 namespace GameManagement.Interactions
 {
-    public class ItemInteraction : Interactable
+    public class ItemInteraction : InteractableBase
     {
 
         [FormerlySerializedAs("item")] public ItemData itemData;
-        private IInventory service;
+        private IInventory playerInventory;
 
         public override string InteractionText => itemData.name;
 
-        private void Start() => service = ServiceLocator.RequestService<IInventory>();
+        private void Start() => playerInventory = ServiceLocator.RequestService<IInventoryManager>().PlayerInventory;
 
         protected override void OnInteraction()
         {
@@ -21,6 +21,6 @@ namespace GameManagement.Interactions
             Destroy(gameObject);
         }
 
-        private void AddToInventory() => service.TryAddItem(itemData);
+        private void AddToInventory() => playerInventory.TryAddItem(itemData);
     }
 }

@@ -14,7 +14,7 @@ namespace DialogueSystem
         
         private bool active = false;
 
-        private readonly List<Quote> currentChoices = new List<Quote>();
+        private readonly List<Quote> currentChoices = new();
         private bool isShowingChoices => currentChoices.Count > 0;
         
         private DialogueData currentDialogue;
@@ -22,7 +22,8 @@ namespace DialogueSystem
 
         public void StartDialogue(DialogueData data)
         {
-            if (!data) return;
+            if (currentDialogue) throw new ArgumentException("Cant start dialogue in the middle of another.");
+            if (!data) throw new ArgumentException("Cant start null dialogue.");
             currentDialogue = data;
             active = true;
             OnDialogueStarted?.Invoke(data);
@@ -47,6 +48,18 @@ namespace DialogueSystem
         private void SayQuote(Quote quote)
         {
             currentQuote = quote;
+            if (quote.isDialogueAction)
+            {
+                quote.dialogueAction.OnFinished += OnFinished;
+                quote.dialogueAction.BeginDialogueAction();
+
+                void OnFinished()
+                {
+                    quote.dialogueAction.OnFinished -= OnFinished;
+                    Skip();
+                }
+            }
+            
             OnQuoteStarted?.Invoke(quote);
         }
 

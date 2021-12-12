@@ -22,7 +22,7 @@ MonoBehaviour:
       y: 301
       width: 208.06
       height: 119
-    isDialogueAction: 0
+    dialogueAction: {fileID: 0}
   - title: quote
     text: Wanna buy something?
     talker: 0
@@ -32,7 +32,7 @@ MonoBehaviour:
       y: 184
       width: 219
       height: 119
-    isDialogueAction: 0
+    dialogueAction: {fileID: 0}
   - title: quote
     text: What do you sell?
     talker: 0
@@ -42,7 +42,7 @@ MonoBehaviour:
       y: 321
       width: 218
       height: 119
-    isDialogueAction: 0
+    dialogueAction: {fileID: 0}
   - title: quote
     text: Nothing, bye
     talker: 0
@@ -52,9 +52,9 @@ MonoBehaviour:
       y: 455
       width: 219
       height: 119
-    isDialogueAction: 0
+    dialogueAction: {fileID: 0}
   - title: quote
-    text: selling_ui_action
+    text: 
     talker: 0
     pos:
       serializedVersion: 2
@@ -62,17 +62,17 @@ MonoBehaviour:
       y: 196
       width: 217
       height: 138
-    isDialogueAction: 1
+    dialogueAction: {fileID: 11400000, guid: e92bfa9d118f0d3488058981a9488487, type: 2}
   - title: quote
     text: Anything else?
     talker: 0
     pos:
       serializedVersion: 2
-      x: 325
-      y: 64
-      width: 217
-      height: 186
-    isDialogueAction: 0
+      x: 257
+      y: -62
+      width: 325
+      height: 185
+    dialogueAction: {fileID: 0}
   connections:
   - outputIdx: 0
     inputIdx: 1
