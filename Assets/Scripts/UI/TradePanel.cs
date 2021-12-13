@@ -18,7 +18,7 @@ namespace UI
             service = ServiceLocator.RequestService<ITradeManager>();
             finishTradeButton.onClick.AddListener(service.FinishTrade);
             service.OnTradeStarted += TradeStarted;
-            service.OnTradeFinished += Close;
+            service.OnTradeFinished += Close; 
         }
 
         protected override void OnDestroy()

@@ -18,7 +18,7 @@ namespace Editor
 	}
 
 	[GameService]
-	internal class ClearConstoleEditorTool : MonoBehaviour
+	internal class ClearConsoleEditorTool : MonoBehaviour
 	{
 		private void Update()
 		{

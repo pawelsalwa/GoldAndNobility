@@ -1,7 +1,6 @@
 using System;
 using Common;
 using DialogueSystem;
-using GameManagement.Interactions;
 using UnityEngine;
 
 namespace GameManagement
@@ -10,17 +9,14 @@ namespace GameManagement
     public class TradingDialogueAction : DialogueAction
     {
         private ITradeManager service;
-
-        private void OnEnable()
-        {
-        }
+        public TradeEntity tradeEntity { set; private get; }
 
         public override void BeginDialogueAction()
         {
-            if (!CharacterInteraction.currentTrader) throw new Exception("Trade action requires current trader to be set not to null.");
+            if (tradeEntity == null) throw new Exception("Trade action requires current trader to be set not to null.");
             service = ServiceLocator.RequestService<ITradeManager>();
             service.OnTradeFinished += OnTradeFinished;
-            service.BeginTrade(CharacterInteraction.currentTrader);
+            service.BeginTrade(tradeEntity);
 
             void OnTradeFinished()
             {

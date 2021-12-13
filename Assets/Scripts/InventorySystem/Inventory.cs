@@ -10,6 +10,7 @@ namespace InventorySystem
         public event Action<int, Item> OnChangedAt;
 
         private readonly Item[] items = new Item[InventorySlotsCount];
+
         public Item[] Items => items;
 
         public bool TryAddItem(ItemData data)

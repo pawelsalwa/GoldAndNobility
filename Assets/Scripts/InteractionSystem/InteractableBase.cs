@@ -22,9 +22,8 @@ namespace InteractionSystem
 
 		private void OnDestroy() => OnDestroyed?.Invoke();
 
-		private void OnValidate()
+		protected virtual void OnValidate()
 		{
-			return;
 			if (LayerMask.LayerToName(gameObject.layer) != "Interactable")
 			{
 				Debug.Log($"<color=red> Interactable component {gameObject} doesnt have Interactable layer! Fixing... </color>", gameObject);

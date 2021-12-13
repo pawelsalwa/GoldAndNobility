@@ -34,6 +34,16 @@ namespace InteractionSystem
 
         public void DisableInteraction() => enabled = false; // important thing is it saves performance also with disabling Update()
 
+        private void OnEnable()
+        {
+            
+        }
+
+        private void OnDisable()
+        {
+            if (current) SwitchFocusTo(null);
+        }
+
         private void LateUpdate()
         {
             var closest = GetInteractableClosestToCameraRay();

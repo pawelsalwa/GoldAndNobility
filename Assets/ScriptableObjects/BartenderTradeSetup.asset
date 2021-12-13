@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb52dbd33fb940f0a2c20b34bee04161, type: 3}
   m_Name: BartenderTradeSetup
   m_EditorClassIdentifier: 
-  demands:
-  - {fileID: 11400000, guid: 1476859559066a844a91bb1a228786ce, type: 2}
-  - {fileID: 11400000, guid: e664a4434a1274246ac06bc6c7202ea2, type: 2}
-  offers: []
+  initialItems:
+  - itemToAdd: {fileID: 11400000, guid: 1476859559066a844a91bb1a228786ce, type: 2}
+    count: 3
+  - itemToAdd: {fileID: 11400000, guid: e664a4434a1274246ac06bc6c7202ea2, type: 2}
+    count: 1
+  - itemToAdd: {fileID: 0}
+    count: 0
+  - itemToAdd: {fileID: 0}
+    count: 0
+  itemToAdd: {fileID: 11400000, guid: e664a4434a1274246ac06bc6c7202ea2, type: 2}
