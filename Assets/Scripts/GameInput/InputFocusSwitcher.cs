@@ -15,6 +15,7 @@ namespace GameInput
 	{
 		private enum InputFocus { Gameplay, UI, Dialogue }
 		
+		[SerializeField] private bool enableDebugs = false;
 		[SerializeField, ReadOnly] private bool _gameplayInputEnabled;
 		[SerializeField, ReadOnly] private bool _dialogueInputEnabled;
 		[SerializeField, ReadOnly] private bool _uiInputEnabled;
@@ -55,6 +56,7 @@ namespace GameInput
 
 		private void SetInputFocus(InputFocus target)
 		{
+			if (enableDebugs) Debug.Log($"<color=teal>[InputFocusSwitcher] Scheduling change to {target.ToString()}.</color>");
 			_dialogueInputEnabled = _gameplayInputEnabled = _uiInputEnabled = false;
 			current = target;
 			switch (target)
@@ -75,6 +77,7 @@ namespace GameInput
 
 		private void SetInputAtEndOfFrame()
 		{
+			if (enableDebugs) Debug.Log($"<color=teal>[InputFocusSwitcher] Changing to {current.ToString()}</color>");
 			GameplayInput.enabled = _gameplayInputEnabled;
 			DialogueInput.enabled = _dialogueInputEnabled;
 			UiInput.enabled = _uiInputEnabled;

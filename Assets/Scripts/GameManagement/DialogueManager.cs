@@ -26,8 +26,8 @@ namespace GameManagement
 
         public void StartDialogue(DialogueData data)
         {
-            controller.StartDialogue(data);
             GameState.ChangeState(GameStateType.InDialogue);
+            controller.StartDialogue(data);
         }
 
         private void Awake()
@@ -56,10 +56,7 @@ namespace GameManagement
 
         private void PlayerQuotesAppear(List<Quote> obj) => OnPlayerQuotesAppear?.Invoke(obj);
 
-
         private void QuoteStarted(Quote obj) => OnQuoteStarted?.Invoke(obj);
-
-        private void EndDialogueState() => GameState.CancelState(GameStateType.InDialogue);
 
 
         private void Update()

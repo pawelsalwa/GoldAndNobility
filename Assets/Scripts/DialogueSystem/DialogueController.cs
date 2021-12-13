@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace DialogueSystem
 {
@@ -41,7 +42,8 @@ namespace DialogueSystem
         public void Skip()
         {
             if (!currentDialogue) throw new Exception("Cant skip, current dialogue is null");
-            if (isShowingChoices) return; //throw new Exception("Cant call skip dialogue when multiple choices are shown.");
+            if (isShowingChoices) return; // throw new Exception("Cant call skip dialogue when multiple choices are shown.");
+            // Debug.Log($"<color=white>skippinggg</color>");
             GoToNextQuote();
         }
 
