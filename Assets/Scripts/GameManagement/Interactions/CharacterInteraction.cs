@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace GameManagement.Interactions
 {
-    internal class CharacterInteraction : InteractableBase
+    internal class CharacterInteraction : InteractableBase 
     {
         public DialogueData DialogueData;
         public TradeEntity tradeEntity;

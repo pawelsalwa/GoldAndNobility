@@ -10,6 +10,7 @@ namespace UI
         public Button finishTradeButton;
         public UiPanelBase inventoryPanel;
         public InventoryUi npcInventoryUi;
+        public InventoryUi playerInventoryUi;
         private ITradeManager service;
 
         protected override void Start()
@@ -18,7 +19,8 @@ namespace UI
             service = ServiceLocator.RequestService<ITradeManager>();
             finishTradeButton.onClick.AddListener(service.FinishTrade);
             service.OnTradeStarted += TradeStarted;
-            service.OnTradeFinished += Close; 
+            service.OnTradeFinished += Close;
+            playerInventoryUi.OnItemSelected += OnItemSelected;
         }
 
         protected override void OnDestroy()
@@ -26,10 +28,13 @@ namespace UI
             finishTradeButton.onClick.RemoveListener(service.FinishTrade);
             service.OnTradeStarted -= TradeStarted;
             service.OnTradeFinished -= Close;
+            playerInventoryUi.OnItemSelected -= OnItemSelected;
         }
 
         protected override void OnOpened() => inventoryPanel.Open();
         protected override void OnClosed() => inventoryPanel.Close();
+        
+        private void OnItemSelected(ItemStack obj) => service.GenerateOfferFor(obj);
 
         private void TradeStarted(TradeEntity obj)
         {

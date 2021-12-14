@@ -17,7 +17,7 @@ namespace GameManagement
             prompt = GetComponent<InteractionHudPrompt>();
             prompt.OnTextChanged += UpdateText;
             UpdateText(prompt.currentText);
-        }
+        } 
 
         private void OnDestroy() => prompt.OnTextChanged -= UpdateText;
 

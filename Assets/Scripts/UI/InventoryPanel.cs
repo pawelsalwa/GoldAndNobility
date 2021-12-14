@@ -17,7 +17,7 @@ namespace UI
             manager.OnInventoryOpened += Open;
             manager.OnInventoryClosed += Close;
             
-            inventoryUi.Init(manager.PlayerInventory);
+            inventoryUi.Init(ServiceLocator.RequestService<IPlayerCharacterSingleton>().tradeEntity.inventory);
         }
         
         protected override void OnDestroy()

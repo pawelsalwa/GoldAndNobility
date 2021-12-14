@@ -874,7 +874,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1662023441}
-  m_LocalRotation: {x: 0.12232355, y: 0.000000008751329, z: -0.0000000010261302, w: 0.9924903}
+  m_LocalRotation: {x: 0.12232355, y: 0.00000000875133, z: -0.0000000010261444, w: 0.9924903}
   m_LocalPosition: {x: -4.84, y: 2.99, z: -3.57}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1101,7 +1101,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1814366062}
-  m_LocalRotation: {x: 0.10429822, y: -0.0000000042781347, z: 4.4864876e-10, w: 0.99454606}
+  m_LocalRotation: {x: 0.10429822, y: 0.0000000042781343, z: -4.486487e-10, w: 0.99454606}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2479,6 +2479,7 @@ GameObject:
   - component: {fileID: 6828332288199506387}
   - component: {fileID: 6828332288199506386}
   - component: {fileID: 6828332288199506388}
+  - component: {fileID: 6887314598731526386}
   m_Layer: 9
   m_Name: Teddy
   m_TagString: Player
@@ -2538,6 +2539,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d25e1c2dc6fa4a44da02f130c2f785c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <tradeEntity>k__BackingField: {fileID: 6887314598731526386}
 --- !u!1 &6828405927339965963
 GameObject:
   m_ObjectHideFlags: 0
@@ -3734,3 +3736,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6887314598731526386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6828332288199506385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb52dbd33fb940f0a2c20b34bee04161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialItems:
+  - itemToAdd: {fileID: 11400000, guid: 4d00f1663f804044f907b8708cb33c3c, type: 2}
+    count: 2
+  itemToAdd: {fileID: 0}
+  priceValueMultiplier: 1

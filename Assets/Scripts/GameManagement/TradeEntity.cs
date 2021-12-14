@@ -9,13 +9,17 @@ namespace GameManagement
     public class TradeEntity : MonoBehaviour
     {
         public readonly IInventory inventory = new Inventory();
-        // public List<ItemData> demands;
+        public readonly IGold gold = new Gold();
+        
+        // public List<DemandSetup> demands;
         public List<ItemStartSetup> initialItems;
         public ItemData itemToAdd;
+        public float priceValueMultiplier = 1f;
 
         private void Awake()
         {
             InitializeInitialItems();
+            gold.amount += 150;
         }
 
         private void InitializeInitialItems()

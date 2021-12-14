@@ -8,6 +8,7 @@ namespace InventorySystem
         public Sprite sprite;
         public string desc;
         public bool stacks = true;
+        public int defaultPrice = 1;
         public ItemType type = ItemType.None;
     }
 

@@ -5,17 +5,17 @@ using UnityEngine.UI;
 
 namespace InventorySystem
 {
-    internal class ItemIcon : UIBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+    public class ItemIcon : UIBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         public event EventHandler OnMouseEntered;
-        public event Action<Item> OnClick;
+        public event Action<ItemStack> OnClick;
         private readonly ItemFocusEventArgs args = new(false);
 
         public Image image;
-        public Item currentItem;
+        public ItemStack currentItem;
         public TextMeshProUGUI countTxt;
 
-        public void SetItem(Item item)
+        public void SetItem(ItemStack item)
         {
             currentItem = item;
             if (item == null)

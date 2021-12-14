@@ -2,7 +2,6 @@
 using Common;
 using Common.Attributes;
 using GameInput;
-using InventorySystem;
 using UnityEngine;
 
 namespace GameManagement
@@ -12,7 +11,6 @@ namespace GameManagement
     {
         public event Action OnInventoryOpened;
         public event Action OnInventoryClosed;
-        public IInventory PlayerInventory { get; } = new Inventory();
 
         private void Update()
         {
@@ -39,8 +37,5 @@ namespace GameManagement
         event Action OnInventoryClosed;
 
         void OpenInventory();
-
-        /// <summary> i got no idea where to put it, should it be accesible through character service maybe? that would be similar to other characters i guess :\</summary>
-        IInventory PlayerInventory { get; }
     }
 }

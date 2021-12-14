@@ -1,5 +1,5 @@
 using System;
-using UnityEngine;
+using System.Linq;
 
 namespace InventorySystem
 {
@@ -7,11 +7,11 @@ namespace InventorySystem
     {
         public const int InventorySlotsCount = 15;
         
-        public event Action<int, Item> OnChangedAt;
+        public event Action<int, ItemStack> OnChangedAt;
 
-        private readonly Item[] items = new Item[InventorySlotsCount];
+        private readonly ItemStack[] items = new ItemStack[InventorySlotsCount];
 
-        public Item[] Items => items;
+        public ItemStack[] Items => items;
 
         public bool TryAddItem(ItemData data)
         {
@@ -23,12 +23,27 @@ namespace InventorySystem
             return success;
         }
 
-        private bool TryCreateNewStack(ItemData data, out int idx, out Item item)
+        public void RemoveItems(ItemStack target, int count)
+        {
+            for (int i = 0; i < items.Length; i++)
+            {
+                var item = items[i];
+                if (item != null && item == target)
+                {
+                    if (item.Count < count) throw new ArgumentException($"Trying to remove more items of type {target}, than there is in stack. For now by design we can only sell one stack of items at once (with maximum count constraint)");
+                    if (!item.TryDecreaseCount(count))
+                        items[i] = null;
+                    OnChangedAt?.Invoke(i, items[i]);
+                }
+            }
+        }
+
+        private bool TryCreateNewStack(ItemData data, out int idx, out ItemStack item)
         {
             for (int i = 0; i < items.Length; i++)
             {
                 if (items[i] != null) continue;
-                item = items[i] = new Item(data);
+                item = items[i] = new ItemStack(data);
                 idx = i;
                 return true;
             }
@@ -38,7 +53,7 @@ namespace InventorySystem
             return false;
         }
 
-        private bool TryAddToExistingStack(ItemData data, out int idx, out Item item)
+        private bool TryAddToExistingStack(ItemData data, out int idx, out ItemStack item)
         {
             for (int i = 0; i < items.Length; i++)
             {

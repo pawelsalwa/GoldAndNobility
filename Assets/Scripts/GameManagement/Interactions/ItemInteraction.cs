@@ -2,6 +2,7 @@ using Common;
 using InteractionSystem;
 using UnityEngine.Serialization;
 using InventorySystem;
+using UnityEngine;
 
 namespace GameManagement.Interactions
 {
@@ -13,7 +14,10 @@ namespace GameManagement.Interactions
 
         public override string InteractionText => itemData.name;
 
-        private void Start() => playerInventory = ServiceLocator.RequestService<IInventoryManager>().PlayerInventory;
+        private void Start()
+        {
+            playerInventory = ServiceLocator.RequestService<IPlayerCharacterSingleton>().tradeEntity.inventory;
+        }
 
         protected override void OnInteraction()
         {

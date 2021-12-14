@@ -9,7 +9,7 @@ namespace InventorySystem
     public class InventoryUi : UIBehaviour
     {
         internal event Action<ItemIcon, bool> OnItemInspected;
-        internal event Action<Item> OnClicked;
+        public event Action<ItemStack> OnItemSelected;
         
         private IInventory current;
 
@@ -44,11 +44,11 @@ namespace InventorySystem
             }
         }
 
-        private void OnItemClicked(Item item) => OnClicked?.Invoke(item);
+        private void OnItemClicked(ItemStack item) => OnItemSelected?.Invoke(item);
 
         private void OnMouseOverItem(object sender, EventArgs e) => OnItemInspected?.Invoke((ItemIcon)sender, ((ItemFocusEventArgs) e).mouseEntered);
 
-        private void UpdateItemAt(int idx, Item obj) => icons[idx].SetItem(obj);
+        private void UpdateItemAt(int idx, ItemStack obj) => icons[idx].SetItem(obj);
 
         // protected override void OnValidate()
         // {

@@ -49,10 +49,10 @@ namespace Useless
 			if (Input.GetKey (KeyCode.Space)) {transform.position += Vector3.up * climbSpeed * Time.deltaTime;}
 			if (Input.GetKey (KeyCode.C) || Input.GetKey(KeyCode.LeftControl)) {transform.position -= Vector3.up * climbSpeed * Time.deltaTime;}
 
-			if (Input.GetKeyDown (KeyCode.End))
-			{
-				Screen.lockCursor = (Screen.lockCursor == false) ? true : false;
-			}
+			// if (Input.GetKeyDown (KeyCode.End))
+			// {
+			// 	Screen.lockCursor = (Screen.lockCursor == false) ? true : false;
+			// }
 		}
 	}
 }
