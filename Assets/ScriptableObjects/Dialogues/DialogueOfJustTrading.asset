@@ -24,7 +24,7 @@ MonoBehaviour:
       height: 185
     dialogueAction: {fileID: 0}
   - title: quote
-    text: I can take a look
+    text: Lets take a look...
     talker: 0
     pos:
       serializedVersion: 2
@@ -32,7 +32,7 @@ MonoBehaviour:
       y: 183
       width: 325
       height: 161
-    dialogueAction: {fileID: 0}
+    dialogueAction: {fileID: 11400000, guid: e92bfa9d118f0d3488058981a9488487, type: 2}
   - title: quote
     text: No, thanks
     talker: 0
@@ -43,21 +43,9 @@ MonoBehaviour:
       width: 325
       height: 161
     dialogueAction: {fileID: 0}
-  - title: quote
-    text: Hello wanderer...
-    talker: 0
-    pos:
-      serializedVersion: 2
-      x: 980
-      y: 35
-      width: 459
-      height: 137
-    dialogueAction: {fileID: 11400000, guid: e92bfa9d118f0d3488058981a9488487, type: 2}
   connections:
   - outputIdx: 0
     inputIdx: 1
   - outputIdx: 0
     inputIdx: 2
-  - outputIdx: 1
-    inputIdx: 3
   entryQuoteIdx: 0

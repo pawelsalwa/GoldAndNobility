@@ -25,5 +25,7 @@ namespace UI
             manager.OnInventoryOpened -= Open;
             manager.OnInventoryClosed -= Close;
         }
+
+        protected override void OnOpened() => ItemIcon.UnselectCurrent();
     }
 }

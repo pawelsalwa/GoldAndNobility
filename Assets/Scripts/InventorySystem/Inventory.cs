@@ -1,12 +1,20 @@
 using System;
-using System.Linq;
 
 namespace InventorySystem
 {
     public class Inventory : IInventory
     {
         public const int InventorySlotsCount = 15;
-        
+
+        // public Inventory()
+        // {
+        //     for (int i = 0; i < InventorySlotsCount; i++)
+        //     {
+        //         items[i] = new ItemStack();
+        //     }
+        // }
+
+        /// <summary> Called when item stack appears or is removed </summary>
         public event Action<int, ItemStack> OnChangedAt;
 
         private readonly ItemStack[] items = new ItemStack[InventorySlotsCount];
@@ -19,7 +27,7 @@ namespace InventorySystem
             if (TryAddToExistingStack(data, out var idx, out var item)) success = true;
             else if (TryCreateNewStack(data, out idx, out item)) success = true;
 
-            if (success) OnChangedAt?.Invoke(idx, item);
+            // if (success) OnChangedAt?.Invoke(idx, item);
             return success;
         }
 
@@ -30,7 +38,7 @@ namespace InventorySystem
                 var item = items[i];
                 if (item != null && item == target)
                 {
-                    if (item.Count < count) throw new ArgumentException($"Trying to remove more items of type {target}, than there is in stack. For now by design we can only sell one stack of items at once (with maximum count constraint)");
+                    if (item.count < count) throw new ArgumentException($"Trying to remove more items of type {target}, than there is in stack. For now by design we can only sell one stack of items at once (with maximum count constraint)");
                     if (!item.TryDecreaseCount(count))
                         items[i] = null;
                     OnChangedAt?.Invoke(i, items[i]);
@@ -45,6 +53,7 @@ namespace InventorySystem
                 if (items[i] != null) continue;
                 item = items[i] = new ItemStack(data);
                 idx = i;
+                OnChangedAt?.Invoke(idx, item);
                 return true;
             }
 

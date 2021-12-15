@@ -170,6 +170,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 2320913644384921066}
   countTxt: {fileID: 1399428861778370091}
+  selectedColor: {r: 0.13950695, g: 0.31132078, b: 0.14627439, a: 0.5372549}
+  selectedImg: {fileID: 2320913645214563448}
 --- !u!114 &2462122314321436193
 MonoBehaviour:
   m_ObjectHideFlags: 0

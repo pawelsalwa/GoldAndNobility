@@ -11,6 +11,7 @@ namespace GameManagement
     {
         public event Action<TradeEntity> OnTradeStarted;
         public event Action<TradeOffer> OnOfferCreated;
+        public event Action<TradeOffer> OnOfferAccepted;
         public event Action OnTradeFinished;
 
         private TradeEntity currentTarget;
@@ -33,36 +34,30 @@ namespace GameManagement
         {
             tradeOffer.itemToSell = item;
             tradeOffer.pricePerUnit = (int) (item.data.defaultPrice * currentTarget.priceValueMultiplier);
-            tradeOffer.maxItemsSellCount = item.Count;
+            tradeOffer.maxItemsSellCount = item.count;
             OnOfferCreated?.Invoke(tradeOffer);
         }
 
-        public void AcceptCurrentOffer(int soldQuantity)
+        public void AcceptCurrentOffer()
         {
             if (GameState.Current != GameStateType.Trading) throw new Exception("wtf");
             // if (tradeOffer.itemsSellCount == 0) return;
             var service = ServiceLocator.RequestService<IPlayerCharacterSingleton>();
-            service.tradeEntity.inventory.RemoveItems(tradeOffer.itemToSell, soldQuantity);
-            service.tradeEntity.gold.amount += (int) (soldQuantity * currentTarget.priceValueMultiplier);
+            service.tradeEntity.inventory.RemoveItems(tradeOffer.itemToSell, tradeOffer.itemsSellCount);
+            service.tradeEntity.gold.amount += (int) (tradeOffer.itemsSellCount * currentTarget.priceValueMultiplier);
+            OnOfferAccepted?.Invoke(tradeOffer);
         }
-    }
-
-    public class TradeOffer
-    {
-        public ItemStack itemToSell;
-        public int pricePerUnit;
-        public int maxItemsSellCount;
-        public int itemsSellCount;
     }
 
     public interface ITradeManager
     {
         event Action<TradeEntity> OnTradeStarted;
         event Action<TradeOffer> OnOfferCreated;
+        event Action<TradeOffer> OnOfferAccepted;
         event Action OnTradeFinished;
         void BeginTrade(TradeEntity target);
         void FinishTrade();
         void GenerateOfferFor(ItemStack item);
-        void AcceptCurrentOffer(int soldQuantity);
+        void AcceptCurrentOffer();
     }
 }

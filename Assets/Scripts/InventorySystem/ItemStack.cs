@@ -1,11 +1,24 @@
-﻿namespace InventorySystem
+﻿using System;
+
+namespace InventorySystem
 {
     public class ItemStack
     {
+        public event Action OnChanged;
+        
         private const int ItemMaxStack = 10;
         public ItemData data;
-        private int count;
-        public int Count => count;
+
+        private int _count;
+        public int count
+        {
+            get => _count;
+            private set
+            {
+                _count = value;
+                OnChanged?.Invoke();
+            }
+        }
 
         public ItemStack(ItemData data)
         {

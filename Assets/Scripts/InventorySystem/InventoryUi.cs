@@ -17,13 +17,12 @@ namespace InventorySystem
 
         public void Init(IInventory inventory)
         {
-            if (current != null) current.OnChangedAt -= UpdateItemAt; // cleanup memory if inited multiple times :)
+            // if (current != null) current.OnChangedAt -= UpdateItemAt; // cleanup memory if inited multiple times :)
 
             current = inventory;
-            inventory.OnChangedAt += UpdateItemAt;
+            inventory.OnChangedAt += SetItemAt;
             for (var i = 0; i < inventory.Items.Length; i++)
-                if (inventory.Items[i] != null)
-                    UpdateItemAt(i, inventory.Items[i]);
+                SetItemAt(i, inventory.Items[i]);
         }
 
         protected override void Start()
@@ -48,7 +47,7 @@ namespace InventorySystem
 
         private void OnMouseOverItem(object sender, EventArgs e) => OnItemInspected?.Invoke((ItemIcon)sender, ((ItemFocusEventArgs) e).mouseEntered);
 
-        private void UpdateItemAt(int idx, ItemStack obj) => icons[idx].SetItem(obj);
+        private void SetItemAt(int idx, ItemStack obj) => icons[idx].SetItem(obj);
 
         // protected override void OnValidate()
         // {

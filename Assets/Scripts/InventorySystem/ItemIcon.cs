@@ -1,5 +1,6 @@
 ﻿using System;
 using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -15,20 +16,39 @@ namespace InventorySystem
         public ItemStack currentItem;
         public TextMeshProUGUI countTxt;
 
+        private static ItemIcon currentlySelected;
+
+        public Color selectedColor;
+        public Image selectedImg;
+
+        public static void UnselectCurrent()
+        {
+            if (currentlySelected) currentlySelected.MarkSelected(false);
+        }
+
         public void SetItem(ItemStack item)
         {
+            if (currentItem != null) currentItem.OnChanged -= UpdateItemUi;
             currentItem = item;
-            if (item == null)
+            if (currentItem != null) currentItem.OnChanged += UpdateItemUi;
+            UpdateItemUi();
+        }
+
+        private void UpdateItemUi()
+        {
+            if (currentItem == null)
             {
+                UnselectCurrent();
                 image.sprite = null;
                 image.enabled = false;
                 countTxt.text = "";
             }
             else
             {
-                image.sprite = item.data.sprite;
+                UnselectCurrent();
+                image.sprite = currentItem.data.sprite;
                 image.enabled = true;
-                if (item.data.stacks) countTxt.text = item.Count.ToString();
+                countTxt.text = currentItem.data.stacks ? currentItem.count.ToString() : "";
             }
         }
 
@@ -55,7 +75,15 @@ namespace InventorySystem
         public void OnPointerClick(PointerEventData eventData)
         {
             if (currentItem == null) return;
+            if (currentlySelected) currentlySelected.MarkSelected(false);
+            currentlySelected = this;
+            MarkSelected(true);
             OnClick?.Invoke(currentItem);
+        }
+
+        private void MarkSelected(bool val)
+        {
+            selectedImg.color = val ? selectedColor : Color.white;
         }
     }
 

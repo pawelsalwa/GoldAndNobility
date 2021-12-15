@@ -24,7 +24,7 @@ MonoBehaviour:
       height: 119
     dialogueAction: {fileID: 0}
   - title: quote
-    text: Wanna buy something?
+    text: Lets trade
     talker: 0
     pos:
       serializedVersion: 2
@@ -32,7 +32,7 @@ MonoBehaviour:
       y: 184
       width: 219
       height: 119
-    dialogueAction: {fileID: 0}
+    dialogueAction: {fileID: 11400000, guid: e92bfa9d118f0d3488058981a9488487, type: 2}
   - title: quote
     text: What do you sell?
     talker: 0
@@ -58,10 +58,10 @@ MonoBehaviour:
     talker: 0
     pos:
       serializedVersion: 2
-      x: 1062
-      y: 196
-      width: 217
-      height: 138
+      x: 1198
+      y: 46
+      width: 459
+      height: 137
     dialogueAction: {fileID: 11400000, guid: e92bfa9d118f0d3488058981a9488487, type: 2}
   - title: quote
     text: Anything else?
@@ -82,12 +82,12 @@ MonoBehaviour:
     inputIdx: 3
   - outputIdx: 4
     inputIdx: 5
-  - outputIdx: 1
-    inputIdx: 4
   - outputIdx: 5
     inputIdx: 1
   - outputIdx: 5
     inputIdx: 2
   - outputIdx: 5
     inputIdx: 3
+  - outputIdx: 1
+    inputIdx: 5
   entryQuoteIdx: 0
