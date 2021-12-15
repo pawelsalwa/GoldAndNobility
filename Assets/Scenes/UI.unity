@@ -781,7 +781,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 89989720}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -6569,9 +6569,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1261009163}
   m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &1261009171
 MonoBehaviour:
@@ -8281,9 +8281,9 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1643735915}
   m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &1643735919
 MonoBehaviour:
@@ -8470,13 +8470,14 @@ GameObject:
   - component: {fileID: 1650938289}
   - component: {fileID: 1650938288}
   - component: {fileID: 1650938287}
+  - component: {fileID: 1650938290}
   m_Layer: 5
   m_Name: OfferSuccessInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1650938286
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8548,8 +8549,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a966c08b5f44032b447f5439a0d0ffc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cg: {fileID: 1650938290}
   text: {fileID: 194030687}
   shownDuration: 3
+--- !u!225 &1650938290
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650938285}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &1667524470
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10593,6 +10607,7 @@ MonoBehaviour:
   buyBtn: {fileID: 944332046}
   priceSlider: {fileID: 1240413467}
   goldTxt: {fileID: 2051518079}
+  titleTxt: {fileID: 1673219544}
   offerSuccessInfo: {fileID: 1650938289}
 --- !u!114 &2134953126
 MonoBehaviour:

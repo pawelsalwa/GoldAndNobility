@@ -16,6 +16,7 @@ namespace UI
         public Button buyBtn;
         public Slider priceSlider;
         public TextMeshProUGUI goldTxt;
+        public TextMeshProUGUI titleTxt;
         public OfferSuccessInfo offerSuccessInfo;
         private ITradeManager service;
         private TradeOffer currentOffer;
@@ -23,12 +24,32 @@ namespace UI
         private void Awake()
         {
             service = ServiceLocator.RequestService<ITradeManager>();
-            service.OnOfferCreated += ShowOffer;
-            service.OnOfferAccepted += OnAcceptOffer;
+            
+            service.OnNpcOfferCreated += ShowOffer;
+            service.OnPlayerOfferCreated += ShowOffer;
+            
+            service.OnNpcOfferAccepted += OnAcceptOffer;
+            service.OnPlayerOfferAccepted += OnAcceptOffer;
+            
             buyBtn.onClick.AddListener(AcceptOffer);
             maxBtn.onClick.AddListener(Maximize);
+            
             priceSlider.onValueChanged.AddListener(OnSliderChanged);
             gameObject.SetActive(false);
+        }
+
+        private void OnDestroy()
+        {
+            service.OnNpcOfferCreated -= ShowOffer;
+            service.OnPlayerOfferCreated -= ShowOffer;
+            
+            service.OnNpcOfferAccepted -= OnAcceptOffer;
+            service.OnPlayerOfferAccepted -= OnAcceptOffer;
+            
+            buyBtn.onClick.RemoveListener(AcceptOffer);
+            maxBtn.onClick.RemoveListener(Maximize);
+            
+            priceSlider.onValueChanged.RemoveListener(OnSliderChanged);
         }
 
         private void OnAcceptOffer(TradeOffer obj)
@@ -47,15 +68,6 @@ namespace UI
             goldTxt.text = currentOffer.itemsSellCount.ToString();
         }
 
-        private void OnDestroy()
-        {
-            service.OnOfferCreated -= ShowOffer;
-            service.OnOfferAccepted -= OnAcceptOffer;
-            buyBtn.onClick.RemoveListener(AcceptOffer);
-            maxBtn.onClick.RemoveListener(Maximize);
-            priceSlider.onValueChanged.RemoveListener(OnSliderChanged);
-        }
-
         private void ShowOffer(TradeOffer obj)
         {
             gameObject.SetActive(true);
@@ -64,6 +76,7 @@ namespace UI
             priceSlider.minValue = 0;
             priceSlider.value = 1;
             priceSlider.maxValue = obj.maxItemsSellCount;
+            titleTxt.text = obj.isPlayerOffer ? $"Sell {obj.itemToSell.data.name}s" : $"Buy {obj.itemToSell.data.name}s";
         }
     }
 }

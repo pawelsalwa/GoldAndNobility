@@ -22,7 +22,7 @@ MonoBehaviour:
       y: 297
       width: 208
       height: 119
-    isDialogueAction: 0
+    dialogueAction: {fileID: 0}
   - title: quote
     text: what do you want?
     talker: 1
@@ -32,37 +32,37 @@ MonoBehaviour:
       y: 292
       width: 208
       height: 119
-    isDialogueAction: 0
+    dialogueAction: {fileID: 0}
   - title: quote
     text: to get money
     talker: 0
     pos:
       serializedVersion: 2
-      x: 866
-      y: 232
-      width: 219
-      height: 119
-    isDialogueAction: 0
+      x: 884
+      y: 231
+      width: 325
+      height: 137
+    dialogueAction: {fileID: 0}
   - title: quote
     text: to get noble
     talker: 0
     pos:
       serializedVersion: 2
-      x: 868
-      y: 392
-      width: 219
-      height: 119
-    isDialogueAction: 0
+      x: 869
+      y: 398
+      width: 325
+      height: 137
+    dialogueAction: {fileID: 0}
   - title: quote
     text: I dont know, ask merchants around.
     talker: 1
     pos:
       serializedVersion: 2
-      x: 1172
-      y: 311
-      width: 219
-      height: 119
-    isDialogueAction: 0
+      x: 1223
+      y: 307
+      width: 325
+      height: 137
+    dialogueAction: {fileID: 0}
   connections:
   - outputIdx: 0
     inputIdx: 1

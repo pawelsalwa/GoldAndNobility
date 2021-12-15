@@ -17,7 +17,7 @@ namespace InventorySystem
 
         public void Init(IInventory inventory)
         {
-            // if (current != null) current.OnChangedAt -= UpdateItemAt; // cleanup memory if inited multiple times :)
+            if (current != null) current.OnChangedAt -= SetItemAt; // cleanup memory if inited multiple times :)
 
             current = inventory;
             inventory.OnChangedAt += SetItemAt;

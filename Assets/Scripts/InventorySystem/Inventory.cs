@@ -6,14 +6,6 @@ namespace InventorySystem
     {
         public const int InventorySlotsCount = 15;
 
-        // public Inventory()
-        // {
-        //     for (int i = 0; i < InventorySlotsCount; i++)
-        //     {
-        //         items[i] = new ItemStack();
-        //     }
-        // }
-
         /// <summary> Called when item stack appears or is removed </summary>
         public event Action<int, ItemStack> OnChangedAt;
 
@@ -21,7 +13,18 @@ namespace InventorySystem
 
         public ItemStack[] Items => items;
 
-        public bool TryAddItem(ItemData data)
+        public bool TryAddItem(ItemData data, int count = 1)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                var succ = TryAddSingleItem(data);
+                if (!succ) return false;
+            }
+
+            return true;
+        }
+
+        private bool TryAddSingleItem(ItemData data)
         {
             var success = false;
             if (TryAddToExistingStack(data, out var idx, out var item)) success = true;

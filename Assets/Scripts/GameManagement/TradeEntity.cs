@@ -42,5 +42,17 @@ namespace GameManagement
             public ItemData itemToAdd;
             public int count = 1;
         }
+
+        public int HowMuchGoldICanPayFor(ItemStack item)
+        {
+            //todo advanced system for pricing items :)
+            return (int) (item.data.defaultPrice * priceValueMultiplier);
+        }
+
+        public int HowMuchGoldIWantFor(ItemStack item)
+        {
+            //todo advanced system for pricing items :)
+            return (int) (item.data.defaultPrice * priceValueMultiplier);
+        }
     }
 }
