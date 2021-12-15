@@ -1,6 +1,7 @@
 using CharacterSystem;
 using Common;
 using GameInput;
+using TradeSystem;
 using UnityEngine;
 
 namespace GameManagement

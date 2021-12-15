@@ -2,6 +2,7 @@ using System.Linq;
 using Common;
 using DialogueSystem;
 using InteractionSystem;
+using TradeSystem;
 using UnityEngine;
 
 namespace GameManagement.Interactions

@@ -1,6 +1,6 @@
 ﻿using InventorySystem;
 
-namespace GameManagement
+namespace TradeSystem
 {
     public class TradeOffer
     {

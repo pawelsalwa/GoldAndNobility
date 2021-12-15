@@ -1,12 +1,10 @@
-﻿using System;
-using Common;
-using GameManagement;
+﻿using Common;
 using InventorySystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI
+namespace TradeSystem
 {
     internal class TradeOfferUi : MonoBehaviour
     {
@@ -18,12 +16,12 @@ namespace UI
         public TextMeshProUGUI goldTxt;
         public TextMeshProUGUI titleTxt;
         public OfferSuccessInfo offerSuccessInfo;
-        private ITradeManager service;
+        private ITradeController service;
         private TradeOffer currentOffer;
 
-        private void Awake()
+        private void Start()
         {
-            service = ServiceLocator.RequestService<ITradeManager>();
+            service = ServiceLocator.RequestService<ITradeController>();
             
             service.OnNpcOfferCreated += ShowOffer;
             service.OnPlayerOfferCreated += ShowOffer;

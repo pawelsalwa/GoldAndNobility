@@ -1,6 +1,7 @@
 using System;
 using Common;
 using DialogueSystem;
+using TradeSystem;
 using UnityEngine;
 
 namespace GameManagement

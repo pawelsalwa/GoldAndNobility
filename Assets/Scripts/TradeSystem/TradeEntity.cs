@@ -4,7 +4,7 @@ using InventorySystem;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace GameManagement
+namespace TradeSystem
 {
     public class TradeEntity : MonoBehaviour
     {
