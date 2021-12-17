@@ -15,9 +15,9 @@ namespace UI
 
 		private IDialogueManager service;
 
-		protected override void Awake()
+		protected override void Start()
 		{
-			base.Awake();
+			base.Start();
 
 			// service = ServiceLocator.RequestService<IDialogueController>();
 			service = ServiceLocator.RequestService<IDialogueManager>();

@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: ea6146c8445d63a47ab3f04c2f37b763
   - enabled: 1
-    path: Assets/Scenes/GameplayTest.unity
+    path: Assets/Scenes/LightweightEnviro.unity
     guid: 9809790ac6449854aa152a3ba13651c6
   - enabled: 1
     path: Assets/Scenes/Castle.unity

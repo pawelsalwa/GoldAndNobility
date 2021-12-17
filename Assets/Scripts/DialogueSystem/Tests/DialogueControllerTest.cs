@@ -43,14 +43,14 @@ namespace Tests
 		[Test]
 		public void CheckEndEvent()
 		{
-			var saidQuotesCount = 3;
+			var saidQuotesCount = 4;
 			Assert.True(data.quotes.Count == saidQuotesCount);
 			var endEventCalled = false;
 			controller.StartDialogue(data);
 			controller.OnDialogueEnded += OnEndEvent;
-			for (int i = 0; i < saidQuotesCount; i++) controller.Skip();
+			for (int i = 0; i < saidQuotesCount; i++) controller.Skip(); 
 			controller.OnDialogueEnded -= OnEndEvent;
-			Assert.That(endEventCalled);
+			Assert.That(endEventCalled); // to nie dziala bo trzeba wybierac quoty albo zmienic date zeby nie bylo choicow
 			
 			void OnEndEvent() => endEventCalled = true;
 		}

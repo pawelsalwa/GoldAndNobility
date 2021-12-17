@@ -14,7 +14,7 @@ namespace InteractionSystem
 
 		private readonly List<InteractableBase> interactables = new ();
 		
-		private void Awake() => InteractionSystem.InitializeDetector(this);
+		private void Start() => InteractionSystem.controller.Init(this);
 
 		private void OnTriggerEnter(Collider other)
 		{

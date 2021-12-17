@@ -8,6 +8,6 @@ namespace InteractionSystem
 		bool TryInteract();
 		void EnableInteraction();
 		void DisableInteraction();
-		
+		internal void Init(IInteractablesProvider obj);
 	}
 }

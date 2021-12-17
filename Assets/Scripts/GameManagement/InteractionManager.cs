@@ -12,10 +12,16 @@ namespace GameManagement
     {
         private IInteractionController service;
 
+        private void Awake()
+        {
+            service = gameObject.AddComponent<InteractionController>();
+            ServiceLocator.RegisterService(service);
+        }
+
         private void Start()
         {
             GameState.OnChanged += OnGameStateChanged;
-            service = InteractionSystem.InteractionSystem.controller;
+            OnGameStateChanged(GameState.Current);
         }
 
         private void OnDestroy() => GameState.OnChanged -= OnGameStateChanged;
@@ -25,9 +31,7 @@ namespace GameManagement
             if (obj == GameStateType.InGame) service.EnableInteraction();
             else service.DisableInteraction();
         }
-
-
-        // Update is called once per frame
+        
         void Update()
         {
             if (GameplayInput.interact) service.TryInteract();

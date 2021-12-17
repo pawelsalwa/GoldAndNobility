@@ -12,7 +12,9 @@ namespace GameManagement
 
 		[field: SerializeField]
 		public TradeEntity tradeEntity { get; private set; }
-		
+
+		public Nobility nobility { get; } = new() {amount = 50};
+
 		private void Awake()
 		{
 			ServiceLocator.RegisterService<IPlayerCharacterSingleton>(this);
@@ -37,5 +39,6 @@ namespace GameManagement
 	public interface IPlayerCharacterSingleton
 	{
 		TradeEntity tradeEntity { get; }
+		Nobility nobility { get; }
 	}
 }

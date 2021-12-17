@@ -11,7 +11,8 @@ public class FpsTestTool : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.N)) Spawn();
+        if (Input.GetKey(KeyCode.N)) Spawn();
+        if (Input.GetKeyDown(KeyCode.M)) Spawn();
     }
 
     private void Spawn()

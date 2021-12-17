@@ -11,7 +11,7 @@ namespace Common
 	/// <summary> We might want to refacor it to "GameService" or create game services in seprated scene for persistent gameobjects </summary>
 	internal static class PersistentComponentsCreator
 	{
-		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+		// [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
 		private static void CreatePersistentComponents()
 		{
 			foreach (var type in GetPersistentComponentTypes())
@@ -31,7 +31,7 @@ namespace Common
 		{
 			Type[] serviceTypes = null;
 			var att = type.GetCustomAttribute<GameServiceAttribute>();
-			if (att != null) serviceTypes = type.GetCustomAttribute<GameServiceAttribute>()?.serviceTypes;
+			if (att != null) serviceTypes = att.serviceTypes;
 			if (serviceTypes == null || serviceTypes.Length <= 0) return;
 			foreach (var serviceType in serviceTypes)
 				ServiceLocator.RegisterService(serviceType, service);

@@ -16,9 +16,9 @@ namespace UI
 		
 		private ISceneLoader sceneLoader;
 
-		protected override void Awake()
+		protected override void Start()
 		{
-			base.Awake();
+			base.Start();
 			
 			sceneLoader = ServiceLocator.RequestService<ISceneLoader>();
 			sceneLoader.OnSceneLoaded += OnSceneLoaded;

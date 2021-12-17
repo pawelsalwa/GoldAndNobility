@@ -1,13 +1,10 @@
 ﻿using System;
-// using Common;
-// using Common.Attributes;
 using UnityEngine;
 
 namespace InteractionSystem
 {
     /// <summary> this component starts disabled, and will enable when initialized with detector by scene </summary>
-    // [GameService(typeof(IInteractionController), typeof(IInteractionFocusChanger))]
-    internal class InteractionController : MonoBehaviour, IInteractionController, IInteractionFocusChanger
+    public class InteractionController : MonoBehaviour, IInteractionController, IInteractionFocusChanger
     {
         public event Action<InteractableBase> OnInteractableFocused;
 
@@ -15,13 +12,18 @@ namespace InteractionSystem
 
         private IInteractablesProvider provider;
 
-        public void Init(IInteractablesProvider sceneObject)
+        void IInteractionController.Init(IInteractablesProvider sceneObject)
         {
             provider = sceneObject;
             EnableInteraction();
         }
 
-        private void Awake() => DisableInteraction();
+        private void Awake()
+        {
+            InteractionSystem.controller = this;
+            InteractionSystem.focusChanger = this;
+            DisableInteraction();
+        }
 
         public bool TryInteract()
         {
@@ -34,17 +36,13 @@ namespace InteractionSystem
 
         public void DisableInteraction() => enabled = false; // important thing is it saves performance also with disabling Update()
 
-        private void OnEnable()
-        {
-            
-        }
-
         private void OnDisable()
         {
+            DisableInteraction();
             if (current) SwitchFocusTo(null);
         }
 
-        private void LateUpdate()
+        private void Update()
         {
             var closest = GetInteractableClosestToCameraRay();
             if (closest != current) SwitchFocusTo(closest);

@@ -11,10 +11,6 @@ namespace GameManagement
     {
         public event Action OnTradeStarted;
         public event Action OnTradeFinished;
-        public event Action<TradeOffer> OnNpcOfferCreated;
-        public event Action<TradeOffer> OnPlayerOfferCreated;
-        public event Action<TradeOffer> OnNpcOfferAccepted;
-        public event Action<TradeOffer> OnPlayerOfferAccepted;
 
         private TradeEntity player;
         private ITradeController service;
