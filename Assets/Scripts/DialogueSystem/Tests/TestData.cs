@@ -32,12 +32,12 @@ internal class TestData
 			},
 		};
 
-		newData.connections = new List<Connection> // connections connected so after 1st quote we have 2 player choices
+		newData.edges = new List<Edge> // connections connected so after 1st quote we have 2 player choices
 		{
-			new Connection(0, 1),
-			new Connection(0, 2),
-			new Connection(1, 3),
-			new Connection(2, 3),
+			new Edge(0, 1),
+			new Edge(0, 2),
+			new Edge(1, 3),
+			new Edge(2, 3),
 		};
 		newData.entryQuote = newData.quotes[0];
 		return newData;

@@ -22,7 +22,7 @@ namespace InteractionSystem
         {
             InteractionSystem.controller = this;
             InteractionSystem.focusChanger = this;
-            DisableInteraction();
+            if (provider == null) DisableInteraction();
         }
 
         public bool TryInteract()

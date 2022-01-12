@@ -12,7 +12,7 @@ namespace Tests
 		[SetUp]
 		public void Setup()
 		{
-			controller = new DialogueController();
+			controller = DialogueController.GetTestInstance();
 			data = TestData.GetTestDialogueData();
 		}
 		

@@ -13,57 +13,12 @@ MonoBehaviour:
   m_Name: xDD
   m_EditorClassIdentifier: 
   quotes:
-  - text: Hello wanderer...
-    talker: 0
-    pos:
-      serializedVersion: 2
-      x: 331
-      y: 286
-      width: 219
-      height: 119
-    dialogueAction: {fileID: 0}
-  - text: Hello wanderer...
-    talker: 0
-    pos:
-      serializedVersion: 2
-      x: 728
-      y: 38
-      width: 325
-      height: 137
-    dialogueAction: {fileID: 0}
-  - text: Hello wanderer...
-    talker: 0
-    pos:
-      serializedVersion: 2
-      x: 729
-      y: 437
-      width: 325
-      height: 137
-    dialogueAction: {fileID: 0}
-  - text: Hello wanderer...
-    talker: 0
-    pos:
-      serializedVersion: 2
-      x: 1126
-      y: 443
-      width: 325
-      height: 137
-    dialogueAction: {fileID: 0}
-  - text: Hello wanderer...
-    talker: 0
-    pos:
-      serializedVersion: 2
-      x: 1558
-      y: 158
-      width: 325
-      height: 137
-    dialogueAction: {fileID: 0}
   - text: zbierz 10 jablek
     talker: 0
     pos:
       serializedVersion: 2
-      x: 644
-      y: 618
+      x: 646
+      y: 347
       width: 325
       height: 137
     dialogueAction: {fileID: 0}
@@ -71,8 +26,8 @@ MonoBehaviour:
     talker: 0
     pos:
       serializedVersion: 2
-      x: 293
-      y: 603
+      x: 249
+      y: 311
       width: 325
       height: 137
     dialogueAction: {fileID: 0}
@@ -80,8 +35,8 @@ MonoBehaviour:
     talker: 0
     pos:
       serializedVersion: 2
-      x: 1318
-      y: 639
+      x: 1352
+      y: 327
       width: 325
       height: 137
     dialogueAction: {fileID: 0}
@@ -89,26 +44,16 @@ MonoBehaviour:
     talker: 0
     pos:
       serializedVersion: 2
-      x: 980
-      y: 625
+      x: 1014
+      y: 313
       width: 325
       height: 137
     dialogueAction: {fileID: 0}
-  connections:
-  - outputIdx: 0
-    inputIdx: 1
-  - outputIdx: 0
-    inputIdx: 2
-  - outputIdx: 2
-    inputIdx: 3
+  edges:
   - outputIdx: 1
-    inputIdx: 4
+    inputIdx: 0
+  - outputIdx: 0
+    inputIdx: 3
   - outputIdx: 3
-    inputIdx: 4
-  - outputIdx: 6
-    inputIdx: 5
-  - outputIdx: 5
-    inputIdx: 8
-  - outputIdx: 8
-    inputIdx: 7
-  entryQuoteIdx: 0
+    inputIdx: 2
+  entryQuoteIdx: 1

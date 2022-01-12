@@ -219,7 +219,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7483479666687270341}
-  m_LocalRotation: {x: -0, y: 0.36754587, z: -0, w: 0.93000543}
+  m_LocalRotation: {x: 0, y: 0.36754835, z: 0, w: 0.9300044}
   m_LocalPosition: {x: -8.654, y: 0.45, z: -6.226}
   m_LocalScale: {x: 1.03, y: 1.03, z: 1.03}
   m_ConstrainProportionsScale: 0
@@ -1083,6 +1083,7 @@ GameObject:
   - component: {fileID: 7483479667730591353}
   - component: {fileID: 7483479667730591354}
   - component: {fileID: 7483479667730591352}
+  - component: {fileID: 8150669260876969035}
   m_Layer: 8
   m_Name: 'Interaction '
   m_TagString: Untagged
@@ -1132,7 +1133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionTextLocalPos: {x: 0, y: 0, z: 0}
-  DialogueData: {fileID: 11400000, guid: bad75d2fd89e80b4084e8c0d38c24bda, type: 2}
+  dialogueEntity: {fileID: 8150669260876969035}
   tradeEntity: {fileID: 7483479667730591352}
 --- !u!114 &7483479667730591352
 MonoBehaviour:
@@ -1153,6 +1154,19 @@ MonoBehaviour:
     count: 44
   itemToAdd: {fileID: 0}
   priceValueMultiplier: 1
+--- !u!114 &8150669260876969035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7483479667730591348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3eb44f9903140cfa471770c0a82a82d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueData: {fileID: 11400000, guid: f08ef42b3a59aa74780426edf1c34683, type: 2}
 --- !u!1 &7483479667793809455
 GameObject:
   m_ObjectHideFlags: 0

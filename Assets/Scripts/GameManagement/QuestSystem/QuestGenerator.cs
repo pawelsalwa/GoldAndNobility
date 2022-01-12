@@ -21,18 +21,18 @@ namespace GameManagement.QuestSystem
         {
             // TypeCache.
             // characters = FindObjectsOfType<CharacterInteraction>().ToList();
-            data = Instantiate(startingCharacter.DialogueData);
-            startingCharacter.DialogueData = data;
-
-            var lastConnectedQuote = data.entryQuote;
-            foreach (var questQuote in questQuotes)
-            {
-                data.AddQuote(questQuote);
-                data.AddEdge(lastConnectedQuote, questQuote);
-                lastConnectedQuote = questQuote;
-            }
-            
-            data.AddEdge(lastConnectedQuote, data.entryQuote);
+            // data = Instantiate(startingCharacter.DialogueData);
+            // startingCharacter.DialogueData = data;
+            //
+            // var lastConnectedQuote = data.entryQuote;
+            // foreach (var questQuote in questQuotes)
+            // {
+            //     data.AddQuote(questQuote);
+            //     data.AddEdge(lastConnectedQuote, questQuote);
+            //     lastConnectedQuote = questQuote;
+            // }
+            //
+            // data.AddEdge(lastConnectedQuote, data.entryQuote);
         }
     }
 }

@@ -1,5 +1,4 @@
 using System.Linq;
-using Common;
 using DialogueSystem;
 using InteractionSystem;
 using TradeSystem;
@@ -9,16 +8,13 @@ namespace GameManagement.Interactions
 {
     public class CharacterInteraction : InteractableBase 
     {
-        public DialogueData DialogueData;
+        public DialogueEntity dialogueEntity;
         public TradeEntity tradeEntity;
-        private IDialogueManager service;
-
-        private void Start() => service = ServiceLocator.RequestService<IDialogueManager>();
 
         protected override void OnInteraction()
         {
             InitializeTradeEntity();
-            service.StartDialogue(DialogueData);
+            dialogueEntity.StartDialogue();
         }
 
         /// <summary>
@@ -26,7 +22,7 @@ namespace GameManagement.Interactions
         /// </summary>
         private void InitializeTradeEntity()
         {
-            var dialogueActionQuotes = DialogueData.quotes.Where(q => q.isDialogueAction);
+            var dialogueActionQuotes = dialogueEntity.RuntimeDialogue.quotes.Where(q => q.isDialogueAction);
             foreach (var q in dialogueActionQuotes)
                 if (q.dialogueAction is TradingDialogueAction action)
                     action.tradeEntity = tradeEntity;
@@ -36,13 +32,20 @@ namespace GameManagement.Interactions
         {
             base.OnValidate();
             if (!tradeEntity) tradeEntity = GetComponentInParent<TradeEntity>();
-            if (!tradeEntity) tradeEntity = GetComponent<TradeEntity>();
+            if (!tradeEntity) tradeEntity = GetComponent<TradeEntity>(); 
             if (!tradeEntity)
             {
                 Debug.Log($"<color=white>adding trade entity ;)</color>", gameObject);
                 tradeEntity = gameObject.AddComponent<TradeEntity>();
             }
             
+            if (!dialogueEntity) dialogueEntity = GetComponentInParent<DialogueEntity>();
+            if (!dialogueEntity) dialogueEntity = GetComponent<DialogueEntity>();
+            if (!dialogueEntity)
+            {
+                Debug.Log($"<color=white>adding dialogueEntity ;)</color>", gameObject);
+                dialogueEntity = gameObject.AddComponent<DialogueEntity>();
+            }
         }
     }
 }

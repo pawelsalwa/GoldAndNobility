@@ -34,7 +34,7 @@ namespace DialogueSystem.Editor
 		private void GenerateGraph()
 		{
 			foreach (var quote in data.quotes) CreateNode(quote);
-			foreach (var con in data.connections) CreateEdge(con);
+			foreach (var con in data.edges) CreateEdge(con);
 			GenerateEntryEdge();
 		}
 
@@ -49,7 +49,7 @@ namespace DialogueSystem.Editor
 			LinkEdge(startPort, dialogueStartNode.inputPort);
 		}
 
-		private void CreateEdge(Connection connection)
+		private void CreateEdge(Edge edge)
 		{
 			// var dialogueNodes = nodes.ToList().OfType<DialogueNode>().ToList();
 			// var dialogueNodes = nodes.ToList().Cast<DialogueNode>().ToList();
@@ -68,13 +68,13 @@ namespace DialogueSystem.Editor
 
 			LinkEdge(outputPort, inputPort);
 			
-			bool IsOutputNode(DialogueNode node) => data.quotes.IndexOf(node.quote) == connection.outputIdx;
-			bool IsInputNode(DialogueNode node) => data.quotes.IndexOf(node.quote) == connection.inputIdx;
+			bool IsOutputNode(DialogueNode node) => data.quotes.IndexOf(node.quote) == edge.outputIdx;
+			bool IsInputNode(DialogueNode node) => data.quotes.IndexOf(node.quote) == edge.inputIdx;
 		}
 
 		private void LinkEdge(Port output, Port input)
 		{
-			var edge = new Edge {output = output, input = input};
+			var edge = new UnityEditor.Experimental.GraphView.Edge {output = output, input = input};
 			edge.input.Connect(edge);
 			edge.output.Connect(edge);
 			Add(edge);
@@ -118,14 +118,14 @@ namespace DialogueSystem.Editor
 		{
 			foreach (var e in elementsToRemove)
 				if (e is DialogueNode node)
-					data.quotes.Remove(node.quote);
-				else if (e is Edge edge &&
+					data.RemoveQuote(node.quote);
+				else if (e is UnityEditor.Experimental.GraphView.Edge edge &&
 				         edge.input.node is DialogueNode @in &&
 				         edge.output.node is DialogueNode @out)
 					data.RemoveEdge(@out.quote, @in.quote);
 		}
 
-		private void CreateEdges(List<Edge> edgesToCreate)
+		private void CreateEdges(List<UnityEditor.Experimental.GraphView.Edge> edgesToCreate)
 		{
 			foreach (var edge in edgesToCreate)
 				if (edge.output.node is DialogueNode @out &&

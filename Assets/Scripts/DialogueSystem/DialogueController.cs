@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace DialogueSystem
 {
@@ -12,6 +11,8 @@ namespace DialogueSystem
         public event Action<Quote> OnQuoteStarted;
         public event Action<List<Quote>> OnPlayerQuotesAppear;
         public event Action OnDialogueEnded;
+
+        public static readonly IDialogueController instance = new DialogueController();
         
         private bool active = false;
 
@@ -20,6 +21,8 @@ namespace DialogueSystem
         
         private DialogueData currentDialogue;
         private Quote currentQuote;
+
+        private DialogueController() { }
 
         public void StartDialogue(DialogueData data)
         {
@@ -86,5 +89,8 @@ namespace DialogueSystem
             active = false;
             OnDialogueEnded?.Invoke();
         }
+
+        /// <summary> this just exists so we can have static singleton through interface and keep constructor private </summary>
+        public static DialogueController GetTestInstance() => new();
     }
 }

@@ -17,69 +17,21 @@ MonoBehaviour:
     text: Quest stage
     pos:
       serializedVersion: 2
-      x: 314
-      y: 320
-      width: 209
-      height: 97
+      x: 242
+      y: 299
+      width: 336
+      height: 117
+    questStageBase: {fileID: 0}
   - completed: 0
     text: Quest stage
     pos:
       serializedVersion: 2
-      x: 625
-      y: 433
-      width: 209
-      height: 97
-  - completed: 0
-    text: Quest stage
-    pos:
-      serializedVersion: 2
-      x: 626
-      y: 332
-      width: 209
-      height: 97
-  - completed: 0
-    text: Quest stage
-    pos:
-      serializedVersion: 2
-      x: 625
-      y: 232
-      width: 209
-      height: 97
-  - completed: 0
-    text: Quest stage
-    pos:
-      serializedVersion: 2
-      x: 1061
-      y: 321
-      width: 209
-      height: 97
-  - completed: 0
-    text: Quest stage
-    pos:
-      serializedVersion: 2
-      x: 628
-      y: 539
-      width: 209
-      height: 97
-  - completed: 0
-    text: Quest stage
-    pos:
-      serializedVersion: 2
-      x: 625
-      y: 643
-      width: 209
-      height: 97
+      x: 624
+      y: 299
+      width: 336
+      height: 117
+    questStageBase: {fileID: 0}
   connections:
   - outputIdx: 0
-    inputIdx: 3
-  - outputIdx: 0
-    inputIdx: 2
-  - outputIdx: 0
     inputIdx: 1
-  - outputIdx: 2
-    inputIdx: 4
-  - outputIdx: 3
-    inputIdx: 4
-  - outputIdx: 1
-    inputIdx: 4
   QuestStageIdx: 0
