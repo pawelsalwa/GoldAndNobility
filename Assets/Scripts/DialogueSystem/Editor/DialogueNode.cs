@@ -20,7 +20,10 @@ namespace DialogueSystem.Editor
 			this.quote = quote;
 			SetPosition(quote.pos);
 			
-			title = !string.IsNullOrEmpty(quote.title) ? quote.title : entry ? "Start" : "New node";
+			
+			title = !string.IsNullOrEmpty(quote.text) ?
+				quote.text.Substring(0, Mathf.Min(quote.text.Length, 17)) + "...":
+				entry ? "Start" : "Default title :)";
 
 			if (entry)
 			{

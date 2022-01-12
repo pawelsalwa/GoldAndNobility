@@ -8,8 +8,8 @@ namespace DialogueSystem
 	[CreateAssetMenu(fileName = "NewDialogue", menuName = "ScriptableObject/DialogueData")]
 	public class DialogueData : ScriptableObject
 	{
-		public List<Quote> quotes = new List<Quote>();
-		public List<Connection> connections = new List<Connection>();
+		public List<Quote> quotes = new();
+		public List<Connection> connections = new();
 		
 		[field: SerializeField] private int entryQuoteIdx;
 		
@@ -34,6 +34,8 @@ namespace DialogueSystem
 				c.inputIdx == quotes.IndexOf(@in) &&
 				c.outputIdx == quotes.IndexOf(@out);
 		}
+
+		public void AddQuote(Quote q) => quotes.Add(q);
 
 		public List<Quote> GetNextQuotesFor(Quote quote)
 		{

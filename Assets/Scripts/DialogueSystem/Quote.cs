@@ -8,7 +8,7 @@ namespace DialogueSystem
 	[Serializable]
 	public class Quote
 	{
-		public string title = "quote";
+		// public string title = "quote";
 		public string text = "Hello wanderer...";
 		public Talker talker;
 		public Rect pos;

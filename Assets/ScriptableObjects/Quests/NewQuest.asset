@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6abf69df4f66441f9bc8797d938d32fd, type: 3}
+  m_Name: NewQuest
+  m_EditorClassIdentifier: 
+  stages:
+  - completed: 0
+    text: Quest stage
+    pos:
+      serializedVersion: 2
+      x: 314
+      y: 320
+      width: 209
+      height: 97
+  - completed: 0
+    text: Quest stage
+    pos:
+      serializedVersion: 2
+      x: 625
+      y: 433
+      width: 209
+      height: 97
+  - completed: 0
+    text: Quest stage
+    pos:
+      serializedVersion: 2
+      x: 626
+      y: 332
+      width: 209
+      height: 97
+  - completed: 0
+    text: Quest stage
+    pos:
+      serializedVersion: 2
+      x: 625
+      y: 232
+      width: 209
+      height: 97
+  - completed: 0
+    text: Quest stage
+    pos:
+      serializedVersion: 2
+      x: 1061
+      y: 321
+      width: 209
+      height: 97
+  - completed: 0
+    text: Quest stage
+    pos:
+      serializedVersion: 2
+      x: 628
+      y: 539
+      width: 209
+      height: 97
+  - completed: 0
+    text: Quest stage
+    pos:
+      serializedVersion: 2
+      x: 625
+      y: 643
+      width: 209
+      height: 97
+  connections:
+  - outputIdx: 0
+    inputIdx: 3
+  - outputIdx: 0
+    inputIdx: 2
+  - outputIdx: 0
+    inputIdx: 1
+  - outputIdx: 2
+    inputIdx: 4
+  - outputIdx: 3
+    inputIdx: 4
+  - outputIdx: 1
+    inputIdx: 4
+  QuestStageIdx: 0

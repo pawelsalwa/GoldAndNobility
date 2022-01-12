@@ -70,7 +70,7 @@ namespace Common
             {
                 var constructor = type.GetConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, Type.EmptyTypes, null);
                 var hasParameterlessConstructor = constructor == null;
-                if (!hasParameterlessConstructor) throw new TypeLoadException($"<color=red>{type.Name} shouldn't doesnt have parameterless constructor, thus shouldn't be marked with [GameServiceAttribute] </color>");
+                if (!hasParameterlessConstructor) throw new TypeLoadException($"<color=red>{type.Name} doesnt have parameterless constructor, thus shouldn't be marked with [GameServiceAttribute] </color>");
                 obj = Activator.CreateInstance(type);
             }
             return obj;

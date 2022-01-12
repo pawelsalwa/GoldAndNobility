@@ -1,0 +1,18 @@
+{
+    "name": "QuestSystem",
+    "rootNamespace": "",
+    "references": [
+        "GUID:05c88836f127eb74daeb4066ba683333",
+        "GUID:92efc2d3b916d37498e8399580495156",
+        ""
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

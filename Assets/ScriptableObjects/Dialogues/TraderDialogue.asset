@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: TraderDialogue
   m_EditorClassIdentifier: 
   quotes:
-  - title: quote
-    text: How may I help?
+  - text: How may I help?
     talker: 1
     pos:
       serializedVersion: 2
@@ -23,8 +22,7 @@ MonoBehaviour:
       width: 208.06
       height: 119
     dialogueAction: {fileID: 0}
-  - title: quote
-    text: Lets trade
+  - text: Lets trade
     talker: 0
     pos:
       serializedVersion: 2
@@ -33,8 +31,7 @@ MonoBehaviour:
       width: 219
       height: 119
     dialogueAction: {fileID: 11400000, guid: e92bfa9d118f0d3488058981a9488487, type: 2}
-  - title: quote
-    text: What do you sell?
+  - text: What do you sell?
     talker: 0
     pos:
       serializedVersion: 2
@@ -43,8 +40,7 @@ MonoBehaviour:
       width: 218
       height: 119
     dialogueAction: {fileID: 0}
-  - title: quote
-    text: Nothing, bye
+  - text: Nothing, bye
     talker: 0
     pos:
       serializedVersion: 2
@@ -53,8 +49,7 @@ MonoBehaviour:
       width: 219
       height: 119
     dialogueAction: {fileID: 0}
-  - title: quote
-    text: 
+  - text: 
     talker: 0
     pos:
       serializedVersion: 2
@@ -63,8 +58,7 @@ MonoBehaviour:
       width: 459
       height: 137
     dialogueAction: {fileID: 11400000, guid: e92bfa9d118f0d3488058981a9488487, type: 2}
-  - title: quote
-    text: Anything else?
+  - text: Anything else?
     talker: 0
     pos:
       serializedVersion: 2

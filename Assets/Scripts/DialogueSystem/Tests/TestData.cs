@@ -14,25 +14,21 @@ internal class TestData
 			{
 				talker = Talker.Npc,
 				text = "hello",
-				title = "helloTitle"
 			},
 			new Quote
 			{
 				talker = Talker.Player,
 				text = "playerAnswer1",
-				title = "playerAnswer1Title"
 			},
 			new Quote
 			{
 				talker = Talker.Player,
 				text = "playerAnswer2",
-				title = "playerAnswer2Title"
 			},
 			new Quote
 			{
 				talker = Talker.Npc,
 				text = "bye",
-				title = "byeTitle"
 			},
 		};
 

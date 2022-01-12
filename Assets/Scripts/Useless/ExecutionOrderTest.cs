@@ -8,7 +8,6 @@ namespace Common.Fsm
 	{
 		// [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
 		// private static void BeforeSceneLoad() => Debug.Log($"<color=blue>static BeforeSceneLoad</color>");
-		//
 		// [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
 		// private static void AfterSceneLoad() => Debug.Log($"<color=blue>static AfterSceneLoad</color>");
 		// [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
