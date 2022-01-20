@@ -1,6 +1,6 @@
 ﻿namespace QuestSystem
 {
-	public class GatherItemsQuestStage : QuestStageSceneBase
+	public class GatherItemsQuestStage : QuestStage
 	{
 	
 		// private void OnInventoryChangedAt(int idx, ItemStack item)

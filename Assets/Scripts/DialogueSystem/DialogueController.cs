@@ -30,6 +30,7 @@ namespace DialogueSystem
             if (!data) throw new ArgumentException("Cant start null dialogue.");
             currentDialogue = data;
             active = true;
+            currentChoices.Clear();
             OnDialogueStarted?.Invoke(data);
             SayQuote(data.entryQuote);
         }
@@ -64,7 +65,8 @@ namespace DialogueSystem
                     Skip();
                 }
             }
-            
+
+            quote.OnSaid();
             OnQuoteStarted?.Invoke(quote);
         }
 

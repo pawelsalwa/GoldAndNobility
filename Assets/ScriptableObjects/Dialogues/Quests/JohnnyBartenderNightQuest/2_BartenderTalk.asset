@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4048c80fff887364e88ba3c1d5ad8a3b, type: 3}
+  m_Name: 2_BartenderTalk
+  m_EditorClassIdentifier: 
+  quotes:
+  - text: What's the price for one night, buddy?
+    talker: 0
+    pos:
+      serializedVersion: 2
+      x: 243
+      y: 277
+      width: 325
+      height: 137
+    dialogueAction: {fileID: 0}
+  - text: Dude, I'm in need of wood. Got some deals and i need any amount you can
+      bring.
+    talker: 1
+    pos:
+      serializedVersion: 2
+      x: 1313
+      y: 405
+      width: 468
+      height: 161
+    dialogueAction: {fileID: 0}
+  - text: You sell it yourself?
+    talker: 0
+    pos:
+      serializedVersion: 2
+      x: 1907
+      y: 194
+      width: 325
+      height: 137
+    dialogueAction: {fileID: 0}
+  - text: Ok, will be done!
+    talker: 0
+    pos:
+      serializedVersion: 2
+      x: 2581
+      y: 446
+      width: 325
+      height: 137
+    dialogueAction: {fileID: 0}
+  - text: Yes I do, but cant giveaway my buyer!
+    talker: 0
+    pos:
+      serializedVersion: 2
+      x: 2266
+      y: 193
+      width: 325
+      height: 137
+    dialogueAction: {fileID: 0}
+  - text: That will be 10 gold
+    talker: 1
+    pos:
+      serializedVersion: 2
+      x: 641
+      y: 302
+      width: -641
+      height: -302
+    dialogueAction: {fileID: 0}
+  edges:
+  - outputIdx: 1
+    inputIdx: 2
+  - outputIdx: 1
+    inputIdx: 3
+  - outputIdx: 2
+    inputIdx: 4
+  - outputIdx: 4
+    inputIdx: 3
+  - outputIdx: 0
+    inputIdx: 5
+  entryQuoteIdx: 0

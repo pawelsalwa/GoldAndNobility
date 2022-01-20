@@ -8,14 +8,14 @@ namespace DialogueSystem
 	[Serializable]
 	public class Quote
 	{
-		// public string title = "quote";
+		public event Action OnSaidCallback;
 		public string text = "Hello wanderer...";
 		public Talker talker;
 		public Rect pos;
 		public DialogueAction dialogueAction;
 
 		public bool isDialogueAction => dialogueAction;
-		// public bool isDialogueAction = false;
-	}
 
+		internal void OnSaid() => OnSaidCallback?.Invoke();
+	}
 }

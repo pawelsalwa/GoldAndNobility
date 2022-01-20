@@ -6,11 +6,11 @@ namespace QuestSystem.Editor
 	public class QuestWindow : EditorWindow
 	{
 		private QuestGraphView graphView;
-		private QuestData editedData;
+		private Quest editedData;
 		private QuestToolbar toolbar;
 		private bool initialized => editedData != null;
 
-		public void Init(QuestData data)
+		public void Init(Quest data)
 		{
 			editedData = data;
 			EditorUtility.SetDirty(data);
@@ -41,9 +41,9 @@ namespace QuestSystem.Editor
 		
 		private void GenerateToolbar()
 		{
-			if (rootVisualElement.Contains(toolbar)) rootVisualElement.Remove(toolbar);
-			toolbar = new QuestToolbar(editedData);
-			rootVisualElement.Add(toolbar);
+			// if (rootVisualElement.Contains(toolbar)) rootVisualElement.Remove(toolbar);
+			// toolbar = new QuestToolbar(editedData);
+			// rootVisualElement.Add(toolbar);
 		}
 
 		private void ConstructGraphView()

@@ -8,6 +8,7 @@ namespace DialogueSystem
 	{
 
 		[SerializeField] private DialogueData dialogueData;
+		[field: SerializeField]
 		public DialogueData RuntimeDialogue { get; private set; }
 
 		public void StartDialogue() => DialogueController.instance.StartDialogue(RuntimeDialogue);
@@ -18,6 +19,7 @@ namespace DialogueSystem
 			foreach (var connection in dialogueBranch.edges) RuntimeDialogue.AddEdge(dialogueBranch.quotes[connection.outputIdx], dialogueBranch.quotes[connection.inputIdx]);
 			// make ending quotes of quest dialogue point to entry quote of runtime NPC dialogue
 			foreach (var endQuote in dialogueBranch.EndingQuotes) RuntimeDialogue.AddEdge(endQuote, RuntimeDialogue.entryQuote);
+			RuntimeDialogue.AddEdge(RuntimeDialogue.entryQuote, dialogueBranch.entryQuote); // dont forget to add it to root choices :)
 		}
 
 		public void RemoveRuntimeDialogueBranch(DialogueData dialogueBranch)

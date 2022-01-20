@@ -1,5 +1,6 @@
 ﻿using UnityEditor;
 using UnityEditor.Callbacks;
+using UnityEngine;
 
 namespace QuestSystem.Editor
 {
@@ -11,7 +12,7 @@ namespace QuestSystem.Editor
 		private static bool OnQuestAssetOpened(int instanceID, int line)
 		{
 			var obj = EditorUtility.InstanceIDToObject(instanceID);
-			var data = obj as QuestData;
+			var data = obj as Quest;
 			if (!data) return false;
 			GetWindow(true);
 			InitWindow(data);
@@ -31,13 +32,15 @@ namespace QuestSystem.Editor
 		private static void OnSelectionChanged()
 		{
 			if (Selection.objects.Length != 1) return;
-			if (!(Selection.objects[0] is QuestData data)) return;
+			if (!(Selection.objects[0] is GameObject go)) return;
+			var data = go.GetComponent<Quest>();
+			if (!data) return;
 			if (!EditorWindow.HasOpenInstances<QuestWindow>()) return;
 			// if (!(EditorWindow.focusedWindow is QuestWindow)) return;
 			InitWindow(data);
 		}
 
-		private static void InitWindow(QuestData data)
+		internal static void InitWindow(Quest data)
 		{
 			if (!data) return;
 			if (!EditorWindow.HasOpenInstances<QuestWindow>()) return;

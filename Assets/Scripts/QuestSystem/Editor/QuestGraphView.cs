@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -8,10 +9,10 @@ namespace QuestSystem.Editor
 {
 	internal class QuestGraphView : GraphView
 	{
-		private readonly QuestData data;
+		private readonly Quest data;
 		private Port startPort;
 
-		internal QuestGraphView(QuestData data)
+		internal QuestGraphView(Quest data)
 		{
 			this.data = data;
 			Setup();
@@ -22,11 +23,19 @@ namespace QuestSystem.Editor
 		{
 			if (evt.target is QuestGraphView || evt.target is Node)
 			{
-				evt.menu.AppendAction("Create new quote", CreateFromContextMenu);
-				evt.menu.AppendAction("Create new Quest action", CreateFromContextMenu);
+				var questTypes = UnityEditor.TypeCache.GetTypesDerivedFrom<QuestStage>();
+				foreach (var questType in questTypes)
+				{
+					evt.menu.AppendAction($"Create Quest.../{questType.Name}", CreateFromContextMenu, ActionStatusCallack, questType);
+				}
 			}
 
 			base.BuildContextualMenu(evt);
+		}
+
+		private DropdownMenuAction.Status ActionStatusCallack(DropdownMenuAction arg)
+		{
+			return DropdownMenuAction.Status.Normal;
 		}
 
 		public override List<Port> GetCompatiblePorts(Port port, NodeAdapter nodeAdapter) => ports.Where(p => p != port && port.node != p.node && port.direction != p.direction).ToList();
@@ -118,7 +127,7 @@ namespace QuestSystem.Editor
 		{
 			foreach (var e in elementsToRemove)
 				if (e is QuestNode node)
-					data.stages.Remove(node.stage);
+					data.RemoveStage(node.stage);
 				else if (e is Edge edge &&
 				         edge.input.node is QuestNode @in &&
 				         edge.output.node is QuestNode @out)
@@ -150,15 +159,15 @@ namespace QuestSystem.Editor
 
 		// private void GenerateToolbar() => Add(new QuestToolbar(data));
 
-		private void OnCreateNodeButton() => CreateNode(viewport.localBound.center);
+		// private void OnCreateNodeButton() => CreateNode(viewport.localBound.center);
 
-		private void CreateFromContextMenu(DropdownMenuAction obj) => CreateNode(obj.eventInfo.mousePosition);
-
-		private void CreateNode(Vector2 pos)
+		private void CreateFromContextMenu(DropdownMenuAction obj)
 		{
-			var quote = new QuestStage {pos = {min = pos}};
-			data.stages.Add(quote);
-			CreateNode(quote);
+			var questType = (Type) obj.userData;
+			if (!questType.IsSubclassOf(typeof(QuestStage))) throw new ArgumentException($"trying to add quest stage of type {questType.Name}, it should derive from {nameof(QuestStage)}");
+			var stage = data.AddStage(questType);
+			stage.pos = obj.eventInfo.mousePosition;
+			CreateNode(stage);
 		}
 
 		private void CreateNode(QuestStage stage) => AddElement(new QuestNode(stage));

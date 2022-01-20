@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -7,51 +7,80 @@ namespace QuestSystem
 {
 	public class Quest : MonoBehaviour
 	{
-		public List<QuestStageSceneBase> stages;
+		public List<QuestStage> stages;
 		public List<Connection> connections;
 		
 		public int entryIdx;
-		
+		public QuestStage entryStage;
+
 		[Button]
 		private void Edit() => Debug.Log("<color=red>editing not implemented :)</color>");
 
 		private void Start()
 		{
-			foreach (var stage in stages) stage.OnCompleted += OnStageCompleted;
+			foreach (var stage in stages)
+			{
+				stage.OnCompleted += OnStageCompleted;
+				stage.OnDestroyed += OnStageDestroyed;
+			}
 			stages[entryIdx].Enable();
 		}
-		
+
 		private void OnDestroy()
 		{
-			foreach (var stage in stages) stage.OnCompleted -= OnStageCompleted;
+			foreach (var stage in stages)
+			{
+				stage.OnCompleted -= OnStageCompleted;
+				stage.OnDestroyed -= OnStageDestroyed;
+			}
 		}
 
-		private void OnStageCompleted(QuestStageSceneBase stage)
+		private void OnStageCompleted(QuestStage stage)
 		{
-			var next = GetNextFor(stage);
-			next.ForEach(CheckIfShouldBeEnabled);
+			var next = this.GetNextFor(stage);
+			next.ForEach(EnableIfPrevCompleted);
+			var prev = this.GetPrevFor(stage);
+			prev.ForEach(DisableIfNextCompleted);
 		}
 
-		private void CheckIfShouldBeEnabled(QuestStageSceneBase stage)
+		private void EnableIfPrevCompleted(QuestStage stage)
 		{
-			var prevousCompleted = ArePreviousCompletedFor(stage);
+			var prevousCompleted = this.ArePreviousCompletedFor(stage);
 			if (prevousCompleted) stage.Enable();
 		}
 
-		private List<QuestStageSceneBase> GetNextFor(QuestStageSceneBase stage)
+		private void DisableIfNextCompleted(QuestStage stage)
 		{
-			var stageIdx = stages.IndexOf(stage);
-			var nextConnections = connections.Where(c => c.inputIdx == stageIdx);
-			var nextStages = nextConnections.Select(c => stages[c.outputIdx]);
-			return nextStages.ToList();
+			var nextCompleted = this.AreNextCompletedFor(stage);
+			if (nextCompleted) stage.Disable();
 		}
 
-		private bool ArePreviousCompletedFor(QuestStageSceneBase stage)
+
+		public void AddEdge(QuestStage outStage, QuestStage inStage) => connections.Add(new Connection(stages.IndexOf(outStage), stages.IndexOf(inStage)));
+		public void RemoveEdge(QuestStage outStage, QuestStage inStage)  => connections.Remove(new Connection(stages.IndexOf(outStage), stages.IndexOf(inStage)));
+
+		public QuestStage AddStage(Type questType)
 		{
-			var stageIdx = stages.IndexOf(stage);
-			var prevConnections = connections.Where(x => x.inputIdx == stageIdx);
-			var areCompleted = prevConnections.All(c => stages[c.inputIdx].completed);
-			return areCompleted;
+			if (!questType.IsSubclassOf(typeof(QuestStage))) throw new ArgumentException($"trying to add quest stage of type {questType.Name}, it should derive from {nameof(QuestStage)}");
+			var go = new GameObject(questType.Name);
+			go.transform.parent = transform;
+			var stage = go.AddComponent(questType) as QuestStage;
+			stages.Add(stage);
+			return stage;
+		}
+
+		public void RemoveStage(QuestStage stage)
+		{
+			if (Application.isPlaying) Destroy(stage.gameObject);
+			else DestroyImmediate(stage.gameObject);
+		}
+
+		private void OnStageDestroyed(QuestStage stage)
+		{
+			if (!stage) return;
+			stage.OnDestroyed -= OnStageDestroyed;
+			stage.OnCompleted -= OnStageCompleted;
+			stages.Remove(stage);
 		}
 	}
 }
